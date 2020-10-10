@@ -45,6 +45,11 @@ public class PlayerController : MonoBehaviour
             print("Diary");
         }
 
+        if(Input.GetButtonDown("Pause"))
+        {
+            print("Pause");
+        }
+
         if(verticalInput > 0)
         {
             print("Appear");
