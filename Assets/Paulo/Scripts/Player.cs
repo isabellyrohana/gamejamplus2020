@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum PlayerRotationSrite
+public enum PlayerRotationSprite
 {
     Left,
     Right
@@ -15,50 +15,82 @@ public class Player : MonoBehaviour
     [SerializeField]
     InventoryObject currentThrowableObject;
 
+    [SerializeField]
+    GameObject currentSafePlace;
+
+    InventoryObject currentTouchedObject;
+
     public Transform rightHandPosition;
 
-    private PlayerRotationSrite currentPlayerRotation;
+    private PlayerRotationSprite currentPlayerRotation;
+
+    private float horizontalInput;
+    private float verticalInput;
 
 
     // Update is called once per frame
     void Update()
     {
+        horizontalInput = Input.GetAxis("Horizontal");
+
+        verticalInput = Input.GetAxis("HideAppear");
+
         #region Movement
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        //if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+        if(horizontalInput < 0)
         {
-            currentPlayerRotation = PlayerRotationSrite.Left;
+            currentPlayerRotation = PlayerRotationSprite.Left;
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
-            
-        if (Input.GetKey(KeyCode.RightArrow))
+
+        //if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
+        if (horizontalInput > 0)
         {
-            currentPlayerRotation = PlayerRotationSrite.Right;
+            currentPlayerRotation = PlayerRotationSprite.Right;
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
 
         #endregion
 
-        #region ThrowObject
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetButtonDown("Pick"))
         {
-            if (currentThrowableObject == null)
-                return;
-            ThrowObject();
+            //Se tiver encostado, pega o Item
+            if (currentTouchedObject != null)
+
+                PickItem();
+
+            else
+                if (currentThrowableObject != null)
+                    //Se tiver segurando algum item, arremessa
+                    ThrowObject();
         }
-        #endregion
+
+
+        if (verticalInput > 0)
+        {
+            if (currentSafePlace != null)
+            {
+                transform.position = currentSafePlace.transform.position;
+                GetComponent<SpriteRenderer>().enabled = false;
+            }
+        }
+        else if (verticalInput < 0)
+        {
+            GetComponent<SpriteRenderer>().enabled = true;
+        }
     }
 
 
-    private void Rotate(PlayerRotationSrite side)
+    private void Rotate(PlayerRotationSprite side)
     {
         switch (side)
         {
-            case PlayerRotationSrite.Left:
+            case PlayerRotationSprite.Left:
                 transform.Rotate(new Vector3(0, 0, 0), Space.World);
                 break;
 
-            case PlayerRotationSrite.Right:
+            case PlayerRotationSprite.Right:
                 transform.Rotate(new Vector3(0, 180, 0), Space.World);
                 break;
 
@@ -66,49 +98,86 @@ public class Player : MonoBehaviour
                 transform.Rotate(new Vector3(0, 0, 0), Space.World);
                 break;
         }
-            
     }
 
 
     public void ThrowObject()
     {
         if (currentThrowableObject != null)
-            currentThrowableObject.Throw(PlayerForward(), rightHandPosition.position);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //Guardar itens Arremessáveis
-        if (collision.gameObject.tag == "throwable")
         {
-            currentThrowableObject = collision.gameObject.GetComponent<InventoryObject>();
-            collision.gameObject.transform.SetParent(transform);
-            collision.gameObject.transform.position = rightHandPosition.position;
-            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
-
-            rb.bodyType = RigidbodyType2D.Kinematic;
+            currentThrowableObject.Throw(PlayerForward(), rightHandPosition.position);
+            currentThrowableObject = null;
         }
+            
+    }
 
-        //Guardar itens
+    public void Hide()
+    {
+        if (currentSafePlace != null)
+        {
+            GetComponent<BoxCollider2D>().enabled = false;
+            GetComponent<SpriteRenderer>().enabled = false;
+        }
+    }
 
+    public void ShowUp()
+    {
+        GetComponent<BoxCollider2D>().enabled = true;
+        GetComponent<SpriteRenderer>().enabled = true;
+        transform.position = currentSafePlace.transform.position;
+    }
+
+    public void PickItem()
+    {
+        currentThrowableObject = currentTouchedObject.GetComponent<InventoryObject>();
+        currentTouchedObject = null;
+        currentThrowableObject.transform.SetParent(transform);
+        currentThrowableObject.transform.position = rightHandPosition.position;
+        Rigidbody2D rb = currentThrowableObject.GetComponent<Rigidbody2D>();
+        rb.velocity = Vector2.zero;
+        rb.bodyType = RigidbodyType2D.Kinematic;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        //entrando no local seguro
+
+        if (collision.tag == "safeplace")
+            currentSafePlace = collision.gameObject;
+
+        //Guardar itens Arremessáveis
+        if (collision.gameObject.tag == "throwable" )
+            currentTouchedObject = collision.gameObject.GetComponent<InventoryObject>();
 
     }
 
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //saindo do local seguro
+
+        if (collision.gameObject == currentSafePlace)
+            currentSafePlace = null;
+
+        //Guardar itens Arremessáveis
+        if (collision.gameObject == currentThrowableObject)
+        {
+            currentTouchedObject = null;
+        }
+    }
 
     Vector3 PlayerForward()
     {
         switch (currentPlayerRotation)
         {
-            case PlayerRotationSrite.Left:
-                return new Vector3(-1, 0, 0);
+            case PlayerRotationSprite.Left:
+                return new Vector3(-1, 1, 0);
 
-            case PlayerRotationSrite.Right:
-                return new Vector3(1, 0, 0);
+            case PlayerRotationSprite.Right:
+                return new Vector3(1, 1, 0);
 
-            default: return new Vector3(-1, 0, 0);
+            default: return new Vector3(-1, 1, 0);
 
         }
     }
-
 
 }
