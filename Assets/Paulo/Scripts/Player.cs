@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum PlayerRotationSrite
 {
@@ -10,15 +8,17 @@ public enum PlayerRotationSrite
 
 public class Player : MonoBehaviour
 {
-
     [Range(.5f, 10f)]
     [SerializeField]
     private float speed = 2.5f;
 
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    InventoryObject currentThrowableObject;
+
+    public Transform rightHandPosition;
+
+    private PlayerRotationSrite currentPlayerRotation;
+
 
     // Update is called once per frame
     void Update()
@@ -27,26 +27,24 @@ public class Player : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            //Rotate(PlayerRotationSrite.Left);
+            currentPlayerRotation = PlayerRotationSrite.Left;
             transform.Translate(Vector3.left * speed * Time.deltaTime);
         }
             
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            //Rotate(PlayerRotationSrite.Right);
+            currentPlayerRotation = PlayerRotationSrite.Right;
             transform.Translate(Vector3.right * speed * Time.deltaTime);
         }
 
         #endregion
 
-        #region ToogleSpriteRotation
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        #region ThrowObject
+        if (Input.GetKey(KeyCode.S))
         {
-            //Rotate(PlayerRotationSrite.Left);
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            //Rotate(PlayerRotationSrite.Right);
+            if (currentThrowableObject == null)
+                return;
+            ThrowObject();
         }
         #endregion
     }
@@ -70,4 +68,47 @@ public class Player : MonoBehaviour
         }
             
     }
+
+
+    public void ThrowObject()
+    {
+        if (currentThrowableObject != null)
+            currentThrowableObject.Throw(PlayerForward(), rightHandPosition.position);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Guardar itens Arremessáveis
+        if (collision.gameObject.tag == "throwable")
+        {
+            currentThrowableObject = collision.gameObject.GetComponent<InventoryObject>();
+            collision.gameObject.transform.SetParent(transform);
+            collision.gameObject.transform.position = rightHandPosition.position;
+            Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+
+            rb.bodyType = RigidbodyType2D.Kinematic;
+        }
+
+        //Guardar itens
+
+
+    }
+
+
+    Vector3 PlayerForward()
+    {
+        switch (currentPlayerRotation)
+        {
+            case PlayerRotationSrite.Left:
+                return new Vector3(-1, 0, 0);
+
+            case PlayerRotationSrite.Right:
+                return new Vector3(1, 0, 0);
+
+            default: return new Vector3(-1, 0, 0);
+
+        }
+    }
+
+
 }
