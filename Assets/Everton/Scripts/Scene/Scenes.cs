@@ -8,4 +8,6 @@ public class Scenes : MonoBehaviour
     public static string CREDITS = "SceneCredits";
     public static string MAIN_MENU = "SceneMainMenu";
     public static string LOBBY = "SceneLobby";
+    public static string AWAKE = "SceneAwake";
+    public static string START = "SceneStart";
 }

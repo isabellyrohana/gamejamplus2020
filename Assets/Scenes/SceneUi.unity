@@ -1849,13 +1849,15 @@ GameObject:
   - component: {fileID: 669288652}
   - component: {fileID: 669288651}
   - component: {fileID: 669288653}
+  - component: {fileID: 669288655}
+  - component: {fileID: 669288654}
   m_Layer: 5
   m_Name: PanelMainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &669288650
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1931,6 +1933,32 @@ MonoBehaviour:
   buttonCredits: {fileID: 104979649}
   buttonExitGame: {fileID: 1836690231}
   buttonSettings: {fileID: 1567813203}
+  _fadeEffect: {fileID: 0}
+--- !u!114 &669288654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669288649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fde74ebd6656e9439a062b3f1dc51d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationTime: 1
+--- !u!225 &669288655
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669288649}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &670796486
 GameObject:
   m_ObjectHideFlags: 0
@@ -2304,7 +2332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &813377868
 RectTransform:
   m_ObjectHideFlags: 0

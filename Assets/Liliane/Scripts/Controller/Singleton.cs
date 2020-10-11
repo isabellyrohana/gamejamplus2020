@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Singleton<T> : MonoBehaviour where T: Singleton<T>
 {
-    private static T        _instance;
+    private static T _instance;
 
     public static T Instance
     {
@@ -18,7 +18,7 @@ public abstract class Singleton<T> : MonoBehaviour where T: Singleton<T>
         }
     }
 
-    void Awake()
+    protected void Awake()
     {
         if(_instance == null)
         {
