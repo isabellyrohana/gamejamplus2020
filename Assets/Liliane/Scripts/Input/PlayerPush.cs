@@ -5,43 +5,46 @@ using UnityEngine.Events;
 
 public class PlayerPush : MonoBehaviour
 {
-    private GameObject box;
-
     [Header("Position Object Held")]
     public GameObject targetObject;
-
     public LayerMask boxMask;
-    public float distance = 1f;
+
+    public float distance = 0.5f;
 
     private PlayerController _playerController;
-    private float delayToShoot = 3f;
+    private GameObject box;
+    
+    private float delayToShoot = 2f;
     private int direction = 1;
-
-    private bool canShoot;
 
     private void Start()
     {
         _playerController = GetComponent<PlayerController>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
 
-        Physics2D.queriesStartInColliders = false; //Edit>Physics2D>Uncheck QueriesHitTriggers se quiser usar com trigger, ou IgnoreLayer :D
+        Physics2D.queriesStartInColliders = false;
         RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right*transform.localScale.x, distance, boxMask);
 
-        if(hit.collider != null && hit.collider.gameObject.tag=="throwable" && Input.GetButton("Pick"))
+        if(hit.collider != null && hit.collider.gameObject.tag=="throwable" && Input.GetButtonDown("Pick"))
         {
             box = hit.collider.gameObject;
+            box.TryGetComponent(out Rigidbody2D boxRb);
+            boxRb.bodyType = RigidbodyType2D.Dynamic;
+
             StartCoroutine("KeyIsPressed");
-            StartCoroutine("CanShoot");
         }
         
-        if(hit.collider != null && Input.GetButtonUp("Pick") && box!=null) //testar a condição do box, e do hit para tentar retirar
+        if(hit.collider != null && Input.GetButtonDown("Interact") && box!=null)
         {
-            canShoot = false;
+            StopCoroutine("KeyIsPressed");
             box.GetComponent<FixedJoint2D>().enabled = false;
             box.TryGetComponent(out Rigidbody2D boxRb);
+            box.TryGetComponent(out ObjectToShoot boxScript);
+            boxScript.CanDestroy();
+
             if(_playerController.isLookLeft)
             {
                 direction = -1;
@@ -51,9 +54,8 @@ public class PlayerPush : MonoBehaviour
                 direction = 1;
             }
 
-            boxRb.AddForce(new Vector2(20 * direction,10), ForceMode2D.Impulse);
-            
-            StopCoroutine("KeyIsPressed");
+            boxRb.AddForce(new Vector2(20 * direction, 25), ForceMode2D.Impulse);
+
         }
     }
 
@@ -62,18 +64,11 @@ public class PlayerPush : MonoBehaviour
         Gizmos.DrawLine(new Vector2(transform.position.x, transform.position.y), new Vector2(transform.position.x, transform.position.y) + Vector2.right * transform.localScale.x * distance);
     }
 
-    IEnumerator KeyIsPressed()
+    private IEnumerator KeyIsPressed()
     {
         yield return new WaitForSecondsRealtime(0f);
         Hold(box);
         StartCoroutine("KeyIsPressed");
-    }
-
-    IEnumerator CanShoot()
-    {
-        canShoot = false;
-        yield return new WaitForSeconds(delayToShoot);
-        canShoot = true;
     }
 
     void Hold(GameObject box){

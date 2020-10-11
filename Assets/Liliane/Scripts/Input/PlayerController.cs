@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     private Rigidbody2D playerRb;
     private Animator playerAnim;
@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     
     public Transform handToPickPosition;
     public float playerSpeed;
+
+    public bool playerVisible;
 
     void Start()
     {
@@ -91,17 +93,14 @@ public class PlayerController : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public bool GetPlayerVisible()
     {
-        if (collision.gameObject.CompareTag("throwable"))
-        {
-            /*collision.gameObject.transform.SetParent(transform);
-            collision.gameObject.transform.parent = handToPickPosition.transform;
+        return playerVisible;
+    }
 
-            collision.gameObject.TryGetComponent(out Rigidbody2D objectRb);
-            objectRb.bodyType = RigidbodyType2D.Kinematic;*/
-            //objectRb.AddForce(Vector2.one * 10, ForceMode2D.Impulse);
-        }
+    public void UpdatePlayerVisible(bool status)
+    {
+        playerVisible = status;
     }
 
 }
