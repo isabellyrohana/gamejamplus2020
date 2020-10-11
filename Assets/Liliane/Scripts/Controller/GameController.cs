@@ -11,9 +11,9 @@ public class GameController : Singleton<GameController>
     [SerializeField] private Lamp[] lamps;
 
     // Start is called before the first frame update
-    void Start()
+    protected new virtual void Awake()
     {
-        
+        base.Awake();
     }
 
     // Update is called once per frame

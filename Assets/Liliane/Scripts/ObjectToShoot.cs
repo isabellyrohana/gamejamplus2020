@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ObjectToShoot : MonoBehaviour
 {
+
+    private bool _gameIsPaused = false;
+
     public void CanDestroy()
     {
         Destroy(this.gameObject, 4.05f);

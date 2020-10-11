@@ -51,7 +51,6 @@ public class PlayerController : Singleton<PlayerController>
         //shift do teclado ou Y do controle do xbox
         if(Input.GetButtonDown("Diary"))
         {
-            // Criar lógica para deixar o jogo pausado.
             Pause();
             uiPauseController.ButtonJournals();
         }
@@ -59,7 +58,6 @@ public class PlayerController : Singleton<PlayerController>
         //esc teclado ou pause do controle do xbox
         if(Input.GetButtonDown("Pause"))
         {
-            // Criar lógica para deixar o jogo pausado.
             Pause();
             uiPauseController.Show();
         }

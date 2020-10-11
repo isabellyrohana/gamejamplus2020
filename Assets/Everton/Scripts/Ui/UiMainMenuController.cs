@@ -7,6 +7,10 @@ using UnityEngine.UI;
 public class UiMainMenuController : MonoBehaviour
 {
 
+    [Header("Audios")]
+    [SerializeField] private AudioClip doorOpenAudio;
+    [SerializeField] private AudioClip pressButtonAudio;
+
     [Header("Buttons")]
     [SerializeField] private Button buttonPlay;
     [SerializeField] private Button buttonControls;
@@ -22,10 +26,15 @@ public class UiMainMenuController : MonoBehaviour
     [SerializeField] private UiCreditsController uiCreditsController;
     [SerializeField] private UiSettingsController uiSettingsController;
 
+    [Header("Animation")]
+    [SerializeField] private Animator doorAnimator;
+
     private AudioSource _audioSource;
 
     void Awake()
     {
+        doorAnimator.SetBool("DoorOpen", false);
+
         _audioSource = GetComponent<AudioSource>();
         fadeEffect.GetComponent<CanvasGroup>().alpha = 1f;
         StartCoroutine(CustomWait.Wait(1f, () => fadeEffect.FadeOut()));
@@ -45,16 +54,50 @@ public class UiMainMenuController : MonoBehaviour
 
     private void ButtonPlay() 
     {
+        if (_audioSource.isPlaying) _audioSource.Stop();
+        _audioSource.clip = doorOpenAudio;
         _audioSource.Play();
+        doorAnimator.SetBool("DoorOpen", true);
+        StartCoroutine(CustomWait.Wait(50f/60f, Play));
+    }
+
+    public void Play()
+    {
         fadeEffect.FadeIn(() => {
             SceneController.ToGame();
             MainMusicController.Instance.PlayGameAudioClip();
         });
     }
 
-    private void ButtonControls() => uiControlsController.Show();
-    private void ButtonCredits() => uiCreditsController.Show();
-    private void ButtonExitGame() => SceneController.Exit();
-    private void ButtonSettings() => uiSettingsController.Show();
+    private void ButtonControls()
+    {
+        ButtonAudioPlay();
+        uiControlsController.Show();
+    }
+
+    private void ButtonCredits()
+    {
+        ButtonAudioPlay();
+        uiCreditsController.Show();
+    }
+
+    private void ButtonExitGame()
+    {
+        ButtonAudioPlay();
+        SceneController.Exit();
+    }
+
+    private void ButtonSettings()
+    {
+        ButtonAudioPlay();
+        uiSettingsController.Show();
+    }
+
+    private void ButtonAudioPlay()
+    {
+        if (_audioSource.isPlaying) _audioSource.Stop();
+        _audioSource.clip = pressButtonAudio;
+        _audioSource.Play();
+    }
 
 }
