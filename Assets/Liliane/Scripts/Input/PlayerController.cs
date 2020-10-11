@@ -8,17 +8,12 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnim;
 
     private float horizontalInput;
+    private float verticalInput;
+
     private float speedY;
     private bool isGrounded;
     
-
     public float playerSpeed;
-    public float forceJump;
-    public float distance = 1;
-    public bool doubleJump;
-
-    public Transform groundCheckLeft;
-    public Transform groundCheckRight;
 
     void Start()
     {
@@ -29,48 +24,52 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
+        horizontalInput = Input.GetAxis("Horizontal");
+
+        verticalInput = Input.GetAxis("HideAppear");
+
+        //f do teclado ou B do controle do xbox
+        if(Input.GetButtonDown("Pick"))
+        {
+            print("Pegou");
+        }
+
+        //r do teclado ou B do controle do xbox
+        if(Input.GetButtonDown("Interact"))
+        {
+            print("Interact");
+        }
+
+        if(Input.GetButtonDown("Diary"))
+        {
+            print("Diary");
+        }
+
+        if(Input.GetButtonDown("Pause"))
+        {
+            print("Pause");
+        }
+
+        if(verticalInput > 0)
+        {
+            print("Appear");
+        } 
+        else if (verticalInput < 0)
+        {
+            print("Hide");
+        }
+
         Move();
-        Jump();
     }
 
 
     private void Move()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
+        
         speedY = playerRb.velocity.y;
 
         playerRb.velocity = new Vector2(horizontalInput * playerSpeed, speedY);
 
-    }
-
-    private void Jump()
-    {
-        if (Input.GetButtonDown("Jump") && doubleJump)
-        {
-            if (!isGrounded)
-            {
-                doubleJump = false;
-            }
-
-            playerRb.velocity = new Vector2(playerRb.velocity.x, 0);
-            playerRb.AddForce(Vector2.up * forceJump);
-        }
-
-        Debug.DrawRay(groundCheckLeft.position, Vector2.down * distance, isGrounded ? Color.yellow : Color.red);
-        Debug.DrawRay(groundCheckRight.position, Vector2.down * distance, isGrounded ? Color.yellow : Color.red);
-
-    }
-
-    private void FixedUpdate()
-    {
-
-        isGrounded = Physics2D.Raycast(groundCheckLeft.position, Vector2.down, distance, 1 << LayerMask.NameToLayer("Ground"))
-        || Physics2D.Raycast(groundCheckRight.position, Vector2.down, distance, 1 << LayerMask.NameToLayer("Ground"));
-
-        if (isGrounded && !doubleJump)
-        {
-            doubleJump = true;
-        }
     }
 
 }
