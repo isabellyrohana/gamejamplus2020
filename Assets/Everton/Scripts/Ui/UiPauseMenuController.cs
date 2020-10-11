@@ -8,8 +8,6 @@ public class UiPauseMenuController : MonoBehaviour
 {
 
     [SerializeField] private Button buttonPause;
-
-    [SerializeField] private UiFadeEffect bgFadeEffect;
     
     [SerializeField] private UiFadeEffect pauseMenu;
     [SerializeField] private UiFadeEffect journalsMenu;
@@ -24,14 +22,12 @@ public class UiPauseMenuController : MonoBehaviour
     public void StartPauseMenu() 
     {
         buttonPause.GetComponent<UiFadeEffect>().FadeOut();
-        bgFadeEffect.FadeIn();
         Transite(null, pauseMenu);
     }
 
     public void ClosePauseMenu(Action callback = null)
     {
         buttonPause.GetComponent<UiFadeEffect>().FadeIn();
-        bgFadeEffect.FadeOut();
         Transite(pauseMenu, null, callback);
     }
 

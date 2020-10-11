@@ -21,6 +21,12 @@ EditorBuildSettings:
     path: Assets/Scenes/SceneGamePlay.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/SceneStage02.unity
+    guid: 51e18ed6b590b5540a54cd0087c6fef4
+  - enabled: 1
+    path: Assets/Scenes/SceneStage02_Ui.unity
+    guid: 5332dbe0035b28f418f10dd4fb2972ff
+  - enabled: 1
     path: Assets/Scenes/SceneLobby.unity
     guid: 5f4b01542e942b94aacdcce56359e646
   - enabled: 1

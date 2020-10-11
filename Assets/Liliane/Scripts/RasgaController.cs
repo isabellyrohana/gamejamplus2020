@@ -15,6 +15,10 @@ public class RasgaController : MonoBehaviour
     public SpriteRenderer rasgaSr;
     public Transform player;
 
+    public Animator animator;
+
+    private bool _isGamePaused;
+
     void Start()
     {
         //rasgaSr = GetComponent<SpriteRenderer>();
@@ -25,6 +29,8 @@ public class RasgaController : MonoBehaviour
 
     void Update()
     {
+        if (_isGamePaused) return;
+
         if(PlayerController.Instance.GetPlayerVisible())
         {
             transform.position = Vector3.MoveTowards(transform.position, PlayerController.Instance.transform.position, 0.1f);
@@ -60,4 +66,11 @@ public class RasgaController : MonoBehaviour
         isLookLeft = !isLookLeft;
         rasgaSr.flipX = !rasgaSr.flipX;
     }
+
+    public void SetPause(bool pause)
+    {
+        _isGamePaused = pause;
+        animator.enabled = !pause;
+    }
+
 }

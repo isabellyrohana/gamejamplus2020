@@ -523,7 +523,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 600}
+  m_SizeDelta: {x: 1168, y: 900}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1450529516
 MonoBehaviour:
@@ -637,6 +637,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a96dac02406df24419f8693e2bc1deaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startTime: 1
+  waitTime: 2
   studioFadeEffect: {fileID: 1450529516}
 --- !u!1 &2097414258
 GameObject:

@@ -9,9 +9,13 @@ public class Lamp : MonoBehaviour
 
     public Light2D lightLamp;
 
+    private bool _gameIsPaused = false;
+
+    private Coroutine _currentCoroutine = null;
+
     private void Start()
     {
-        StartCoroutine("TwinkleLight");  
+        _currentCoroutine = StartCoroutine("TwinkleLight");
     }
 
     private IEnumerator TwinkleLight()
@@ -27,8 +31,7 @@ public class Lamp : MonoBehaviour
         yield return new WaitForSeconds(randomTwinkle);
         lightLamp.intensity = 2.5f;
         
-        StartCoroutine("TwinkleLight"); 
-
+        _currentCoroutine = StartCoroutine("TwinkleLight");
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -45,6 +48,12 @@ public class Lamp : MonoBehaviour
         {
             PlayerController.Instance.UpdatePlayerVisible(false);
         }
+    }
+
+    public void SetPause(bool pause)
+    {
+        if (pause && _currentCoroutine != null) StopCoroutine(_currentCoroutine);
+        else if (!pause) _currentCoroutine = StartCoroutine("TwinkleLight");
     }
 
 }

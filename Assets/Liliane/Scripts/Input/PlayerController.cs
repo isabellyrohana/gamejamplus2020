@@ -18,6 +18,9 @@ public class PlayerController : Singleton<PlayerController>
 
     public bool playerVisible;
 
+    public UiPauseController uiPauseController;
+    private bool _gameIsPaused = false;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
@@ -27,6 +30,8 @@ public class PlayerController : Singleton<PlayerController>
     
     void Update()
     {
+        if (_gameIsPaused) return;
+
         Move();
         
         verticalInput = Input.GetAxis("HideAppear");
@@ -46,13 +51,17 @@ public class PlayerController : Singleton<PlayerController>
         //shift do teclado ou Y do controle do xbox
         if(Input.GetButtonDown("Diary"))
         {
-            print("Diary");
+            // Criar lógica para deixar o jogo pausado.
+            Pause();
+            uiPauseController.ButtonJournals();
         }
 
         //esc teclado ou pause do controle do xbox
         if(Input.GetButtonDown("Pause"))
         {
-            print("Pause");
+            // Criar lógica para deixar o jogo pausado.
+            Pause();
+            uiPauseController.Show();
         }
 
         //direcional para cima ou para baixo ou stick up/down do xbox
@@ -101,6 +110,16 @@ public class PlayerController : Singleton<PlayerController>
     public void UpdatePlayerVisible(bool status)
     {
         playerVisible = status;
+    }
+
+    public void Pause()
+    {
+        GameController gameController = GameObject.FindObjectOfType<GameController>();
+        if (gameController != null)
+        {
+            if (gameController.IsPause()) _gameIsPaused = false; else _gameIsPaused = true;
+            gameController.SetPause(_gameIsPaused);
+        }
     }
 
 }
