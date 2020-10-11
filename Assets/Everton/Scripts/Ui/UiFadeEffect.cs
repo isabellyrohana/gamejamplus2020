@@ -35,15 +35,10 @@ public class UiFadeEffect : MonoBehaviour
 
     private IEnumerator FadeEffect(bool fadeIn = true, Action callback = null)
     {
-        float startAlpha = _canvasGroup.alpha == 0f || _canvasGroup.alpha == 1f ? _canvasGroup.alpha : fadeIn ? 0f : 1f;
+        float startAlpha = fadeIn ? 0f : 1f;
         float endAlpha = fadeIn ? 1f : 0f;
 
-        Debug.Log("GameObject: " + gameObject.name);
-        Debug.Log("Start Alpha: " + startAlpha);
-        Debug.Log("End Alpha: " + endAlpha);
-
-        float currentTime = (fadeIn ? startAlpha : 1f - startAlpha) * animationTime;
-        Debug.Log("CurrentTime: " + currentTime);
+        float currentTime = 0f;
 
         while(currentTime < animationTime)
         {
