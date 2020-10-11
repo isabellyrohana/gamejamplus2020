@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
     private Rigidbody2D playerRb;
     private Animator playerAnim;
@@ -11,9 +11,12 @@ public class PlayerController : MonoBehaviour
     private float verticalInput;
 
     private float speedY;
-    private bool isGrounded;
+    public bool isLookLeft;
     
+    public Transform handToPickPosition;
     public float playerSpeed;
+
+    public bool playerVisible;
 
     void Start()
     {
@@ -24,15 +27,15 @@ public class PlayerController : MonoBehaviour
     
     void Update()
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-
+        Move();
+        
         verticalInput = Input.GetAxis("HideAppear");
 
-        //f do teclado ou B do controle do xbox
-        if(Input.GetButtonDown("Pick"))
+        //f do teclado ou A do controle do xbox
+        /*if(Input.GetButtonDown("Pick"))
         {
             print("Pegou");
-        }
+        }*/
 
         //r do teclado ou B do controle do xbox
         if(Input.GetButtonDown("Interact"))
@@ -40,16 +43,19 @@ public class PlayerController : MonoBehaviour
             print("Interact");
         }
 
+        //shift do teclado ou Y do controle do xbox
         if(Input.GetButtonDown("Diary"))
         {
             print("Diary");
         }
 
+        //esc teclado ou pause do controle do xbox
         if(Input.GetButtonDown("Pause"))
         {
             print("Pause");
         }
 
+        //direcional para cima ou para baixo ou stick up/down do xbox
         if(verticalInput > 0)
         {
             print("Appear");
@@ -58,18 +64,43 @@ public class PlayerController : MonoBehaviour
         {
             print("Hide");
         }
-
-        Move();
     }
 
 
     private void Move()
     {
-        
+        horizontalInput = Input.GetAxis("Horizontal");
+
         speedY = playerRb.velocity.y;
 
         playerRb.velocity = new Vector2(horizontalInput * playerSpeed, speedY);
 
+        if(horizontalInput > 0 && isLookLeft)
+        {
+            Flip();
+        }
+        else if(horizontalInput < 0 && !isLookLeft)
+        {
+            Flip();
+        }
+
+    }
+
+    private void Flip()
+    {
+        isLookLeft = !isLookLeft;
+        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+    }
+
+
+    public bool GetPlayerVisible()
+    {
+        return playerVisible;
+    }
+
+    public void UpdatePlayerVisible(bool status)
+    {
+        playerVisible = status;
     }
 
 }
