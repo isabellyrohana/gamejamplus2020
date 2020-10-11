@@ -17,6 +17,7 @@ public class InventoryObject : MonoBehaviour, ThrowAble
         transform.position = position;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         GetComponent<Rigidbody2D>().AddForce(direction * Throwforce);
+        transform.parent = null;
         //GetComponent<ParticleSystem>().Play();
     }
 

@@ -26,10 +26,7 @@ public class UiMainMenuController : MonoBehaviour
         buttonSettings.onClick.AddListener(ButtonSettings);
     }
 
-    private void ButtonPlay()
-    {
-        Debug.Log("Button Play");
-    }
+    private void ButtonPlay() => SceneController.ToGame();
 
     private void ButtonControls()
     {
@@ -41,10 +38,7 @@ public class UiMainMenuController : MonoBehaviour
         Debug.Log("Button Credits");
     }
 
-    private void ButtonExitGame()
-    {
-        Debug.Log("Button Exsit Game");
-    }
+    private void ButtonExitGame() => SceneController.Exit();
 
     private void ButtonSettings()
     {
