@@ -6,7 +6,11 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     
-    public static void ToMainMenu() => SceneManager.LoadScene(Scenes.MAIN_MENU);
+    public static void ToMainMenu()
+    {
+        SceneManager.LoadScene(Scenes.MAIN_MENU);
+        MainMusicController.Instance.PlayThemeAudioClip();
+    }
 
     public static void ToStartScreen() => SceneManager.LoadScene(Scenes.START);
 

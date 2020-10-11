@@ -6,6 +6,7 @@ public class MainMusicController : Singleton<MainMusicController>
 {
 
     [SerializeField] private AudioClip gameAudioClip;
+    [SerializeField] private AudioClip themeAudioClip;
 
     private AudioSource _audioSource;
 
@@ -22,6 +23,16 @@ public class MainMusicController : Singleton<MainMusicController>
         _audioSource.Stop();
         _audioSource.clip = gameAudioClip;
         _audioSource.Play();
+    }
+
+    public void PlayThemeAudioClip()
+    {
+        if (_audioSource.clip != null && _audioSource.clip != themeAudioClip)
+        {
+            _audioSource.Stop();
+            _audioSource.clip = themeAudioClip;
+            _audioSource.Play();
+        }
     }
 
 }
