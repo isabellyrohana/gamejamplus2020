@@ -14,6 +14,8 @@ public class UiMainMenuController : MonoBehaviour
 
     [SerializeField] private UiFadeEffect fadeEffect;
 
+    [SerializeField] private UiCreditsController uiCreditsController;
+
     void Awake()
     {
         fadeEffect.GetComponent<CanvasGroup>().alpha = 1f;
@@ -42,10 +44,7 @@ public class UiMainMenuController : MonoBehaviour
         Debug.Log("Button Controls");
     }
 
-    private void ButtonCredits()
-    {
-        Debug.Log("Button Credits");
-    }
+    private void ButtonCredits() => uiCreditsController.Show();
 
     private void ButtonExitGame() => SceneController.Exit();
 
