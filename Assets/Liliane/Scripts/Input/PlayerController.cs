@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
         verticalInput = Input.GetAxis("HideAppear");
 
-        //f do teclado ou B do controle do xbox
+        //f do teclado ou A do controle do xbox
         if(Input.GetButtonDown("Pick"))
         {
             print("Pegou");
@@ -40,16 +40,19 @@ public class PlayerController : MonoBehaviour
             print("Interact");
         }
 
+        //shift do teclado ou Y do controle do xbox
         if(Input.GetButtonDown("Diary"))
         {
             print("Diary");
         }
 
+        //esc teclado ou pause do controle do xbox
         if(Input.GetButtonDown("Pause"))
         {
             print("Pause");
         }
 
+        //direcional para cima ou para baixo ou stick up/down do xbox
         if(verticalInput > 0)
         {
             print("Appear");
