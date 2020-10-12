@@ -24,7 +24,6 @@ public class ExitLevelDoor : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            Debug.Log("Porta colidiu com o player");
             ExitLevel();
         }
     }

@@ -34,6 +34,7 @@ public class PorcoVela : MonoBehaviour
 
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         porco.position = positions[0].position;
         target = nextTargetIndex = 0;
     }
@@ -44,6 +45,12 @@ public class PorcoVela : MonoBehaviour
 
         if (PlayerController.Instance.GetPlayerVisible())
         {
+            if (!GetLoud)
+            {
+                AudioSource.PlayClipAtPoint(porcoGrito, transform.position);
+                GetLoud = true;
+            }
+
             speed = 5f;
             porco.position =
                     Vector3.MoveTowards(porco.position, positionFinal.position, speed * Time.deltaTime);

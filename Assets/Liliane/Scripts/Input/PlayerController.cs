@@ -43,6 +43,8 @@ public class PlayerController : Singleton<PlayerController>
 
     public GameObject papelzin;
 
+    public GameObject papelzinPicked;
+
     void Start()
     {
         playerRb = GetComponent<Rigidbody2D>();
