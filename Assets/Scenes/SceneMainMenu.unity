@@ -3147,7 +3147,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 30%
+  m_Text: 100%
 --- !u!222 &612696385
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5158,7 +5158,7 @@ GameObject:
   - component: {fileID: 999652030}
   - component: {fileID: 999652029}
   m_Layer: 5
-  m_Name: ButtonMinusLanguage
+  m_Name: ButtonPlusLanguage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6491,7 +6491,7 @@ GameObject:
   - component: {fileID: 1348442413}
   - component: {fileID: 1348442412}
   m_Layer: 5
-  m_Name: ButtonMinusResolution
+  m_Name: ButtonPlusResolution
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6610,7 +6610,7 @@ GameObject:
   - component: {fileID: 1350879059}
   - component: {fileID: 1350879058}
   m_Layer: 5
-  m_Name: ButtonMinusFontSize
+  m_Name: ButtonPlusFontSize
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7106,7 +7106,7 @@ GameObject:
   - component: {fileID: 1453668493}
   - component: {fileID: 1453668492}
   m_Layer: 5
-  m_Name: ButtonMinusVolume
+  m_Name: ButtonPlusVolume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8236,7 +8236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: '-'
+  m_Text: +
 --- !u!222 &1733947782
 CanvasRenderer:
   m_ObjectHideFlags: 0
