@@ -13,12 +13,14 @@ public class PlayerPush : MonoBehaviour
 
     private PlayerController _playerController;
     private GameObject box;
+     private Animator playerAnim;
     
     private int direction = 1;
 
     private void Start()
     {
         _playerController = GetComponent<PlayerController>();
+        playerAnim = GetComponent<Animator>();
     }
 
     void Update()
@@ -33,11 +35,14 @@ public class PlayerPush : MonoBehaviour
             box.TryGetComponent(out Rigidbody2D boxRb);
             boxRb.bodyType = RigidbodyType2D.Dynamic;
 
+            playerAnim.SetBool("hold", true);
+
             StartCoroutine("KeyIsPressed");
         }
         
         if(hit.collider != null && Input.GetButtonDown("Interact") && box!=null)
         {
+            playerAnim.SetBool("hold", false);
             StopCoroutine("KeyIsPressed");
             box.GetComponent<FixedJoint2D>().enabled = false;
             box.TryGetComponent(out Rigidbody2D boxRb);
