@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameController : Singleton<GameController>
 {
@@ -14,14 +15,24 @@ public class GameController : Singleton<GameController>
     protected new virtual void Awake()
     {
         base.Awake();
-
+    }
         
+    public GameObject gameOverPanel;
+
+    public void ActiveGameOver(string nameSceneToLoad)
+    {   
+        StartCoroutine("SceneToLoadIE", nameSceneToLoad);
+    }
+    public void SceneToLoad(string nameSceneToLoad)
+    {
+        SceneManager.LoadSceneAsync(nameSceneToLoad);
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator SceneToLoadIE(string nameSceneToLoad)
     {
-        
+        gameOverPanel.SetActive(true);
+        yield return new WaitForSeconds(6f);
+        SceneManager.LoadSceneAsync(nameSceneToLoad);
     }
 
     public void SetPause(bool pause) 

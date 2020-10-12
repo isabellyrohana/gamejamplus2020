@@ -14,7 +14,6 @@ public class PlayerPush : MonoBehaviour
     private PlayerController _playerController;
     private GameObject box;
     
-    private float delayToShoot = 2f;
     private int direction = 1;
 
     private void Start()
@@ -26,7 +25,7 @@ public class PlayerPush : MonoBehaviour
     {
 
         Physics2D.queriesStartInColliders = false;
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.right*transform.localScale.x, distance, boxMask);
+        RaycastHit2D hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 1f), Vector2.right * transform.localScale.x, distance, boxMask);
 
         if(hit.collider != null && hit.collider.gameObject.tag=="throwable" && Input.GetButtonDown("Pick"))
         {
@@ -43,7 +42,7 @@ public class PlayerPush : MonoBehaviour
             box.GetComponent<FixedJoint2D>().enabled = false;
             box.TryGetComponent(out Rigidbody2D boxRb);
             box.TryGetComponent(out ObjectToShoot boxScript);
-            boxScript.CanDestroy();
+            boxScript.ChangeToTrigger();
 
             if(_playerController.isLookLeft)
             {
@@ -61,7 +60,7 @@ public class PlayerPush : MonoBehaviour
 
     void OnDrawGizmos() {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(new Vector2(transform.position.x, transform.position.y), new Vector2(transform.position.x, transform.position.y) + Vector2.right * transform.localScale.x * distance);
+        Gizmos.DrawLine(new Vector2(transform.position.x, transform.position.y - 1f), new Vector2(transform.position.x, transform.position.y - 1f) + Vector2.right * transform.localScale.x * distance);
     }
 
     private IEnumerator KeyIsPressed()

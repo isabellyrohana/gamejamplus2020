@@ -17,6 +17,7 @@ public class PlayerController : Singleton<PlayerController>
     public float playerSpeed;
 
     public bool playerVisible;
+    private bool playerDeath;
 
     public UiPauseController uiPauseController;
     private bool _gameIsPaused = false;
@@ -27,10 +28,11 @@ public class PlayerController : Singleton<PlayerController>
         playerAnim = GetComponent<Animator>();
     }
 
-    
     void Update()
     {
         if (_gameIsPaused) return;
+        
+        if (playerDeath) return;
 
         Move();
         
@@ -43,10 +45,10 @@ public class PlayerController : Singleton<PlayerController>
         }*/
 
         //r do teclado ou B do controle do xbox
-        if(Input.GetButtonDown("Interact"))
+        /*if(Input.GetButtonDown("Interact"))
         {
             print("Interact");
-        }
+        }*/
 
         //shift do teclado ou Y do controle do xbox
         if(Input.GetButtonDown("Diary"))
@@ -97,6 +99,15 @@ public class PlayerController : Singleton<PlayerController>
             Flip();
         }
 
+        if(horizontalInput == 0)
+        {
+            playerAnim.SetBool("walk", false);
+        }
+        else
+        {
+            playerAnim.SetBool("walk", true);
+        }
+
     }
 
     private void Flip()
@@ -129,6 +140,26 @@ public class PlayerController : Singleton<PlayerController>
     public void SetPause(bool pause)
     {
         _gameIsPaused = pause;
+    }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Rasga"))
+        {
+            Destroy(this.gameObject);
+            GameController.Instance.ActiveGameOver("SceneStage02VFinal");
+        }
+
+        if(other.gameObject.CompareTag("Door"))
+        {
+            Destroy(this.gameObject);
+            GameController.Instance.SceneToLoad("SceneStage02CuteScene");
+        }
+    }
+
+    private void PlaySfx()
+    {
+        SoundFxController.Instance.playFx(5);
     }
 
 }

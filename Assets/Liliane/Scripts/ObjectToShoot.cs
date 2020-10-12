@@ -4,13 +4,26 @@ using UnityEngine;
 
 public class ObjectToShoot : MonoBehaviour
 {
-
     private bool _gameIsPaused = false;
+    private Rigidbody2D objectRb;
+    private Animator objectAnim;
+    private BoxCollider2D objectBC;
+    private bool canDestroy;
+
+    private void Start()
+    {
+        objectRb = GetComponent<Rigidbody2D>();
+        objectAnim = GetComponent<Animator>();
+        objectBC = GetComponent<BoxCollider2D>();
+    }
 
     public void CanDestroy()
     {
         Destroy(this.gameObject, 4.05f);
-        //StartCoroutine("SpawnNewObject");
+    }
+    public void ChangeToTrigger()
+    {
+        objectBC.isTrigger = true;
     }
 
     /*private IEnumerator SpawnNewObject()
@@ -18,4 +31,25 @@ public class ObjectToShoot : MonoBehaviour
         yield return new WaitForSeconds(4f);
         SpawnObject.Instance.SpawnObjectToShoot();
     }*/
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Chandelier"))
+        {
+            print("Chandelier");
+            objectAnim.SetTrigger("destroy");
+            objectRb.velocity = new Vector2(0, objectRb.velocity.x);
+            objectRb.gravityScale = 3f;
+            canDestroy = true;
+           SoundFxController.Instance.playFx(7);
+        }
+
+        if(other.gameObject.CompareTag("Ground") && canDestroy)
+        {
+            objectRb.velocity = Vector2.zero;
+            objectAnim.SetTrigger("destroy");
+            objectRb.gravityScale = 0f;
+        }
+        
+    }
 }

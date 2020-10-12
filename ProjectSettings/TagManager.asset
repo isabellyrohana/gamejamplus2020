@@ -7,6 +7,10 @@ TagManager:
   - throwable
   - Ground
   - Enemy
+  - Rasga
+  - Chandelier
+  - Destroy
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -41,6 +45,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1760868505
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Lamp : MonoBehaviour
 {
     private float randomTwinkle;
+    public bool hasSound;
 
     public Light2D lightLamp;
 
@@ -27,6 +28,8 @@ public class Lamp : MonoBehaviour
 
         lightLamp.intensity = 0.1f;
         randomTwinkle = Random.Range(0.01f, 0.25f);
+        
+        PlaySfx();
 
         yield return new WaitForSeconds(randomTwinkle);
         lightLamp.intensity = 2.5f;
@@ -54,6 +57,14 @@ public class Lamp : MonoBehaviour
     {
         if (pause && _currentCoroutine != null) StopCoroutine(_currentCoroutine);
         else if (!pause) _currentCoroutine = StartCoroutine("TwinkleLight");
+    }
+    
+    private void PlaySfx()
+    {
+        if(hasSound)
+        {
+            SoundFxController.Instance.playFx(4);
+        }
     }
 
 }

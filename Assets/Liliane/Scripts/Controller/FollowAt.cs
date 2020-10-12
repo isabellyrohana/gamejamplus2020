@@ -10,6 +10,8 @@ public class FollowAt : MonoBehaviour
 
     void LateUpdate()
     {
+        if(objectToFollow == null) return ;
+        
         transform.position = objectToFollow.transform.position + offset;
     }
 }
