@@ -12,6 +12,7 @@ TagManager:
   - Destroy
   - Door
   - safeplace
+  - papelzin
   layers:
   - Default
   - TransparentFX
@@ -26,8 +27,8 @@ TagManager:
   - Ground
   - safeplacelayer
   - throwablelayer
-  - 
-  - 
+  - player
+  - enemy
   - 
   - 
   - 
