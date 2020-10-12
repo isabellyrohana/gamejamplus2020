@@ -26,7 +26,7 @@ public class PlayerCute : MonoBehaviour
         playerRb.velocity = Vector2.zero;
         playerAnim.SetBool("walk", false);
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(7f);
         continuePanel.SetActive(true);
 
         yield return new WaitForSeconds(5f);
