@@ -14,6 +14,8 @@ public class GameController : Singleton<GameController>
     protected new virtual void Awake()
     {
         base.Awake();
+
+        
     }
 
     // Update is called once per frame

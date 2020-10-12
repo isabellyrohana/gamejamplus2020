@@ -63,10 +63,7 @@ public class UiMainMenuController : MonoBehaviour
 
     public void Play()
     {
-        fadeEffect.FadeIn(() => {
-            SceneController.ToGame();
-            MainMusicController.Instance.PlayGameAudioClip();
-        });
+        fadeEffect.FadeIn(() => SceneController.ToPreGameScreen());
     }
 
     private void ButtonControls()
