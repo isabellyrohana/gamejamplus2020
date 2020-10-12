@@ -30,6 +30,6 @@ public class PlayerCute : MonoBehaviour
         continuePanel.SetActive(true);
 
         yield return new WaitForSeconds(5f);
-        GameController.Instance.SceneToLoad("SceneMainMenu");
+        SceneController.ToMainMenu();
     }
 }

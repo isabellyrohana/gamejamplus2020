@@ -15,7 +15,7 @@ public class SceneController : MonoBehaviour
     public static void ToStartScreen() => SceneManager.LoadScene(Scenes.START);
     public static void ToPreGameScreen() => SceneManager.LoadScene(Scenes.PRE_GAME);
     public static void ToReloadScreen() => SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    public static void ToGame() => SceneManager.LoadScene(Scenes.GAME);
+    public static void ToGame() => SceneManager.LoadScene(Scenes.STAGE_02);
 
     public static void Exit() => Application.Quit();
 

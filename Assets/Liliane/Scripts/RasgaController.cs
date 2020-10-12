@@ -36,6 +36,7 @@ public class RasgaController : Singleton<RasgaController>
     {
         if (_isGamePaused) return;
         if (!canAttack) return;
+        if (PlayerController.Instance == null) return;
 
         if(PlayerController.Instance.GetPlayerVisible())
         {

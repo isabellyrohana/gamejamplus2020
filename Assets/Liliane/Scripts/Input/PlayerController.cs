@@ -129,11 +129,10 @@ public class PlayerController : Singleton<PlayerController>
 
     public void Pause()
     {
-        GameController gameController = GameObject.FindObjectOfType<GameController>();
-        if (gameController != null)
+        if (GameController.Instance != null)
         {
-            if (gameController.IsPause()) gameController.SetPause(false);
-            else gameController.SetPause(true);
+            if (GameController.Instance.IsPause()) GameController.Instance.SetPause(false);
+            else GameController.Instance.SetPause(true);
         }
     }
 

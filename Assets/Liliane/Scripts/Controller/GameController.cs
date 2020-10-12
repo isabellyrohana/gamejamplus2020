@@ -8,6 +8,7 @@ public class GameController : Singleton<GameController>
 
     private bool isPaused = false;
 
+    [SerializeField] private UiPauseController uiPauseController;
     [SerializeField] private RasgaController[] rasgas;
     [SerializeField] private Lamp[] lamps;
 
@@ -31,8 +32,9 @@ public class GameController : Singleton<GameController>
     private IEnumerator SceneToLoadIE(string nameSceneToLoad)
     {
         gameOverPanel.SetActive(true);
+        uiPauseController.OpenGameOver();
         yield return new WaitForSeconds(6f);
-        SceneManager.LoadSceneAsync(nameSceneToLoad);
+        gameOverPanel.SetActive(false);
     }
 
     public void SetPause(bool pause) 
