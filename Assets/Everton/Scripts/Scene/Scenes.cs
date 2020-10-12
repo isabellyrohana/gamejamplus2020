@@ -11,6 +11,6 @@ public class Scenes : MonoBehaviour
     public static string LOBBY = "SceneLobby";
     public static string AWAKE = "SceneAwake";
     public static string START = "SceneStart";
-    public static string STAGE_02 = "SceneStage02";
+    public static string STAGE_02 = "SceneStage02VFinal";
     public static string STAGE_02_UI = "SceneStage02_Ui";
 }
