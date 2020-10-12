@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 
@@ -29,6 +28,9 @@ public class PorcoVela : MonoBehaviour
 
     bool sprinting = false;
 
+    public Animator animator;
+
+    private bool _isGamePaused;
 
     private void Start()
     {
@@ -38,6 +40,8 @@ public class PorcoVela : MonoBehaviour
 
     private void Update()
     {
+        if (_isGamePaused) return;
+
         if (PlayerController.Instance.GetPlayerVisible())
         {
             speed = 5f;
@@ -96,6 +100,12 @@ public class PorcoVela : MonoBehaviour
     {
         porco.GetComponent<SpriteRenderer>().flipX = isLookLeft;
 
+    }
+
+    public void SetPause(bool pause)
+    {
+        _isGamePaused = pause;
+        animator.enabled = !pause;
     }
 
 

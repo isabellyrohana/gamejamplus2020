@@ -33,20 +33,9 @@ public class UiPauseController : UiGenericMenu
         buttonControls.onClick.AddListener(ButtonControls);
         buttonJournals.onClick.AddListener(ButtonJournals);
         buttonExitGame.onClick.AddListener(ButtonExitGame);
-
-        Journal journal1 = new Journal("Informações do diário 1");
-        Journal journal2 = new Journal("Informações do diário 2");
-        Journal journal3 = new Journal("Informações do diário 3");
-        Journal journal4 = new Journal("Informações do diário 4");
-        Journal journal5 = new Journal("Informações do diário 5");
-        Journals.AddJournal(journal1);
-        Journals.AddJournal(journal2);
-        Journals.AddJournal(journal3);
-        Journals.AddJournal(journal4);
-        Journals.AddJournal(journal5);
     }
 
-    private void ButtonContinue() => this.ButtonClose(() => PlayerController.Instance.Pause());
+    private void ButtonContinue() => this.ButtonClose(() => PlayerController.Instance?.Pause(false));
 
     private void ButtonControls() => uiPauseControls.Show();
 
@@ -71,6 +60,8 @@ public class UiPauseController : UiGenericMenu
         Journal journal = Journals.GetJournal(Journals.GetJournals().Count - 1);
         uiPauseJournal.Setup(journal.text);
     }
+
+    public bool JournalIsOpen() => uiPauseJournal.IsShowing();
 
     public void OpenGameOver()
     {

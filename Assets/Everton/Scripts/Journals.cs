@@ -7,7 +7,24 @@ public class Journals
     
     private static List<Journal> journals = new List<Journal>();
 
-    public static void AddJournal(Journal journal) => journals.Add(journal);
+    public static bool AddJournal(Journal journal)
+    {
+        bool contains = false;
+        foreach(Journal j in journals)
+        {
+            if (j.text.Equals(journal.text))
+            {
+                contains = true;
+                break;
+            }
+        }
+        if (!contains) 
+        {
+            journals.Add(journal);
+            return true;
+        }
+        return false;
+    }
 
     public static Journal GetJournal(int index) => journals[index];
 

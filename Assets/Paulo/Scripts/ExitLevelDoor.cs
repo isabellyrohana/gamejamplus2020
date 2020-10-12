@@ -17,13 +17,15 @@ public class ExitLevelDoor : MonoBehaviour
 
         yield return new WaitForSeconds(1.1f);
 
-        SceneManager.LoadScene("SceneStage02");
+        SceneController.ToStage02();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
-            if(collision.GetComponent<PlayerController>().papelzin != null)
-                ExitLevel();
+        {
+            Debug.Log("Porta colidiu com o player");
+            ExitLevel();
+        }
     }
 }

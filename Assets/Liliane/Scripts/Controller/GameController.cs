@@ -10,6 +10,7 @@ public class GameController : Singleton<GameController>
 
     [SerializeField] private UiPauseController uiPauseController;
     [SerializeField] private RasgaController[] rasgas;
+    [SerializeField] private PorcoVela[] porcos;
     [SerializeField] private Lamp[] lamps;
 
     // Start is called before the first frame update
@@ -20,16 +21,16 @@ public class GameController : Singleton<GameController>
         
     public GameObject gameOverPanel;
 
-    public void ActiveGameOver(string nameSceneToLoad)
+    public void ActiveGameOver()
     {   
-        StartCoroutine("SceneToLoadIE", nameSceneToLoad);
+        StartCoroutine("SceneToLoadIE");
     }
-    public void SceneToLoad(string nameSceneToLoad)
+    public void ToFinal()
     {
-        SceneManager.LoadSceneAsync(nameSceneToLoad);
+        SceneController.ToFinal();
     }
 
-    private IEnumerator SceneToLoadIE(string nameSceneToLoad)
+    private IEnumerator SceneToLoadIE()
     {
         gameOverPanel.SetActive(true);
         uiPauseController.OpenGameOver();
@@ -39,10 +40,14 @@ public class GameController : Singleton<GameController>
 
     public void SetPause(bool pause) 
     {
-        isPaused = pause;
-        foreach (RasgaController rasga in rasgas) rasga?.SetPause(isPaused);
-        foreach (Lamp lamp in lamps) lamp?.SetPause(isPaused);
-        PlayerController.Instance?.SetPause(isPaused);
+        if (isPaused != pause)
+        {
+            isPaused = pause;
+            foreach (RasgaController rasga in rasgas) rasga?.SetPause(isPaused);
+            foreach (PorcoVela porco in porcos) porco?.SetPause(isPaused);
+            foreach (Lamp lamp in lamps) lamp?.SetPause(isPaused);
+            PlayerController.Instance?.SetPause(isPaused);
+        }
     }
     public bool IsPause() => isPaused;
 }

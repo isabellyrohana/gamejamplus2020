@@ -35,7 +35,7 @@ public class PlayerController : Singleton<PlayerController>
 
     public Transform rightHandPosition;
 
-    AudioClip morteAudioPorco;
+    public AudioClip morteAudioPorco;
 
     Animator anim;
 
@@ -54,7 +54,6 @@ public class PlayerController : Singleton<PlayerController>
     void Update()
     {
         if (_gameIsPaused) return;
-
         if (playerDeath) return;
 
         Move();
@@ -75,30 +74,47 @@ public class PlayerController : Singleton<PlayerController>
                 ThrowObject();
         }
 
+        //esc teclado ou pause do controle do xbox
+        if (Input.GetButtonDown("Pause"))
+        {
+            if (GameController.Instance != null)
+            {
+                if (GameController.Instance.IsPause()) 
+                {
+                    uiPauseController.Hide(() => Pause(false));
+                }
+                else 
+                {
+                    uiPauseController.Show(() => Pause(true));
+                }
+            }
+        }
+
         //r do teclado ou B do controle do xbox
         if (Input.GetButtonDown("Interact"))
         {
-            //print("Interact");
             if (papelzin != null)
             {
-                papelzin.GetComponent<SpriteRenderer>().enabled = false;
-                pistaPanel.SetActive(true);
+                string text = "Raira eu queria te falar antes.. mas nao tive como. Cuidado com as sombras!! Tem cois...";
+                Journal journal = new Journal(text);
+                if (Journals.AddJournal(journal))
+                {
+                    Destroy(papelzin.gameObject);
+                    Pause(true);
+                    uiPauseController.OpenLastJournal();
+                }
             }
-
+            else if (uiPauseController.JournalIsOpen())
+            {
+                Pause(false);
+            }
         }
 
         //shift do teclado ou Y do controle do xbox
         if (Input.GetButtonDown("Diary"))
         {
-            Pause();
+            Pause(false);
             uiPauseController.ButtonJournals();
-        }
-
-        //esc teclado ou pause do controle do xbox
-        if (Input.GetButtonDown("Pause"))
-        {
-            Pause();
-            uiPauseController.Show();
         }
 
         //direcional para cima ou para baixo ou stick up/down do xbox
@@ -128,15 +144,13 @@ public class PlayerController : Singleton<PlayerController>
         {
             anim.SetTrigger("TriggerWalkIdle");
             if (isLookLeft) Flip(isLookLeft);
-            if (!PassosSound.isPlaying)
-                PassosSound.Play();
+            if (!PassosSound.isPlaying) PassosSound.Play();
         }
         else if (horizontalInput < -0.5f)
         {
             anim.SetTrigger("TriggerWalkIdle");
             if (!isLookLeft) Flip(isLookLeft);
-            if (!PassosSound.isPlaying)
-                PassosSound.Play();
+            if (!PassosSound.isPlaying) PassosSound.Play();
         }
         else
         {
@@ -178,17 +192,11 @@ public class PlayerController : Singleton<PlayerController>
         playerVisible = status;
     }
 
-    public void Pause()
-    {
-        if (GameController.Instance != null)
-        {
-            if (GameController.Instance.IsPause()) GameController.Instance.SetPause(false);
-            else GameController.Instance.SetPause(true);
-        }
-    }
+    public void Pause(bool pause) => GameController.Instance?.SetPause(pause);
 
     public void SetPause(bool pause)
     {
+        playerRb.velocity *= Vector2.up;
         _gameIsPaused = pause;
     }
 
@@ -197,13 +205,13 @@ public class PlayerController : Singleton<PlayerController>
         if (other.gameObject.CompareTag("Rasga"))
         {
             Destroy(this.gameObject);
-            GameController.Instance.ActiveGameOver("SceneStage02VFinal");
+            GameController.Instance.ActiveGameOver();
         }
 
         if (other.gameObject.CompareTag("Door"))
         {
             Destroy(this.gameObject);
-            GameController.Instance.SceneToLoad("SceneStage02CuteScene");
+            GameController.Instance.ToFinal();
         }
 
         if (other.tag == "safeplace")
