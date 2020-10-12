@@ -19,6 +19,7 @@ public class UiPauseController : UiGenericMenu
     [SerializeField] private UiPauseControls uiPauseControls;
     [SerializeField] private UiPauseJournals uiPauseJournals;
     [SerializeField] private UiPauseJournal uiPauseJournal;
+    [SerializeField] private UiPauseGameOver uiPauseGameOver;
 
     protected new virtual void Awake() {
         base.Awake();
@@ -69,6 +70,11 @@ public class UiPauseController : UiGenericMenu
     {
         Journal journal = Journals.GetJournal(Journals.GetJournals().Count - 1);
         uiPauseJournal.Setup(journal.text);
+    }
+
+    public void OpenGameOver()
+    {
+        uiPauseGameOver.Show();
     }
 
 }

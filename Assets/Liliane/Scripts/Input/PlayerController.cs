@@ -62,6 +62,12 @@ public class PlayerController : Singleton<PlayerController>
             uiPauseController.Show();
         }
 
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Pause();
+            uiPauseController.OpenGameOver();
+        }
+
         //direcional para cima ou para baixo ou stick up/down do xbox
         if(verticalInput > 0)
         {
@@ -115,9 +121,14 @@ public class PlayerController : Singleton<PlayerController>
         GameController gameController = GameObject.FindObjectOfType<GameController>();
         if (gameController != null)
         {
-            if (gameController.IsPause()) _gameIsPaused = false; else _gameIsPaused = true;
-            gameController.SetPause(_gameIsPaused);
+            if (gameController.IsPause()) gameController.SetPause(false);
+            else gameController.SetPause(true);
         }
+    }
+
+    public void SetPause(bool pause)
+    {
+        _gameIsPaused = pause;
     }
 
 }

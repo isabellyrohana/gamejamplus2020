@@ -29,6 +29,7 @@ public class GameController : Singleton<GameController>
         isPaused = pause;
         foreach (RasgaController rasga in rasgas) rasga?.SetPause(isPaused);
         foreach (Lamp lamp in lamps) lamp?.SetPause(isPaused);
+        PlayerController.Instance?.SetPause(isPaused);
     }
     public bool IsPause() => isPaused;
 }
