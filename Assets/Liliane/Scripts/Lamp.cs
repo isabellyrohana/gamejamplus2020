@@ -5,9 +5,15 @@ using UnityEngine;
 
 public class Lamp : MonoBehaviour
 {
+    public float minRange = 1f, maxRange = 3f;
+
     private float randomTwinkle;
 
     public Light2D lightLamp;
+
+    public float intensity;
+
+
 
     private void Start()
     {
@@ -17,7 +23,7 @@ public class Lamp : MonoBehaviour
     private IEnumerator TwinkleLight()
     {
         lightLamp.intensity = 2.5f;
-        randomTwinkle = Random.Range(1f, 3f);
+        randomTwinkle = Random.Range(minRange, maxRange);
 
         yield return new WaitForSeconds(randomTwinkle);
 
@@ -35,7 +41,8 @@ public class Lamp : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            PlayerController.Instance.UpdatePlayerVisible(true);
+            if(PlayerController.Instance != null)
+                PlayerController.Instance.UpdatePlayerVisible(true);
         }
     }
 
@@ -43,7 +50,8 @@ public class Lamp : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            PlayerController.Instance.UpdatePlayerVisible(false);
+            if (PlayerController.Instance != null)
+                PlayerController.Instance.UpdatePlayerVisible(false);
         }
     }
 

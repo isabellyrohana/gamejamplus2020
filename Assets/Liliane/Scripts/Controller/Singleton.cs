@@ -12,7 +12,7 @@ public abstract class Singleton<T> : MonoBehaviour where T: Singleton<T>
         {
             if(_instance == null)
             {
-                Debug.LogError(typeof(T).ToString() + " is Null");
+                Debug.Log(typeof(T).ToString() + " is Null");
             }
             return _instance;
         }

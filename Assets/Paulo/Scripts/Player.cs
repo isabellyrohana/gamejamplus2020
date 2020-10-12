@@ -27,6 +27,8 @@ public class Player : MonoBehaviour
     private float horizontalInput;
     private float verticalInput;
 
+    public bool playerVisible;
+
 
     // Update is called once per frame
     void Update()
@@ -124,7 +126,7 @@ public class Player : MonoBehaviour
     {
         GetComponent<BoxCollider2D>().enabled = true;
         GetComponent<SpriteRenderer>().enabled = true;
-        transform.position = currentSafePlace.transform.position;
+        transform.position  = new Vector3(currentSafePlace.transform.position.x, transform.position.y, transform.position.z);
     }
 
     public void PickItem()
@@ -178,6 +180,17 @@ public class Player : MonoBehaviour
             default: return new Vector3(-1, 1, 0);
 
         }
+    }
+
+
+    public bool GetPlayerVisible()
+    {
+        return playerVisible;
+    }
+
+    public void UpdatePlayerVisible(bool status)
+    {
+        playerVisible = status;
     }
 
 }
