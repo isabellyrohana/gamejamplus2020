@@ -144,15 +144,13 @@ public class PlayerController : Singleton<PlayerController>
 
         if (horizontalInput > 0.5f)
         {
-            //anim.SetTrigger("TriggerWalkIdle");
             if (isLookLeft) Flip(isLookLeft);
-            if (!PassosSound.isPlaying) PassosSound.Play();
+            if (PassosSound != null && !PassosSound.isPlaying) PassosSound.Play();
         }
         else if (horizontalInput < -0.5f)
         {
-            //anim.SetTrigger("TriggerWalkIdle");
             if (!isLookLeft) Flip(isLookLeft);
-            if (!PassosSound.isPlaying) PassosSound.Play();
+            if (PassosSound != null && !PassosSound.isPlaying) PassosSound.Play();
         }
 
         if (horizontalInput == 0)

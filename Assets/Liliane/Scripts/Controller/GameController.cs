@@ -12,14 +12,12 @@ public class GameController : Singleton<GameController>
     [SerializeField] private RasgaController[] rasgas;
     [SerializeField] private PorcoVela[] porcos;
     [SerializeField] private Lamp[] lamps;
+    public GameObject gameOverPanel;
 
-    // Start is called before the first frame update
     protected new virtual void Awake()
     {
         base.Awake();
     }
-        
-    public GameObject gameOverPanel;
 
     public void ActiveGameOver()
     {   
