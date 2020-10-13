@@ -32,6 +32,12 @@ public class PorcoVela : MonoBehaviour
 
     private bool _isGamePaused;
 
+    bool GetLoud = false;
+
+    public AudioClip porcoGrito;
+
+    public AudioSource audioSource;
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
