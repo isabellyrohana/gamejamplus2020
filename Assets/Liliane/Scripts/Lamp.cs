@@ -52,5 +52,4 @@ public class Lamp : MonoBehaviour
             SoundFxController.Instance.playFx(4);
         }
     }
-
 }
