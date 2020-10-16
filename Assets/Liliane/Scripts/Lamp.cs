@@ -39,24 +39,6 @@ public class Lamp : MonoBehaviour
         _currentCoroutine = StartCoroutine("TwinkleLight");
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            if(PlayerController.Instance != null)
-                PlayerController.Instance.UpdatePlayerVisible(true);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other) 
-    {
-        if(other.gameObject.CompareTag("Player"))
-        {
-            if (PlayerController.Instance != null)
-                PlayerController.Instance.UpdatePlayerVisible(false);
-        }
-    }
-
     public void SetPause(bool pause)
     {
         if (pause && _currentCoroutine != null) StopCoroutine(_currentCoroutine);

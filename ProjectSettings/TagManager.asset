@@ -4,15 +4,15 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - throwable
+  - Throwable
   - Ground
   - Enemy
   - Rasga
   - Chandelier
   - Destroy
   - Door
-  - safeplace
-  - papelzin
+  - Safeplace
+  - Paper
   layers:
   - Default
   - TransparentFX
@@ -25,10 +25,11 @@ TagManager:
   - 
   - 
   - Ground
-  - safeplacelayer
-  - throwablelayer
-  - player
-  - enemy
+  - Safeplace
+  - Throwable
+  - Player
+  - Enemy
+  - 
   - 
   - 
   - 

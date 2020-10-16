@@ -6,7 +6,7 @@ public class Journal
 {
     
     public string text;
-
+    
     public Journal() {}
     public Journal(string text)
     {

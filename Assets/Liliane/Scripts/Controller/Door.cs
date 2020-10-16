@@ -2,20 +2,38 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[
+    RequireComponent(typeof(AudioSource)),
+    RequireComponent(typeof(Animator))
+]
 public class Door : MonoBehaviour
 {
-    private Animator doorAnim;
-    
-    void Start()
+
+    [SerializeField] private Scenes.ScenesEnum sceneTransition = Scenes.ScenesEnum.MAIN_MENU;
+
+    private Animator _doorAnim;
+    private AudioSource _audioSource;
+
+    private void Awake()
     {
-        doorAnim = GetComponent<Animator>();
+        _doorAnim = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OpenDoor() => StartCoroutine(ChangeLevel());
+
+    private IEnumerator ChangeLevel()
     {
-        if(other.gameObject.CompareTag("Player"))
+        _doorAnim.SetTrigger("open");
+        _audioSource.Play();
+        PlayerController.Instance?.Pause(true);
+
+        while(_audioSource.isPlaying)
         {
-            doorAnim.SetTrigger("open");
+            yield return null;
         }
+
+        SceneController.ToScene(sceneTransition);
     }
+
 }

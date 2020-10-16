@@ -49,7 +49,7 @@ public class PlayerPush : MonoBehaviour
             box.TryGetComponent(out ObjectToShoot boxScript);
             boxScript.ChangeToTrigger();
 
-            if(_playerController.isLookLeft)
+            if(_playerController.IsFacingLeft())
             {
                 direction = -1;
             }

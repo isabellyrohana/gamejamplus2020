@@ -18,6 +18,9 @@ EditorBuildSettings:
     path: Assets/Scenes/ScenePreGame.unity
     guid: 8dd5feac1173f7847b3da39d0c449507
   - enabled: 1
+    path: Assets/Scenes/SceneStage00.unity
+    guid: 9d2c36323dc0195438fb4600ca9fedb9
+  - enabled: 1
     path: Assets/Scenes/SceneStage01.unity
     guid: f95b2725fd9243848aa542150ee25167
   - enabled: 1

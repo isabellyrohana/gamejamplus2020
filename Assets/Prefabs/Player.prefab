@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6739132238484606902}
   - component: {fileID: 8272518123150972344}
   - component: {fileID: 3181659073590920092}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -54,8 +54,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8857422, y: 3.2783203}
-    newSize: {x: 0.34, y: 0.4}
+    oldSize: {x: 1.1375, y: 4.2425}
+    newSize: {x: 1.1375, y: 4.2425}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -123,7 +123,7 @@ SpriteRenderer:
   m_SortingLayerID: -1278992347
   m_SortingLayer: 1
   m_SortingOrder: 20
-  m_Sprite: {fileID: 2927028914861806976, guid: 9a5355d94cc48b44cb90471269989d65,
+  m_Sprite: {fileID: 2927028914861806976, guid: 3a2e3bdb711400144841805adc5cb0ec,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_Size: {x: 1.1375, y: 4.2425}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &6739132238484606902
@@ -147,18 +147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5e42cfdabf5ce4497e062e8944fe99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isLookLeft: 0
-  handToPickPosition: {fileID: 1739824317451283844}
   playerSpeed: 5
-  playerVisible: 0
   uiPauseController: {fileID: 0}
-  currentThrowableObject: {fileID: 0}
-  currentSafePlace: {fileID: 0}
-  rightHandPosition: {fileID: 0}
-  morteAudioPorco: {fileID: 0}
-  pistaPanel: {fileID: 0}
-  papelzin: {fileID: 0}
-  papelzinPicked: {fileID: 0}
+  rightHandPosition: {fileID: 1739824317451283844}
+  morteAudioPorco: {fileID: 8300000, guid: da0624b29f4b46c4b8370d6400aa09a5, type: 3}
 --- !u!95 &8272518123150972344
 Animator:
   serializedVersion: 3
@@ -283,7 +275,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1739824317451283844}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: RightHand
   m_TagString: Untagged
   m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}

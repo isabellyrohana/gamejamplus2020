@@ -35,4 +35,9 @@ public class MainMusicController : Singleton<MainMusicController>
         }
     }
 
+    public void StopMusic()
+    {
+        _audioSource.Stop();
+    }
+
 }
