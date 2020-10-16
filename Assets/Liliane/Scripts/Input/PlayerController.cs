@@ -131,14 +131,14 @@ public class PlayerController : Singleton<PlayerController>
         float speedY = _rigidbody2D.velocity.y;
         _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speedY);
 
-        if (_horizontalInput > 0.5f)
+        if (_horizontalInput > 0f)
         {
-            if (_isFacingLeft) Flip(_isFacingLeft);
+            if (_isFacingLeft) Flip();
             if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
         }
-        else if (_horizontalInput < -0.5f)
+        else if (_horizontalInput < 0f)
         {
-            if (!_isFacingLeft) Flip(_isFacingLeft);
+            if (!_isFacingLeft) Flip();
             if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
         }
 
