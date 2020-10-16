@@ -24,6 +24,7 @@ public class PlayerController : Singleton<PlayerController>
     private bool _isHiding = false;
     private bool _playerDeath = false;
     private bool _gameIsPaused = false;
+    private bool _isOnTheLight = false;
 
     // Paulo
     private InventoryObject _currentThrowableObject = null;
@@ -127,16 +128,17 @@ public class PlayerController : Singleton<PlayerController>
     private void Move()
     {
         _horizontalInput = Input.GetAxis("Horizontal");
+        print(_horizontalInput);
 
         float speedY = _rigidbody2D.velocity.y;
         _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speedY);
 
-        if (_horizontalInput > 0f)
+        if (_horizontalInput > 0)
         {
             if (_isFacingLeft) Flip();
             if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
         }
-        else if (_horizontalInput < 0f)
+        else if (_horizontalInput < 0)
         {
             if (!_isFacingLeft) Flip();
             if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
@@ -162,6 +164,16 @@ public class PlayerController : Singleton<PlayerController>
     public bool GetPlayerVisible()
     {
         return _isHiding;
+    }
+
+    public bool GetPlayerOnTheLight()
+    {
+        return _isOnTheLight;
+    }
+
+    public void UpdatePlayerOnTheLight(bool status)
+    {
+        _isOnTheLight = status;
     }
 
     public void Pause(bool pause) => GameController.Instance?.SetPause(pause);

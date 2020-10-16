@@ -49,7 +49,7 @@ public class PorcoVela : MonoBehaviour
     {
         if (_isGamePaused) return;
 
-        if (PlayerController.Instance.GetPlayerVisible())
+        if (!PlayerController.Instance.GetPlayerVisible())
         {
             if (!GetLoud)
             {

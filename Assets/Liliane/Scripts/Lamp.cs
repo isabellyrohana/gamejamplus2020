@@ -52,4 +52,20 @@ public class Lamp : MonoBehaviour
             SoundFxController.Instance.playFx(4);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            PlayerController.Instance.UpdatePlayerOnTheLight(true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            PlayerController.Instance.UpdatePlayerOnTheLight(false);
+        }
+    }
 }

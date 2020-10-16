@@ -48,4 +48,9 @@ public class GameController : Singleton<GameController>
         }
     }
     public bool IsPause() => isPaused;
+
+    public string GetSceneName()
+    {
+        return SceneManager.GetActiveScene().name;
+    }
 }

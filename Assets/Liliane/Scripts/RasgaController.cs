@@ -35,10 +35,10 @@ public class RasgaController : Singleton<RasgaController>
     void Update()
     {
         if (_isGamePaused) return;
-        if (!canAttack) return;
+        
         if (PlayerController.Instance == null) return;
 
-        if(PlayerController.Instance.GetPlayerVisible())
+        if(PlayerController.Instance.GetPlayerOnTheLight())
         {
             rasgaAnim.SetBool("attack", true);
 
@@ -56,6 +56,8 @@ public class RasgaController : Singleton<RasgaController>
         }
         else
         {
+            if (!canAttack) return;
+
             rasgaAnim.SetBool("attack", false);
 
             rasgaControllerRb.velocity = Vector2.zero;
@@ -97,18 +99,17 @@ public class RasgaController : Singleton<RasgaController>
     public void UpdateCanAttack(bool value)
     {
         canAttack = value;
-        if(!canAttack)
-        {
-            StartCoroutine("FlyAway");
-        }
+    }
+
+    public void RasgaAffected()
+    {
+        StartCoroutine("FlyAway");
     }
 
     private IEnumerator FlyAway()
     {
         direction = (posToRun.transform.position - transform.position).normalized;
         rasgaControllerRb.velocity = direction * speedToAttack;
-
-        SoundFxController.Instance.playFx(3);
 
         yield return new WaitForSeconds(5f);
         
