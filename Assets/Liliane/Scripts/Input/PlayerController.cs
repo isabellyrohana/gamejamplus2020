@@ -42,10 +42,14 @@ public class PlayerController : Singleton<PlayerController>
     protected new virtual void Awake() 
     {
         base.Awake();
-
-        _rigidbody2D = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
+        
+        _rigidbody2D = GetComponent<Rigidbody2D>();   
         _passosSound = GetComponent<AudioSource>();
+    }
+
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
     }
 
     void Update()

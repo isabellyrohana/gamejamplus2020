@@ -16,7 +16,10 @@ public class SoundFxController : Singleton<SoundFxController>
 
     public void playFx(int idFx)
     {
-        audioSourceFx.PlayOneShot(soundFx[idFx]);
+        if(soundFx[idFx] != null)
+        {
+            audioSourceFx.PlayOneShot(soundFx[idFx]);
+        }    
     }
 
     public bool IsPlaying()
