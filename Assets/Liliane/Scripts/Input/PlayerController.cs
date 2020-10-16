@@ -128,7 +128,6 @@ public class PlayerController : Singleton<PlayerController>
     private void Move()
     {
         _horizontalInput = Input.GetAxis("Horizontal");
-        print(_horizontalInput);
 
         float speedY = _rigidbody2D.velocity.y;
         _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speedY);
@@ -152,7 +151,6 @@ public class PlayerController : Singleton<PlayerController>
         {
             _animator.SetBool("walk", true);
         }
-
     }
 
     private void Flip()
@@ -166,6 +164,7 @@ public class PlayerController : Singleton<PlayerController>
         return _isHiding;
     }
 
+    //Quando ele estiver visivel na Luz vermelha o inimigo ataca
     public bool GetPlayerOnTheLight()
     {
         return _isOnTheLight;
