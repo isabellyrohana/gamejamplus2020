@@ -156,14 +156,7 @@ public class PlayerController : Singleton<PlayerController>
     private void Flip()
     {
         _isFacingLeft = !_isFacingLeft;
-        transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-    }
-
-    private void Flip(bool isLeft)
-    {
-        _isFacingLeft = !_isFacingLeft;
-        //transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-        transform.Rotate(new Vector3(0, 180, 0), Space.World);
+        transform.Rotate(new Vector3(0, 180, 0), Space.Self);
     }
 
     public bool GetPlayerVisible()
