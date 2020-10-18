@@ -6,9 +6,11 @@ public class PlayerCute : MonoBehaviour
 {
     private Rigidbody2D playerRb;
     private Animator playerAnim;
+
     public GameObject continuePanel;
 
-    private void Awake() {
+    private void Awake()
+    {
         MainMusicController.Instance.StopMusic();
     }
 

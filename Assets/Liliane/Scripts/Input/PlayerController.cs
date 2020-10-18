@@ -127,17 +127,17 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Move()
     {
-        _horizontalInput = Input.GetAxis("Horizontal");
+        _horizontalInput = Input.GetAxisRaw("Horizontal");
 
         float speedY = _rigidbody2D.velocity.y;
         _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speedY);
 
-        if (_horizontalInput > 0)
+        if (_horizontalInput == 1)
         {
             if (_isFacingLeft) Flip();
             if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
         }
-        else if (_horizontalInput < 0)
+        else if (_horizontalInput == -1)
         {
             if (!_isFacingLeft) Flip();
             if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
