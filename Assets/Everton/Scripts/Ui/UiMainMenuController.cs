@@ -52,13 +52,13 @@ public class UiMainMenuController : MonoBehaviour
         buttonSettings.onClick.AddListener(ButtonSettings);
     }
 
-    private void ButtonPlay() 
+    private void ButtonPlay()
     {
         if (_audioSource.isPlaying) _audioSource.Stop();
         _audioSource.clip = doorOpenAudio;
         _audioSource.Play();
         doorAnimator.SetBool("DoorOpen", true);
-        StartCoroutine(CustomWait.Wait(50f/60f, Play));
+        StartCoroutine(CustomWait.Wait(50f / 60f, Play));
     }
 
     public void Play()

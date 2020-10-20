@@ -62,7 +62,7 @@ public class PlayerController : Singleton<PlayerController>
 
         _verticalInput = Input.GetAxis("HideAppear");
 
-        // J do teclado ou A do controle do xbox
+        // K do teclado ou A do controle do xbox
         if (Input.GetButtonDown("Pick"))
         {
             // Se tiver encostado, pega o Item
@@ -85,7 +85,7 @@ public class PlayerController : Singleton<PlayerController>
             }
         }
 
-        // K do teclado ou B do controle do xbox
+        // J do teclado ou B do controle do xbox
         if (Input.GetButtonDown("Interact"))
         {
             if (_journalReference != null)
