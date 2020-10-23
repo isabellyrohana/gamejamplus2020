@@ -22,9 +22,9 @@ namespace Settings
         {
             switch (fontsizeEnum)
             {
-                case FontsizeEnum.SMALL: return "Small";
-                case FontsizeEnum.BIG: return "Big";
-                default: return "Normal";
+                case FontsizeEnum.SMALL: return "small";
+                case FontsizeEnum.BIG: return "large";
+                default: return "normal";
             }
         }
     }

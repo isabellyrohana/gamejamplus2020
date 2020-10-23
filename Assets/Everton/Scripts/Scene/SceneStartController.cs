@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Settings;
 using UnityEngine;
 
 public class SceneStartController : MonoBehaviour
@@ -9,14 +10,28 @@ public class SceneStartController : MonoBehaviour
 
     [SerializeField] private UiFadeEffect logoFadeEffect;
 
-    void Awake() {
+    private IEnumerator Start() {
+        LocalizationManager.Instance.LoadLocalizedText(Language.GetFileName(Language.LanguageEnum.ENGLISH));
+
         logoFadeEffect.FadeIn(() => {
             StartCoroutine(CustomWait.Wait(wait, () => {
                 logoFadeEffect.FadeOut(() => {
-                    SceneController.ToMainMenu();
+                    StartCoroutine(WaitLoadLocalizationFiles());
                 });
             }));
         });
+
+        yield return null;
+
+        IEnumerator WaitLoadLocalizationFiles()
+        {
+            while(!LocalizationManager.Instance.IsReady)
+            {
+                yield return null;
+            }
+
+            SceneController.ToMainMenu();
+        }
     }
 
 }

@@ -16,7 +16,7 @@ public class ScenePreGameController : MonoBehaviour
     {
         if (Input.anyKeyDown) bgFadeEffect.FadeOut(() => {
             SceneController.ToGame();
-            MainMusicController.Instance.PlayGameAudioClip();
+            MainMusicManager.Instance.PlayGameAudioClip();
         });
     }
 

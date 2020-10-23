@@ -7,8 +7,8 @@ namespace Settings
     public static class Resolution
     {
 
-        private static float maxWidth = Screen.width;
-        private static float maxHeight = Screen.height;
+        private static float maxWidth = Display.main.systemWidth;
+        private static float maxHeight = Display.main.systemHeight;
 
         private static Vector2[] screenSizes =
         {

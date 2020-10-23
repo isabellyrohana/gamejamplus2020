@@ -127,8 +127,13 @@ public class UiSettingsController : UiGenericMenu
     {
         buttonPreviousFullscreen.interactable = fullscreen;
         buttonNextFullscreen.interactable = !fullscreen;
+        UpdateFullscreenLabel();
+    }
 
-        fullscreenText.text = fullscreen ? "Yes" : "No";
+    private void UpdateFullscreenLabel()
+    {
+        string fullscreenYesNo = LocalizationManager.Instance.GetLocalizationValue(fullscreen ? "yes" : "no");
+        fullscreenText.text = fullscreenYesNo;
     }
 
     #endregion
@@ -198,6 +203,12 @@ public class UiSettingsController : UiGenericMenu
         buttonNextLanguage.interactable = !(indexLanguage >= length - 1);
         string language = Settings.Language.GetNativeLanguage((Settings.Language.LanguageEnum) indexLanguage);
         languageText.text = language;
+
+        LocalizationManager.Instance.LoadLocalizedText(Settings.Language.GetFileName((Settings.Language.LanguageEnum) indexLanguage));
+        Events.ObserverManager.Notify(NotifyEvent.Language.ChangeInSettings);
+
+        UpdateFullscreenLabel();
+        UpdateFontsizeLabel();
     }
 
     #endregion
@@ -232,8 +243,14 @@ public class UiSettingsController : UiGenericMenu
         buttonPreviousFontSize.interactable = !(indexFontsize <= 0);
         buttonNextFontSize.interactable = !(indexFontsize >= length - 1);
 
-        string fontsize = Settings.Fontsize.GetFontsize((Settings.Fontsize.FontsizeEnum) indexFontsize);
-        fontsizeText.text = fontsize;
+        UpdateFontsizeLabel();
+    }
+
+    private void UpdateFontsizeLabel()
+    {
+        string fontsizeKey = Settings.Fontsize.GetFontsize((Settings.Fontsize.FontsizeEnum) indexFontsize);
+        string fontsizeValue = LocalizationManager.Instance.GetLocalizationValue(fontsizeKey);
+        fontsizeText.text = fontsizeValue;
     }
 
     #endregion
@@ -252,7 +269,7 @@ public class UiSettingsController : UiGenericMenu
     private void Apply()
     {
         Settings.Settings settings = new Settings.Settings();
-        settings.fullscreen = true;
+        settings.fullscreen = fullscreen;
         settings.resolution = indexResolution;
         settings.language = indexLanguage;
         settings.fontsize = indexFontsize;
@@ -274,6 +291,7 @@ public class UiSettingsController : UiGenericMenu
         FullScreenMode fullscreenMode = fullscreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
 
         Screen.SetResolution((int) resolution.x, (int) resolution.y, fullscreenMode);
+        base.PlaySfxSound();
     }
 
     #endregion
