@@ -17,6 +17,11 @@ public class UiPauseGameOver : UiGenericMenu
         buttonExit.onClick.AddListener(ButtonExitGame);
     }
 
+    public override void Setup()
+    {
+        
+    }
+
     private void ButtonExitGame() => SceneController.ToMainMenu();
 
     public void Restart() => SceneController.ToReloadScreen();

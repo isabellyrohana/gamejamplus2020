@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class UiControlsController : UiGenericMenu
 {
-    
+    public override void Setup()
+    {
+        
+    }
+
 }

@@ -4,5 +4,9 @@ using UnityEngine;
 
 public class UiPauseControls : UiGenericMenu
 {
+    public override void Setup()
+    {
+
+    }
     
 }

@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
-public class UiGenericMenu : MonoBehaviour
+public abstract class UiGenericMenu : MonoBehaviour
 {
 
     private static List<UiGenericMenu> menus = new List<UiGenericMenu>();
-    
+
     [SerializeField] private Button buttonClose;
     [SerializeField] private UiFadeEffect bgFadeEffect;
     private AudioSource _audioSource;
@@ -23,19 +23,24 @@ public class UiGenericMenu : MonoBehaviour
         buttonClose?.onClick.AddListener(() => ButtonClose());
     }
 
-    void Update() {
-        if (_isShowing && Input.GetButtonDown("Pause")) 
+    public abstract void Setup();
+
+    void Update()
+    {
+        if (_isShowing && Input.GetButtonDown("Pause"))
         {
             if (menus.Count > 0) menus[menus.Count - 1].Hide();
         }
     }
 
-    public void Show(Action callback = null) 
+    public void Show(Action callback = null)
     {
         if (!_isShowing)
         {
             _audioSource?.Play();
-            bgFadeEffect.FadeIn(() => {
+            Setup();
+            bgFadeEffect.FadeIn(() =>
+            {
                 callback?.Invoke();
                 _isShowing = true;
                 menus.Add(this);
@@ -48,7 +53,8 @@ public class UiGenericMenu : MonoBehaviour
         if (_isShowing)
         {
             _audioSource?.Play();
-            bgFadeEffect.FadeOut(() => {
+            bgFadeEffect.FadeOut(() =>
+            {
                 callback?.Invoke();
                 _isShowing = false;
                 menus.Remove(this);

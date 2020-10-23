@@ -10,7 +10,7 @@ public class UiPauseJournals : UiGenericMenu
     [SerializeField] private GameObject gridItemPrefab;
     [SerializeField] private UiPauseJournal uiPauseJournal;
 
-    public void Setup()
+    public override void Setup()
     {
         foreach(Transform child in gridTransform) 
         {

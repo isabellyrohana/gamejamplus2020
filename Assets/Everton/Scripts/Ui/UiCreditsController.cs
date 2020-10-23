@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class UiCreditsController : UiGenericMenu
 {
+    public override void Setup()
+    {
 
-
+    }
+    
 }

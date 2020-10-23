@@ -21,7 +21,7 @@ public class UiPauseController : UiGenericMenu
     [SerializeField] private UiPauseJournal uiPauseJournal;
     [SerializeField] private UiPauseGameOver uiPauseGameOver;
 
-    protected new virtual void Awake() {
+    protected virtual new void Awake() {
         base.Awake();
         
         buttonContinue.onClick.RemoveAllListeners();
@@ -33,6 +33,11 @@ public class UiPauseController : UiGenericMenu
         buttonControls.onClick.AddListener(ButtonControls);
         buttonJournals.onClick.AddListener(ButtonJournals);
         buttonExitGame.onClick.AddListener(ButtonExitGame);
+    }
+
+    public override void Setup()
+    {
+        
     }
 
     private void ButtonContinue() => this.ButtonClose(() => PlayerController.Instance?.Pause(false));
