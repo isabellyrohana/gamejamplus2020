@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(AudioSource))]
 public abstract class UiGenericMenu : MonoBehaviour
@@ -27,10 +28,10 @@ public abstract class UiGenericMenu : MonoBehaviour
 
     void Update()
     {
-        if (_isShowing && Input.GetButtonDown("Pause"))
+        /*if (_isShowing && Input.GetButtonDown("Pause"))
         {
             if (menus.Count > 0) menus[menus.Count - 1].Hide();
-        }
+        }*/
     }
 
     public void Show(Action callback = null)
@@ -66,5 +67,13 @@ public abstract class UiGenericMenu : MonoBehaviour
     public void ButtonClose(Action callback = null) => Hide(callback);
 
     public bool IsShowing() => _isShowing;
+
+    private void OnPause()
+    {
+        if (_isShowing)
+        {
+            if (menus.Count > 0) menus[menus.Count - 1].Hide();
+        }
+    }
 
 }

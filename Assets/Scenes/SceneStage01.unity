@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -2084,6 +2084,37 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4559107435617569982}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1653546676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1653546675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: e8709a5a44781db4e8c0840245924c34,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Gameplay
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!4 &1668489545 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8028253807047710537, guid: a37a44350ff1baa42a01d8dc2bc5958e,
@@ -2982,6 +3013,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 368110793148515513, guid: aeeaea1871badfe49ab599e736ffcf00,
+        type: 3}
+      propertyPath: boxMask.m_Bits
+      value: 23607
+      objectReference: {fileID: 0}
     - target: {fileID: 4559107436180197901, guid: aeeaea1871badfe49ab599e736ffcf00,
         type: 3}
       propertyPath: m_Name
@@ -3046,17 +3082,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9059483996043956852, guid: aeeaea1871badfe49ab599e736ffcf00,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 2927028914861806976, guid: 3a2e3bdb711400144841805adc5cb0ec,
-        type: 3}
-    - target: {fileID: 9059483996043956852, guid: aeeaea1871badfe49ab599e736ffcf00,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aeeaea1871badfe49ab599e736ffcf00, type: 3}

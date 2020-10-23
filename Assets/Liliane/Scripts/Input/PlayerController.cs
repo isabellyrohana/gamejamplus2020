@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [
     RequireComponent(typeof(Rigidbody2D)),
@@ -60,65 +61,12 @@ public class PlayerController : Singleton<PlayerController>
 
         if (!_isHiding) Move();
 
-        _verticalInput = Input.GetAxis("HideAppear");
-
-        // K do teclado ou A do controle do xbox
-        if (Input.GetButtonDown("Pick"))
-        {
-            // Se tiver encostado, pega o Item
-            if (_currentTouchedObject != null) PickItem();
-            // Se tiver segurando algum item, arremessa
-            else if (_currentThrowableObject != null) ThrowObject();
-        }
-
-        // ESC do teclado ou pause do controle do xbox
-        if (Input.GetButtonDown("Pause"))
-        {
-            if (GameController.Instance != null)
-            {
-                if (GameController.Instance.IsPause()) uiPauseController.Hide(() => Pause(false));
-                else 
-                {
-                    Pause(true);
-                    uiPauseController.Show();
-                }
-            }
-        }
-
-        // J do teclado ou B do controle do xbox
-        if (Input.GetButtonDown("Interact"))
-        {
-            if (_journalReference != null)
-            {
-                string text = "Raira eu queria te falar antes.. mas nao tive como. Cuidado com as sombras!! Tem cois...";
-                Journal journal = new Journal(text);
-                if (Journals.AddJournal(journal))
-                {
-                    Destroy(_journalReference.gameObject);
-                    Pause(true);
-                    uiPauseController.OpenLastJournal();
-                }
-            }
-            else if (uiPauseController.JournalIsOpen())
-            {
-                Pause(false);
-            }
-        }
-
-        //shift do teclado ou Y do controle do xbox
-        if (Input.GetButtonDown("Diary"))
-        {
-            Pause(false);
-            uiPauseController.ButtonJournals();
-        }
-
-        //direcional para cima ou para baixo ou stick up/down do xbox
-        if (_verticalInput > 0)
+        if (_verticalInput == 1)
         {
             if (_onDoor != null) _onDoor.OpenDoor();
             else Hide();
         }
-        else if (_verticalInput < 0)
+        else if (_verticalInput == -1)
         {
             ShowUp();
         }
@@ -127,17 +75,15 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Move()
     {
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
-
         float speedY = _rigidbody2D.velocity.y;
         _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speedY);
 
-        if (_horizontalInput == 1)
+        if (_horizontalInput > 0.2f)
         {
             if (_isFacingLeft) Flip();
             if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
         }
-        else if (_horizontalInput == -1)
+        else if (_horizontalInput < -0.2f)
         {
             if (!_isFacingLeft) Flip();
             if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
@@ -278,5 +224,77 @@ public class PlayerController : Singleton<PlayerController>
     }
 
     public bool IsFacingLeft() => _isFacingLeft;
+
+    #region New Input System
+
+    private void OnMove(InputValue value)
+    {
+        _horizontalInput = value.Get<Vector2>().x;
+        print("move " + _horizontalInput);
+    }
+
+    private void OnHideAppear(InputValue value)
+    {
+        _verticalInput = value.Get<Vector2>().y;
+        print("hide " + _verticalInput);
+    }
+
+    private void OnDiary()
+    {
+        Pause(false);
+        uiPauseController.ButtonJournals();
+    }
+
+    private void OnPick()
+    {
+        print("pick click");
+        // Se tiver encostado, pega o Item
+        if (_currentTouchedObject != null) PickItem();
+        // Se tiver segurando algum item, arremessa
+        else if (_currentThrowableObject != null) ThrowObject();
+    }
+
+    private void OnInteract()
+    {
+        print("interact click");
+
+        if (_journalReference != null)
+        {
+            string text = "Raira eu queria te falar antes.. mas nao tive como. Cuidado com as sombras!! Tem cois...";
+            Journal journal = new Journal(text);
+            if (Journals.AddJournal(journal))
+            {
+                Destroy(_journalReference.gameObject);
+                Pause(true);
+                uiPauseController.OpenLastJournal();
+            }
+        }
+        else if (uiPauseController.JournalIsOpen())
+        {
+            Pause(false);
+        }
+    }
+
+    private void OnPause()
+    {
+        print("pause click");
+        
+        if (GameController.Instance != null)
+        {
+            if (GameController.Instance.IsPause()) uiPauseController.Hide(() => Pause(false));
+            else 
+            {
+                Pause(true);
+                uiPauseController.Show();
+            }
+        }
+    }
+
+    private void OnBag()
+    {
+        print("bag click");
+    }
+
+    #endregion
 
 }
