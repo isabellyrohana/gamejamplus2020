@@ -39,13 +39,13 @@ namespace Settings
             }
         }
 
-        public static string GetShortLanguage(LanguageEnum languageEnum)
+        public static string GetFileName(LanguageEnum languageEnum)
         {
             switch(languageEnum)
             {
-                case LanguageEnum.ESPANISH: return "es";
-                case LanguageEnum.PORTUGUESE: return "pt-br";
-                default: return "en";
+                case LanguageEnum.ESPANISH: return "language_es.json";
+                case LanguageEnum.PORTUGUESE: return "language_pt-br.json";
+                default: return "language_en.json";
             }
         }
 

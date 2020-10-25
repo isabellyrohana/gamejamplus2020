@@ -61,6 +61,9 @@ namespace Settings
                 file.Close();
 
                 _settings = datas;
+
+                LoadLanguage();
+
                 return true;
             }
             catch (System.Exception)
@@ -79,6 +82,14 @@ namespace Settings
 
             _settings = (Settings) binaryFormatter.Deserialize(file);
             file.Close();
+
+            LoadLanguage();
+        }
+
+        private static void LoadLanguage()
+        {
+            LocalizationManager.Instance.LoadLocalizedText(Language.GetFileName((LanguageEnum) settings.language));
+            Events.ObserverManager.Notify(NotifyEvent.Language.Change);
         }
 
         public static Settings settings => new Settings(_settings);

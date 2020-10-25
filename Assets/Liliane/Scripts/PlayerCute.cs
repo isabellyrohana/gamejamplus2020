@@ -11,7 +11,7 @@ public class PlayerCute : MonoBehaviour
 
     private void Awake()
     {
-        MainMusicController.Instance.StopMusic();
+        MainMusicManager.Instance.StopMusic();
     }
 
     private void Start()

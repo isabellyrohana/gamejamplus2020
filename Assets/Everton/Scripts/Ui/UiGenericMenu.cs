@@ -11,9 +11,9 @@ public abstract class UiGenericMenu : MonoBehaviour
 
     private static List<UiGenericMenu> menus = new List<UiGenericMenu>();
 
-    [SerializeField] private Button buttonClose;
-    [SerializeField] private UiFadeEffect bgFadeEffect;
-    private AudioSource _audioSource;
+    [SerializeField] private Button buttonClose = null;
+    [SerializeField] private UiFadeEffect bgFadeEffect = null;
+    private AudioSource _audioSource = null;
 
     private bool _isShowing = false;
 
@@ -75,5 +75,7 @@ public abstract class UiGenericMenu : MonoBehaviour
             if (menus.Count > 0) menus[menus.Count - 1].Hide();
         }
     }
+    
+    public void PlaySfxSound() => _audioSource?.Play();
 
 }
