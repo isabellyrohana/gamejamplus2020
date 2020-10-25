@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UiSettingsController : UiGenericMenu
@@ -10,9 +12,10 @@ public class UiSettingsController : UiGenericMenu
     #region fullscreen
 
     [Header("Fullscreen Components")]
-    [SerializeField] private Text fullscreenText;
-    [SerializeField] private Button buttonPreviousFullscreen;
-    [SerializeField] private Button buttonNextFullscreen;
+    [SerializeField] private Button fullscreenLabel = null;
+    [SerializeField] private Text fullscreenText = null;
+    [SerializeField] private Button buttonPreviousFullscreen = null;
+    [SerializeField] private Button buttonNextFullscreen = null;
 
     private bool fullscreen = true;
 
@@ -21,6 +24,7 @@ public class UiSettingsController : UiGenericMenu
     #region resolution
 
     [Header("Resolution Components")]
+    [SerializeField] private Button resolutionLabel = null;
     [SerializeField] private Text resolutionsText = null;
     [SerializeField] private Button buttonPreviousResolution = null;
     [SerializeField] private Button buttonNextResolution = null;
@@ -33,9 +37,10 @@ public class UiSettingsController : UiGenericMenu
     #region language
 
     [Header("Language Components")]
-    [SerializeField] private Text languageText;
-    [SerializeField] private Button buttonPreviousLanguage;
-    [SerializeField] private Button buttonNextLanguage;
+    [SerializeField] private Button languageLabel = null;
+    [SerializeField] private Text languageText = null;
+    [SerializeField] private Button buttonPreviousLanguage = null;
+    [SerializeField] private Button buttonNextLanguage = null;
 
     private int indexLanguage = 0;
 
@@ -44,9 +49,10 @@ public class UiSettingsController : UiGenericMenu
     #region fontsize
 
     [Header("Fontsize Components")]
-    [SerializeField] private Text fontsizeText;
-    [SerializeField] private Button buttonPreviousFontSize;
-    [SerializeField] private Button buttonNextFontSize;
+    [SerializeField] private Button fontsizeLabel = null;
+    [SerializeField] private Text fontsizeText = null;
+    [SerializeField] private Button buttonPreviousFontSize = null;
+    [SerializeField] private Button buttonNextFontSize = null;
 
     private int indexFontsize = 0;
 
@@ -90,7 +96,7 @@ public class UiSettingsController : UiGenericMenu
         buttonNextFontSize?.onClick.RemoveAllListeners();
         buttonNextFontSize?.onClick.AddListener(NextFontsize);
 
-        // Setting fontsize buttons
+        // Setting general buttons
         buttonDefault?.onClick.RemoveAllListeners();
         buttonDefault?.onClick.AddListener(Default);
         buttonApply?.onClick.RemoveAllListeners();
@@ -101,6 +107,41 @@ public class UiSettingsController : UiGenericMenu
     {
         Settings.SettingsFile.Load();
         DefaultSettings();
+    }
+
+    private void OnMove(InputValue value)
+    {
+        if (IsShowing())
+        {
+            float horizontalValue = value.Get<Vector2>().x;
+            if (horizontalValue != 0f)
+            {
+                Button currentButton = EventSystem.current.currentSelectedGameObject.GetComponent<Button>();
+                if (currentButton != null)
+                {
+                    if (currentButton == fullscreenLabel)
+                    {
+                        if (horizontalValue > 0f) FullscreenEnable();
+                        else if (horizontalValue < 0f) FullscreenDisable();
+                    }
+                    else if (currentButton == resolutionLabel)
+                    {
+                        if (horizontalValue > 0f) NextResolution();
+                        else if (horizontalValue < 0f) PreviousResolution();
+                    }
+                    else if (currentButton == languageLabel)
+                    {
+                        if (horizontalValue > 0f) NextLanguage();
+                        else if (horizontalValue < 0f) PreviousLanguage();
+                    }
+                    else if (currentButton == fontsizeLabel)
+                    {
+                        if (horizontalValue > 0f) NextFontsize();
+                        else if (horizontalValue < 0f) PreviousFontsize();
+                    }
+                }
+            }
+        }
     }
 
     #region fullscreenMethods
@@ -125,6 +166,8 @@ public class UiSettingsController : UiGenericMenu
 
     private void UpdateFullscreen()
     {
+        fullscreenLabel.Select();
+
         buttonPreviousFullscreen.interactable = fullscreen;
         buttonNextFullscreen.interactable = !fullscreen;
         UpdateFullscreenLabel();
@@ -162,6 +205,8 @@ public class UiSettingsController : UiGenericMenu
 
     private void UpdateResolution()
     {
+        resolutionLabel.Select();
+
         Vector2[] settingsResolution = Settings.Resolution.listScreenSizes;
 
         buttonPreviousResolution.interactable = !(indexResolution <= 0);
@@ -197,6 +242,8 @@ public class UiSettingsController : UiGenericMenu
 
     private void UpdateLanguage()
     {
+        languageLabel.Select();
+
         int length = Settings.Language.Length;
 
         buttonPreviousLanguage.interactable = !(indexLanguage <= 0);
@@ -238,6 +285,8 @@ public class UiSettingsController : UiGenericMenu
 
     private void UpdateFontsize()
     {
+        fontsizeLabel.Select();
+
         int length = Settings.Fontsize.Length;
 
         buttonPreviousFontSize.interactable = !(indexFontsize <= 0);
@@ -273,7 +322,7 @@ public class UiSettingsController : UiGenericMenu
         settings.resolution = indexResolution;
         settings.language = indexLanguage;
         settings.fontsize = indexFontsize;
-        Settings.SettingsFile.Save(settings);
+        if (Settings.SettingsFile.Save(settings)) Events.ObserverManager.Notify(NotifyEvent.Language.Change);
 
         ApplySettings();
     }

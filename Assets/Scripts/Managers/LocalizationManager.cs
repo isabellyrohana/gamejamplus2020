@@ -13,7 +13,6 @@ public class LocalizationManager : Singleton<LocalizationManager>
     public override void Init()
     {
         base.Init();
-
         DontDestroyOnLoad (gameObject);
     }
 

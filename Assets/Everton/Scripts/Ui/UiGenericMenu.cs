@@ -34,6 +34,8 @@ public abstract class UiGenericMenu : MonoBehaviour
         }*/
     }
 
+    public void Show() => Show(null);
+
     public void Show(Action callback = null)
     {
         if (!_isShowing)
@@ -48,6 +50,8 @@ public abstract class UiGenericMenu : MonoBehaviour
             });
         }
     }
+
+    public void Hide() => Hide(null);
 
     public void Hide(Action callback = null)
     {

@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-    
+
     public static void ToMainMenu()
     {
         SceneManager.LoadScene(Scenes.GetScene(Scenes.ScenesEnum.MAIN_MENU));
@@ -20,6 +20,13 @@ public class SceneController : MonoBehaviour
 
     public static void ToScene(Scenes.ScenesEnum scene) => SceneManager.LoadScene(Scenes.GetScene(scene));
 
-    public static void Exit() => Application.Quit();
+    public static void Exit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 
 }
