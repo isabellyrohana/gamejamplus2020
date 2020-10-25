@@ -34,7 +34,7 @@ public class ObjectToShoot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Chandelier"))
+        if(other.gameObject.CompareTag("Chandelier") || other.gameObject.CompareTag("Bound"))
         {
             print("Chandelier");
             objectAnim.SetTrigger("destroy");
@@ -47,9 +47,19 @@ public class ObjectToShoot : MonoBehaviour
         if(other.gameObject.CompareTag("Ground") && canDestroy)
         {
             objectRb.velocity = Vector2.zero;
-            objectAnim.SetTrigger("destroy");
             objectRb.gravityScale = 0f;
+            objectAnim.SetTrigger("destroy");
         }
         
+    }
+
+    private void OnTriggerStay2D(Collider2D other) 
+    {
+        if(other.gameObject.CompareTag("Ground")  && canDestroy)
+        {
+            objectRb.velocity = Vector2.zero;
+            objectRb.gravityScale = 0f;
+            objectAnim.SetTrigger("destroy");
+        }
     }
 }

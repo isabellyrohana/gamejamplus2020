@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 439387}
   m_Layer: 0
   m_Name: wallBound
-  m_TagString: Untagged
+  m_TagString: Bound
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 439385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -18.768, y: -0.31, z: 0}
+  m_LocalPosition: {x: -18.768, y: -0.759, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1028890430}
@@ -171,7 +171,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 0.5, y: 3.2}
-    newSize: {x: 15.675945, y: 10.629927}
+    newSize: {x: 15.675945, y: 26.360338}
     adaptiveTilingThreshold: 0.5
     drawMode: 2
     adaptiveTiling: 0
@@ -224,7 +224,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
-  m_Size: {x: 15.675945, y: 10.629927}
+  m_Size: {x: 15.675945, y: 26.360338}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -880,7 +880,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -3.589161, y: -4.67}
+  m_Offset: {x: -3.3971424, y: -4.67}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -891,7 +891,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 9.065277, y: 1.7441883}
+  m_Size: {x: 4.9369392, y: 1.7441883}
   m_EdgeRadius: 0
 --- !u!114 &269405336
 MonoBehaviour:
@@ -1235,12 +1235,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ba9bf627d73c1478ef9a02019f6008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetObject: {fileID: 1235996427}
-  boxMask:
+  rightHandPosition: {fileID: 1235996428}
+  layerNotThrowable:
     serializedVersion: 2
-    m_Bits: 6199
-  distance: 2
-  forceAttack: 400
+    m_Bits: 27703
+  distance: 1.5
+  throwForce: 10
 --- !u!95 &330771745
 Animator:
   serializedVersion: 3
@@ -1701,7 +1701,7 @@ GameObject:
   m_Component:
   - component: {fileID: 391118983}
   m_Layer: 0
-  m_Name: Enemyes
+  m_Name: Enemies
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3705,7 +3705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1235996427}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.89, y: -0.39, z: 0}
+  m_LocalPosition: {x: 1.2, y: -0.39, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 330771743}
@@ -3929,8 +3929,8 @@ MonoBehaviour:
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 0
   m_ShadowVolumeIntensity: 0
-  m_PointLightInnerAngle: 42
-  m_PointLightOuterAngle: 71
+  m_PointLightInnerAngle: 20
+  m_PointLightOuterAngle: 40
   m_PointLightInnerRadius: 0.42
   m_PointLightOuterRadius: 11.6
   m_PointLightDistance: 3
@@ -4377,7 +4377,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 6.714905, y: -0.6541281}
+  m_Offset: {x: 5.540328, y: -0.6541281}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4388,7 +4388,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 60.831055, y: 2.5940876}
+  m_Size: {x: 63.180206, y: 2.5940876}
   m_EdgeRadius: 0
 --- !u!1 &1746023053
 GameObject:
@@ -5349,8 +5349,8 @@ MonoBehaviour:
   m_AlphaBlendOnOverlap: 0
   m_ShadowIntensity: 0
   m_ShadowVolumeIntensity: 0
-  m_PointLightInnerAngle: 42
-  m_PointLightOuterAngle: 71
+  m_PointLightInnerAngle: 20
+  m_PointLightOuterAngle: 40
   m_PointLightInnerRadius: 0.42
   m_PointLightOuterRadius: 11.6
   m_PointLightDistance: 3

@@ -17,6 +17,7 @@ public class RasgaController : Singleton<RasgaController>
 
     private Rigidbody2D rasgaControllerRb;
     private Vector2 direction;
+
     private int idTarget;
     private bool canAttack = true;
 
@@ -38,13 +39,19 @@ public class RasgaController : Singleton<RasgaController>
         
         if (PlayerController.Instance == null) return;
 
+        if (!canAttack) return;
+
         if(PlayerController.Instance.GetPlayerOnTheLight())
         {
             rasgaAnim.SetBool("attack", true);
 
-            direction = (PlayerController.Instance.transform.position - transform.position).normalized;
+            if(Vector2.Distance(PlayerController.Instance.transform.position, transform.position) > 0)
+            {
+                direction = (PlayerController.Instance.transform.position - transform.position).normalized;
+            }
+
             rasgaControllerRb.velocity = direction * speedToAttack;
-            
+
             if (direction.x < 0 && !isLookLeft)
             {
                 Flip();
@@ -56,7 +63,6 @@ public class RasgaController : Singleton<RasgaController>
         }
         else
         {
-            if (!canAttack) return;
 
             rasgaAnim.SetBool("attack", false);
 
