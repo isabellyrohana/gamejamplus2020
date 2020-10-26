@@ -1,22 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class UiMainMenuController : MonoBehaviour
 {
 
+    [Header("Input System Ui Input Module")]
+    [SerializeField] private InputSystemUIInputModule uiInputModule;
+
     [Header("Audios")]
     [SerializeField] private AudioClip doorOpenAudio;
     [SerializeField] private AudioClip pressButtonAudio;
-
-    [Header("Buttons")]
-    [SerializeField] private Button buttonPlay;
-    [SerializeField] private Button buttonControls;
-    [SerializeField] private Button buttonCredits;
-    [SerializeField] private Button buttonExitGame;
-    [SerializeField] private Button buttonSettings;
 
     [Header("Background")]
     [SerializeField] private UiFadeEffect fadeEffect;
@@ -33,61 +30,36 @@ public class UiMainMenuController : MonoBehaviour
 
     void Awake()
     {
+        uiInputModule.enabled = false;
         doorAnimator.SetBool("DoorOpen", false);
 
         _audioSource = GetComponent<AudioSource>();
         fadeEffect.GetComponent<CanvasGroup>().alpha = 1f;
-        StartCoroutine(CustomWait.Wait(1f, () => fadeEffect.FadeOut()));
-
-        buttonPlay.onClick.RemoveAllListeners();
-        buttonControls.onClick.RemoveAllListeners();
-        buttonCredits.onClick.RemoveAllListeners();
-        buttonExitGame.onClick.RemoveAllListeners();
-        buttonSettings.onClick.RemoveAllListeners();
-
-        buttonPlay.onClick.AddListener(ButtonPlay);
-        buttonControls.onClick.AddListener(ButtonControls);
-        buttonCredits.onClick.AddListener(ButtonCredits);
-        buttonExitGame.onClick.AddListener(ButtonExitGame);
-        buttonSettings.onClick.AddListener(ButtonSettings);
+        StartCoroutine(CustomWait.Wait(1f, () => fadeEffect.FadeOut(() => uiInputModule.enabled = true)));
     }
 
-    private void ButtonPlay()
+    public void ButtonPlay()
     {
+        uiInputModule.enabled = false;
         if (_audioSource.isPlaying) _audioSource.Stop();
         _audioSource.clip = doorOpenAudio;
         _audioSource.Play();
         doorAnimator.SetBool("DoorOpen", true);
-        StartCoroutine(CustomWait.Wait(50f / 60f, Play));
+
+        StartCoroutine(CustomWait.Wait(50f / 60f, () => fadeEffect.FadeIn(() => SceneController.ToPreGameScreen())));
     }
 
-    public void Play()
+    public void ButtonExitGame()
     {
-        fadeEffect.FadeIn(() => SceneController.ToPreGameScreen());
-    }
-
-    private void ButtonControls()
-    {
+        uiInputModule.enabled = false;
         ButtonAudioPlay();
-        uiControlsController.Show();
-    }
+        StartCoroutine(Wait());
 
-    private void ButtonCredits()
-    {
-        ButtonAudioPlay();
-        uiCreditsController.Show();
-    }
-
-    private void ButtonExitGame()
-    {
-        ButtonAudioPlay();
-        SceneController.Exit();
-    }
-
-    private void ButtonSettings()
-    {
-        ButtonAudioPlay();
-        uiSettingsController.Show();
+        IEnumerator Wait()
+        {
+            while(_audioSource.clip != null && _audioSource.isPlaying) yield return null;
+            SceneController.Exit();
+        }
     }
 
     private void ButtonAudioPlay()

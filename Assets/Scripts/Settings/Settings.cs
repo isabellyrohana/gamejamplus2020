@@ -62,8 +62,6 @@ namespace Settings
 
                 _settings = datas;
 
-                LoadLanguage();
-
                 return true;
             }
             catch (System.Exception)

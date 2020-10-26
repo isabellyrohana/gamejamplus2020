@@ -11,7 +11,7 @@ public class SceneStartController : MonoBehaviour
     [SerializeField] private UiFadeEffect logoFadeEffect;
 
     private IEnumerator Start() {
-        LocalizationManager.Instance.LoadLocalizedText(Language.GetFileName(Language.LanguageEnum.ENGLISH));
+        Settings.SettingsFile.Load();
 
         logoFadeEffect.FadeIn(() => {
             StartCoroutine(CustomWait.Wait(wait, () => {
