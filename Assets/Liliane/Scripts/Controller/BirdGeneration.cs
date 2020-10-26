@@ -28,9 +28,8 @@ public class BirdGeneration : MonoBehaviour
         temp.TryGetComponent(out Rigidbody2D tempRb);
         tempRb.velocity = new Vector2(Random.Range(2, speed) * signalDirection, 0);
         
-        Destroy(temp, 15);
+        Destroy(temp, 15f);
         StartCoroutine("SpawnBird");
-
     }
 
 }

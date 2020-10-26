@@ -41,7 +41,7 @@ public class PlayerPush : MonoBehaviour
 
     private void OnPick(InputValue value)
     {
-        if (!isThrowable)
+        if (!isThrowable && value.Get<float>() == 1)
         {
             Physics2D.queriesStartInColliders = false;
             hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 1f), Vector2.right * direction, distance);
@@ -52,7 +52,7 @@ public class PlayerPush : MonoBehaviour
                 playerAnim.SetBool("hold", true);
             }
         }
-        else if (!Physics2D.OverlapPoint(rightHandPosition.position, layerNotThrowable))
+        else if (!Physics2D.OverlapPoint(rightHandPosition.position, layerNotThrowable) && value.Get<float>() == 1)
         {
             isThrowable = false;
 
@@ -61,7 +61,9 @@ public class PlayerPush : MonoBehaviour
                 hit.collider.gameObject.TryGetComponent(out Rigidbody2D hitRb);
 
                 hitRb.bodyType = RigidbodyType2D.Dynamic;
-                hitRb.velocity = new Vector2(direction, 1) * throwForce;
+                hitRb.velocity = Vector2.zero;
+
+                hitRb.AddForce(new Vector2(direction, 3f) * throwForce * Time.deltaTime, ForceMode2D.Impulse);
                 
                 hit.collider.gameObject.TryGetComponent(out ObjectToShoot hitScript);
                 hitScript.ChangeToTrigger();

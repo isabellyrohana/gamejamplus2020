@@ -17,10 +17,7 @@ public class ObjectToShoot : MonoBehaviour
         objectBC = GetComponent<BoxCollider2D>();
     }
 
-    public void CanDestroy()
-    {
-        Destroy(this.gameObject, 4.05f);
-    }
+
     public void ChangeToTrigger()
     {
         objectBC.isTrigger = true;
@@ -34,29 +31,37 @@ public class ObjectToShoot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Chandelier") || other.gameObject.CompareTag("Bound"))
+        if (other.gameObject.CompareTag("Chandelier") || other.gameObject.CompareTag("Wall"))
         {
-            print("Chandelier");
+            SoundFxController.Instance.playFx(7);
+
             objectAnim.SetTrigger("destroy");
             objectRb.velocity = new Vector2(0, objectRb.velocity.x);
             objectRb.gravityScale = 3f;
+
             canDestroy = true;
-           SoundFxController.Instance.playFx(7);
         }
 
-        if(other.gameObject.CompareTag("Ground") && canDestroy)
+        if (other.gameObject.CompareTag("Bound"))
         {
+            canDestroy = true;
+        }
+
+        if (other.gameObject.CompareTag("Ground"))
+        {
+            canDestroy = true;
             objectRb.velocity = Vector2.zero;
             objectRb.gravityScale = 0f;
             objectAnim.SetTrigger("destroy");
         }
-        
     }
 
     private void OnTriggerStay2D(Collider2D other) 
     {
         if(other.gameObject.CompareTag("Ground")  && canDestroy)
         {
+            canDestroy = false;
+            SoundFxController.Instance.playFx(7);
             objectRb.velocity = Vector2.zero;
             objectRb.gravityScale = 0f;
             objectAnim.SetTrigger("destroy");
