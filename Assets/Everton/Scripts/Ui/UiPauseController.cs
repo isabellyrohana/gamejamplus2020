@@ -44,7 +44,7 @@ public class UiPauseController : UiGenericMenu
 
     private void ButtonControls() => uiPauseControls.Show();
 
-    public void ButtonJournals() => uiPauseJournals.Setup();
+    public void ButtonJournals() => uiPauseJournals.Show();
 
     private void ButtonExitGame() => this.ButtonClose(() => SceneController.ToMainMenu());
 
@@ -58,12 +58,14 @@ public class UiPauseController : UiGenericMenu
     {
         Journal journal = Journals.GetJournal(index);
         uiPauseJournal.Setup(journal.text);
+        uiPauseJournal.Show();
     }
 
     public void OpenLastJournal()
     {
         Journal journal = Journals.GetJournal(Journals.GetJournals().Count - 1);
         uiPauseJournal.Setup(journal.text);
+        uiPauseJournal.Show();
     }
 
     public bool JournalIsOpen() => uiPauseJournal.IsShowing();

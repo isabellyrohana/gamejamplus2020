@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00ba9bf627d73c1478ef9a02019f6008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rightHandPosition: {fileID: 0}
+  rightHandPosition: {fileID: 1235996428}
   layerNotThrowable:
     serializedVersion: 2
     m_Bits: 0

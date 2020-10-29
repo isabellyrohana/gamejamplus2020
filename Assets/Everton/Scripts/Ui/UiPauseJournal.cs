@@ -16,7 +16,6 @@ public class UiPauseJournal : UiGenericMenu
     public void Setup(string text)
     {
         this.journalText.text = text;
-        this.Show();
     }
 
 }

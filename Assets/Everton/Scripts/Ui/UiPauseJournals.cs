@@ -26,7 +26,6 @@ public class UiPauseJournals : UiGenericMenu
                 uiPauseJournal.Setup(journal.text);
             });
         }
-        this.Show();
     }
     
 }

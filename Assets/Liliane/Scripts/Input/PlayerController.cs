@@ -241,7 +241,7 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnDiary()
     {
-        Pause(false);
+        Pause(true);
         uiPauseController.ButtonJournals();
     }
 

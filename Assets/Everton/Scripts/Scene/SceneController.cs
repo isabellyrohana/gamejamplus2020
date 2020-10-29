@@ -9,7 +9,7 @@ public class SceneController : MonoBehaviour
     public static void ToMainMenu()
     {
         SceneManager.LoadScene(Scenes.GetScene(Scenes.ScenesEnum.MAIN_MENU));
-        MainMusicManager.Instance.PlayThemeAudioClip();
+        MainMusicManager.Instance?.PlayThemeAudioClip();
     }
 
     public static void ToStartScreen() => SceneManager.LoadScene(Scenes.GetScene(Scenes.ScenesEnum.START));
