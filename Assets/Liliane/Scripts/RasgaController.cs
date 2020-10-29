@@ -19,7 +19,9 @@ public class RasgaController : Singleton<RasgaController>
     private Vector2 direction;
 
     private int idTarget;
+    private int signal = 1;
     private bool canAttack = true;
+    private float distance;
 
     public Animator animator;
 
@@ -36,8 +38,6 @@ public class RasgaController : Singleton<RasgaController>
     void Update()
     {
         if (_isGamePaused) return;
-        
-        if (PlayerController.Instance == null) return;
 
         if (!canAttack) return;
 
@@ -45,49 +45,61 @@ public class RasgaController : Singleton<RasgaController>
         {
             rasgaAnim.SetBool("attack", true);
 
-            if(Vector2.Distance(PlayerController.Instance.transform.position, transform.position) > 0)
+            distance = Vector2.Distance(PlayerController.Instance.transform.position, transform.position);
+
+            if(distance > 0)
             {
                 direction = (PlayerController.Instance.transform.position - transform.position).normalized;
+
+                if (direction.x < 0 && !isLookLeft)
+                {
+                    Flip();
+                }
+                else if (direction.x > 0 && isLookLeft)
+                {
+                    Flip();
+                }
+                
+                signal = -1;
+            }
+            else
+            {
+                signal = 1;
             }
 
-            rasgaControllerRb.velocity = direction * speedToAttack;
-
-            if (direction.x < 0 && !isLookLeft)
-            {
-                Flip();
-            }
-            else if (direction.x > 0 && isLookLeft)
-            {
-                Flip();
-            }
+            rasgaControllerRb.velocity = new Vector2(signal, direction.y) * speedToAttack;
         }
         else
         {
-
-            rasgaAnim.SetBool("attack", false);
-
-            rasgaControllerRb.velocity = Vector2.zero;
-
-            Rasga.position = Vector3.MoveTowards(Rasga.position, posRasga[idTarget].position, speed * Time.deltaTime);
-
-            if (Rasga.position == posRasga[idTarget].position)
-            {
-                idTarget += 1;
-                if (idTarget == posRasga.Length)
-                {
-                    idTarget = 0;
-                }
-            }
-
-            if (Rasga.position.x > posRasga[idTarget].position.x && !isLookLeft)
-            {
-                Flip();
-            }
-            else if (Rasga.position.x < posRasga[idTarget].position.x && isLookLeft)
-            {
-                Flip();
-            }
+            MoveToLeftToRight();
         }        
+    }
+
+    private void MoveToLeftToRight()
+    {
+        rasgaAnim.SetBool("attack", false);
+
+        rasgaControllerRb.velocity = Vector2.zero;
+
+        Rasga.position = Vector3.MoveTowards(Rasga.position, posRasga[idTarget].position, speed * Time.deltaTime);
+
+        if (Rasga.position == posRasga[idTarget].position)
+        {
+            idTarget += 1;
+            if (idTarget == posRasga.Length)
+            {
+                idTarget = 0;
+            }
+        }
+
+        if (Rasga.position.x > posRasga[idTarget].position.x && !isLookLeft)
+        {
+            Flip();
+        }
+        else if (Rasga.position.x < posRasga[idTarget].position.x && isLookLeft)
+        {
+            Flip();
+        }
     }
 
     private void Flip()
@@ -120,6 +132,14 @@ public class RasgaController : Singleton<RasgaController>
         yield return new WaitForSeconds(5f);
         
         rasgaControllerRb.velocity = Vector2.zero;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            MoveToLeftToRight();
+        }
     }
 
 }
