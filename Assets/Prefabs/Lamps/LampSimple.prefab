@@ -92,7 +92,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2946579789808328955}
   m_Layer: 0
-  m_Name: LampSimple 1
+  m_Name: LampSimple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
-  m_ShadowIntensity: 0
+  m_ShadowIntensity: 0.6
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 41
   m_PointLightOuterAngle: 68

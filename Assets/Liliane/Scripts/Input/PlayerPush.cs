@@ -17,6 +17,8 @@ public class PlayerPush : MonoBehaviour
     public float distance = 0.5f;
     public float throwForce;
 
+    private bool isThrow;
+
     private void Start()
     {
         playerAnim = GetComponent<Animator>();
@@ -63,7 +65,7 @@ public class PlayerPush : MonoBehaviour
                 hitRb.bodyType = RigidbodyType2D.Dynamic;
                 hitRb.velocity = Vector2.zero;
 
-                hitRb.AddForce(new Vector2(direction, 3f) * throwForce * Time.deltaTime, ForceMode2D.Impulse);
+                hitRb.AddForce(new Vector2(direction, 3f) * throwForce);
                 
                 hit.collider.gameObject.TryGetComponent(out ObjectToShoot hitScript);
                 hitScript.ChangeToTrigger();

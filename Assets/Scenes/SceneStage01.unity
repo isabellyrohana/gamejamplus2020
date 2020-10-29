@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -593,7 +593,7 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
-  m_ShadowIntensity: 0
+  m_ShadowIntensity: 0.6
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 46
   m_PointLightOuterAngle: 73
@@ -2999,6 +2999,11 @@ PrefabInstance:
       propertyPath: m_PointLightOuterAngle
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 2946579789961863304, guid: 07eeeae4aa41be0408c1e2d5758c9ba3,
+        type: 3}
+      propertyPath: m_ShadowIntensity
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 2946579789961863311, guid: 07eeeae4aa41be0408c1e2d5758c9ba3,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -3375,7 +3380,7 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_LightOrder: 0
   m_AlphaBlendOnOverlap: 0
-  m_ShadowIntensity: 0
+  m_ShadowIntensity: 0.6
   m_ShadowVolumeIntensity: 0
   m_PointLightInnerAngle: 26
   m_PointLightOuterAngle: 66
