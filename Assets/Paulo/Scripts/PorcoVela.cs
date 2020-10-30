@@ -49,7 +49,7 @@ public class PorcoVela : MonoBehaviour
     {
         if (_isGamePaused) return;
 
-        if (!PlayerController.Instance.GetPlayerVisible())
+        if (PlayerController.Instance.GetPlayerOnTheLight())
         {
             if (!GetLoud)
             {
@@ -67,7 +67,6 @@ public class PorcoVela : MonoBehaviour
         }
         else
         {
-
             if (!sprinting) {
                 speed = 1;
                 porco.position =
