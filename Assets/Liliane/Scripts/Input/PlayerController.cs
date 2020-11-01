@@ -184,6 +184,12 @@ public class PlayerController : Singleton<PlayerController>
             GameController.Instance.ActiveGameOver();
         }
 
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            Destroy(this.gameObject);
+            GameController.Instance.ActiveGameOver();
+        }
+
         // Enter in Door Trigger
         if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.DOOR))) _onDoor = other.GetComponent<Door>();
         // Enter in Safeplace Trigger
