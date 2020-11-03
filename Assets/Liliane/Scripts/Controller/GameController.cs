@@ -31,9 +31,11 @@ public class GameController : Singleton<GameController>
     private IEnumerator SceneToLoadIE()
     {
         gameOverPanel.SetActive(true);
+        yield return new WaitForSeconds(5f);
         uiPauseController.OpenGameOver();
-        yield return new WaitForSeconds(6f);
+        yield return new WaitForSeconds(1.5f);
         gameOverPanel.SetActive(false);
+        
     }
 
     public void SetPause(bool pause) 
