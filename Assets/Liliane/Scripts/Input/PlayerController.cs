@@ -26,6 +26,7 @@ public class PlayerController : Singleton<PlayerController>
     private bool _playerDeath = false;
     private bool _gameIsPaused = false;
     private bool _isOnTheLight = false;
+    public bool _hasKey = false;
 
     // Paulo
     private InventoryObject _currentThrowableObject = null;
@@ -63,7 +64,13 @@ public class PlayerController : Singleton<PlayerController>
 
         if (_verticalInput == 1)
         {
-            if (_onDoor != null) _onDoor.OpenDoor();
+            if (_onDoor != null)
+            {
+                if(GetHasKey())
+                {
+                    _onDoor.OpenDoor();
+                }
+            }
             else Hide();
         }
         else if (_verticalInput == -1)
@@ -72,6 +79,15 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
+    public void UpdateHasKey(bool value)
+    {
+        _hasKey = value;
+    }
+
+    public bool GetHasKey()
+    {
+        return _hasKey;
+    }
 
     private void Move()
     {
@@ -188,6 +204,11 @@ public class PlayerController : Singleton<PlayerController>
         {
             Destroy(this.gameObject);
             GameController.Instance.ActiveGameOver();
+        }
+
+        if (other.gameObject.CompareTag("Key"))
+        {
+            UpdateHasKey(true);
         }
 
         // Enter in Door Trigger

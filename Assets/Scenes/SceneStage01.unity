@@ -147,7 +147,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 106711881}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.768, y: 0, z: 0}
+  m_LocalPosition: {x: -18.768, y: 0, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 207411973}
@@ -215,8 +215,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1278992347
+  m_SortingLayer: 2
   m_SortingOrder: 101
   m_Sprite: {fileID: -1435797338680635134, guid: ff06a9ff9282bbe478133b808948f369,
     type: 3}
@@ -3657,6 +3657,7 @@ MonoBehaviour:
   uiPauseController: {fileID: 1898019278}
   rightHandPosition: {fileID: 2837317179204362554}
   morteAudioPorco: {fileID: 8300000, guid: da0624b29f4b46c4b8370d6400aa09a5, type: 3}
+  _hasKey: 1
 --- !u!50 &7330416164016774593
 Rigidbody2D:
   serializedVersion: 4
