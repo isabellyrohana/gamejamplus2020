@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 ]
 public class PlayerController : Singleton<PlayerController>
 {
-    
+
     [SerializeField] private float playerSpeed = 5f;
     [SerializeField] private UiPauseController uiPauseController = null;
     [SerializeField] private Transform rightHandPosition = null;
@@ -43,13 +43,13 @@ public class PlayerController : Singleton<PlayerController>
     private Animator _animator = null;
     private AudioSource _passosSound = null;
 
-    
 
-    protected new virtual void Awake() 
+
+    protected new virtual void Awake()
     {
         base.Awake();
-        
-        _rigidbody2D = GetComponent<Rigidbody2D>();   
+
+        _rigidbody2D = GetComponent<Rigidbody2D>();
         _passosSound = GetComponent<AudioSource>();
     }
 
@@ -69,7 +69,7 @@ public class PlayerController : Singleton<PlayerController>
         {
             if (_onDoor != null)
             {
-                if(GetHasKey())
+                if (GetHasKey())
                 {
                     _onDoor.OpenDoor();
                 }
@@ -188,13 +188,13 @@ public class PlayerController : Singleton<PlayerController>
 
     public void PickItem()
     {
-        _currentThrowableObject = _currentTouchedObject.GetComponent<InventoryObject>();
-        _currentTouchedObject = null;
-        _currentThrowableObject.transform.SetParent(transform);
-        _currentThrowableObject.transform.position = rightHandPosition.position;
-        Rigidbody2D rb = _currentThrowableObject.GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.zero;
-        rb.bodyType = RigidbodyType2D.Kinematic;
+        //_currentThrowableObject = _currentTouchedObject.GetComponent<InventoryObject>();
+        //_currentTouchedObject = null;
+        //_currentThrowableObject.transform.SetParent(transform);
+        //_currentThrowableObject.transform.position = rightHandPosition.position;
+        //Rigidbody2D rb = _currentThrowableObject.GetComponent<Rigidbody2D>();
+        //rb.velocity = Vector2.zero;
+        //rb.bodyType = RigidbodyType2D.Kinematic;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -262,7 +262,7 @@ public class PlayerController : Singleton<PlayerController>
     private void OnMove(InputValue value)
     {
         _horizontalInput = value.Get<Vector2>().x;
-        print("move " + _horizontalInput);
+        //print("move " + _horizontalInput);
     }
 
     private void OnHideAppear(InputValue value)
@@ -279,11 +279,11 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnPick()
     {
-        print("pick click");
-        // Se tiver encostado, pega o Item
-        if (_currentTouchedObject != null) PickItem();
-        // Se tiver segurando algum item, arremessa
-        else if (_currentThrowableObject != null) ThrowObject();
+        //print("pick click");
+        //// Se tiver encostado, pega o Item
+        //if (_currentTouchedObject != null) PickItem();
+        //// Se tiver segurando algum item, arremessa
+        //else if (_currentThrowableObject != null) ThrowObject();
     }
 
     private void OnInteract()
@@ -310,11 +310,11 @@ public class PlayerController : Singleton<PlayerController>
     private void OnPause()
     {
         print("pause click");
-        
+
         if (GameController.Instance != null)
         {
             if (GameController.Instance.IsPause()) uiPauseController.Hide(() => Pause(false));
-            else 
+            else
             {
                 Pause(true);
                 uiPauseController.Show();
@@ -328,5 +328,4 @@ public class PlayerController : Singleton<PlayerController>
     }
 
     #endregion
-
 }

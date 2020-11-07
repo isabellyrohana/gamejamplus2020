@@ -53,18 +53,21 @@ public class ObjectToShoot : MonoBehaviour
             objectRb.velocity = Vector2.zero;
             objectRb.gravityScale = 0f;
             objectAnim.SetTrigger("destroy");
+
+            SoundFxController.Instance.playFx(7);
+            gameObject.tag = "Untagged";
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other) 
-    {
-        if(other.gameObject.CompareTag("Ground")  && canDestroy)
-        {
-            canDestroy = false;
-            SoundFxController.Instance.playFx(7);
-            objectRb.velocity = Vector2.zero;
-            objectRb.gravityScale = 0f;
-            objectAnim.SetTrigger("destroy");
-        }
-    }
+    //private void OnTriggerStay2D(Collider2D other) 
+    //{
+    //    if(other.gameObject.CompareTag("Ground")  && canDestroy)
+    //    {
+    //        canDestroy = false;
+    //        SoundFxController.Instance.playFx(7);
+    //        objectRb.velocity = Vector2.zero;
+    //        objectRb.gravityScale = 0f;
+    //        objectAnim.SetTrigger("destroy");
+    //    }
+    //}
 }
