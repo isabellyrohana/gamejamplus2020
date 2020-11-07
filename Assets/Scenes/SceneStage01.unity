@@ -3657,7 +3657,8 @@ MonoBehaviour:
   uiPauseController: {fileID: 1898019278}
   rightHandPosition: {fileID: 2837317179204362554}
   morteAudioPorco: {fileID: 8300000, guid: da0624b29f4b46c4b8370d6400aa09a5, type: 3}
-  _hasKey: 1
+  armarioAudioClip: {fileID: 8300000, guid: 710a3294f0b148545ada5acdea768773, type: 3}
+  _hasKey: 0
 --- !u!50 &7330416164016774593
 Rigidbody2D:
   serializedVersion: 4

@@ -15,6 +15,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private UiPauseController uiPauseController = null;
     [SerializeField] private Transform rightHandPosition = null;
     [SerializeField] private AudioClip morteAudioPorco = null;
+    [SerializeField] private AudioClip armarioAudioClip = null;
 
     // Inputs
     private float _horizontalInput = 0f;
@@ -41,6 +42,8 @@ public class PlayerController : Singleton<PlayerController>
     private Rigidbody2D _rigidbody2D = null;
     private Animator _animator = null;
     private AudioSource _passosSound = null;
+
+    
 
     protected new virtual void Awake() 
     {
@@ -168,6 +171,8 @@ public class PlayerController : Singleton<PlayerController>
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
             _isHiding = true;
+
+            AudioSource.PlayClipAtPoint(armarioAudioClip, transform.position, 1f);
         }
     }
 
