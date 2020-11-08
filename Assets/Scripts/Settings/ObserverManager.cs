@@ -39,13 +39,13 @@ namespace Events
 
         public static void Register<A, B>(int type, UnityAction<A, B> action)
         {
-            if (ArgsEvents != null && !ArgsEvents.ContainsKey(type)) ArgsEvents.Add(type, new ArgEvent<A>());
+            if (ArgsEvents != null && !ArgsEvents.ContainsKey(type)) ArgsEvents.Add(type, new ArgEvent<A, B>());
             (ArgsEvents[type] as ArgEvent<A, B>).AddListener(action);
         }
 
         public static void Register<A, B, C>(int type, UnityAction<A, B, C> action)
         {
-            if (ArgsEvents != null && !ArgsEvents.ContainsKey(type)) ArgsEvents.Add(type, new ArgEvent<A>());
+            if (ArgsEvents != null && !ArgsEvents.ContainsKey(type)) ArgsEvents.Add(type, new ArgEvent<A, B, C>());
             (ArgsEvents[type] as ArgEvent<A, B, C>).AddListener(action);
         }
 
