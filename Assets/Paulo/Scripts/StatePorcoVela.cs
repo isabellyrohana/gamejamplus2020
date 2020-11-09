@@ -88,8 +88,3 @@ public class StatePorcoVelaIDLE: StatePorcoVela
         base.Exit();
     }
 }
-
-public class StatePorcoVelaPATROL: StatePorcoVela
-{
-    public StatePorcoVelaPATROL
-}
