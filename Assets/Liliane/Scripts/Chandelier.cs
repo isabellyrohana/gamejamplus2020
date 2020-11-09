@@ -15,18 +15,18 @@ public class Chandelier : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("throwable"))
+        if (other.gameObject.CompareTag(Tags.GetTag(Tags.TagsEnum.THROWABLE)))
         {
             chandelierRb.gravityScale = 2f;
 
-            RasgaController.Instance.UpdateCanAttack(false);
-            RasgaController.Instance.RasgaAffected();
+            RasgaController.Instance?.UpdateCanAttack(false);
+            RasgaController.Instance?.RasgaAffected();
             
             SoundFxController.Instance.playFx(3);
             StartCoroutine("LightsFall");
         }
 
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag(Tags.GetTag(Tags.TagsEnum.GROUND)))
         {
             chandelierRb.gravityScale = 0f;
             chandelierRb.velocity = Vector2.zero;
@@ -36,7 +36,7 @@ public class Chandelier : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other) 
     {
-        if (other.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag(Tags.GetTag(Tags.TagsEnum.GROUND)))
         {
             chandelierRb.gravityScale = 0f;
             chandelierRb.velocity = Vector2.zero;

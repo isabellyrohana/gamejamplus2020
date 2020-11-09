@@ -14,6 +14,8 @@ public class Door : MonoBehaviour
     private Animator _doorAnim;
     private AudioSource _audioSource;
 
+    private bool _keyIsShow = false;
+
     private void Awake()
     {
         _doorAnim = GetComponent<Animator>();
@@ -38,18 +40,31 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
 
-        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)))
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && PlayerController.Instance.GetHasKey() && !_keyIsShow)
         {
             string key = "W";
             Vector2 position = transform.position + Vector3.up * 4.25f;
             Events.ObserverManager.Notify<string, Vector2>(NotifyEvent.Interactions.Arrows.Show, key, position);
+            _keyIsShow = true;
+        }
+
+    }
+
+    private void OnTriggerStay2D(Collider2D other) {
+        
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && PlayerController.Instance.GetHasKey() && !_keyIsShow)
+        {
+            string key = "W";
+            Vector2 position = transform.position + Vector3.up * 4.25f;
+            Events.ObserverManager.Notify<string, Vector2>(NotifyEvent.Interactions.Arrows.Show, key, position);
+            _keyIsShow = true;
         }
 
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         
-        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)))
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && _keyIsShow)
         {
             Events.ObserverManager.Notify(NotifyEvent.Interactions.Arrows.Hide);
         }
