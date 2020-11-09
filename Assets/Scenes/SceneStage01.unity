@@ -1487,7 +1487,7 @@ PrefabInstance:
     - target: {fileID: 1125937398949757419, guid: bd4b49a70d8a94348a56afe5c010c76b,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1125937398949757419, guid: bd4b49a70d8a94348a56afe5c010c76b,
         type: 3}
@@ -1547,7 +1547,7 @@ PrefabInstance:
     - target: {fileID: 8028253807047710536, guid: a37a44350ff1baa42a01d8dc2bc5958e,
         type: 3}
       propertyPath: m_SortingLayer
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8028253807047710536, guid: a37a44350ff1baa42a01d8dc2bc5958e,
         type: 3}
@@ -1978,8 +1978,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 8727683836241684774, guid: 7955841ba4faf2e40bbfd1f6fc35b372,
-    type: 3}
+  m_Sprite: {fileID: 21300000, guid: cef06677a1d3edf4c8eac477c9cde40e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2017,18 +2016,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.15647037, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.74, y: 1.33}
+    oldSize: {x: 3, y: 3}
     newSize: {x: 0.74, y: 1.33}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.67, y: 1.22}
+  m_Size: {x: 0.3570592, y: 1.22}
   m_EdgeRadius: 0
 --- !u!1 &1369098584
 GameObject:
@@ -3657,8 +3656,11 @@ MonoBehaviour:
   uiPauseController: {fileID: 1898019278}
   rightHandPosition: {fileID: 2837317179204362554}
   morteAudioPorco: {fileID: 8300000, guid: da0624b29f4b46c4b8370d6400aa09a5, type: 3}
-  armarioAudioClip: {fileID: 8300000, guid: 710a3294f0b148545ada5acdea768773, type: 3}
-  _hasKey: 1
+  armarioEntrandoAudioClip: {fileID: 8300000, guid: 85b8f7d0a87bf2e4eb660cde3771f8fc,
+    type: 3}
+  armarioSaindoAudioClip: {fileID: 8300000, guid: 0c44dac57805d78478a8f8af4caf6d9d,
+    type: 3}
+  _hasKey: 0
 --- !u!50 &7330416164016774593
 Rigidbody2D:
   serializedVersion: 4
@@ -3687,6 +3689,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 864337075}
     m_Modifications:
+    - target: {fileID: 7615983537327138018, guid: 72467e0d29e0ed547a7b8206f8ef41c3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7615983537630068835, guid: 72467e0d29e0ed547a7b8206f8ef41c3,
         type: 3}
       propertyPath: m_Name
@@ -3796,6 +3803,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7615983538492752398, guid: 72467e0d29e0ed547a7b8206f8ef41c3,
+        type: 3}
+      propertyPath: m_Text
+      value: "Cuidado, aqui n\xE3o \xE9 t\xE3o seguro.... se ficar com medo se esconda."
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72467e0d29e0ed547a7b8206f8ef41c3, type: 3}

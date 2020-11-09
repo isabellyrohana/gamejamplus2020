@@ -15,7 +15,8 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private UiPauseController uiPauseController = null;
     [SerializeField] private Transform rightHandPosition = null;
     [SerializeField] private AudioClip morteAudioPorco = null;
-    [SerializeField] private AudioClip armarioAudioClip = null;
+    [SerializeField] private AudioClip armarioEntrandoAudioClip = null;
+    [SerializeField] private AudioClip armarioSaindoAudioClip = null;
 
     // Inputs
     private float _horizontalInput = 0f;
@@ -160,13 +161,13 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (_currentSafePlace != null && !_isHiding)
         {
-            transform.position = new Vector3(_currentSafePlace.transform.position.x, transform.position.y, transform.position.z);
+            //transform.position = new Vector3(_currentSafePlace.transform.position.x, transform.position.y, transform.position.z);
             _rigidbody2D.velocity *= Vector2.up;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
             _isHiding = true;
 
-            AudioSource.PlayClipAtPoint(armarioAudioClip, transform.position, 1f);
+            AudioSource.PlayClipAtPoint(armarioEntrandoAudioClip, Camera.main.transform.position, 1f);
         }
     }
 
@@ -177,6 +178,7 @@ public class PlayerController : Singleton<PlayerController>
             GetComponent<BoxCollider2D>().enabled = true;
             GetComponent<SpriteRenderer>().enabled = true;
             _isHiding = false;
+            AudioSource.PlayClipAtPoint(armarioSaindoAudioClip, Camera.main.transform.position, 1f);
         }
     }
 
@@ -258,7 +260,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (_journalReference != null)
         {
-            string text = "Raira eu queria te falar antes..\n mas nao tive como.\nCuidado com as sombras!! Tem cois...";
+            string text = "cuidado, aqui não é tão seguro.... se ficar com medo se esconda";
             Journal journal = new Journal(text);
             if (Journals.AddJournal(journal))
             {

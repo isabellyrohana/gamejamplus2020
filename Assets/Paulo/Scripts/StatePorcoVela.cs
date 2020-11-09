@@ -1,5 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Net.Mime;
+using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 
@@ -10,32 +13,36 @@ public class StatePorcoVela
         IDLE, PATROL, PURSUE
     }
 
-    public enum EVENT
+    public enum STAGE
     {
         ENTER, UPDATE, EXIT
     }
 
-    public STATE name;
-    protected EVENT stage;
-    protected PorcoVela porco;
-    protected Animator anim;
-    protected StatePorcoVela nextState;
+    #region Attributes
 
-    public StatePorcoVela(PorcoVela _porco, Animator _anim)
+    public STATE name;
+    public STAGE stage;
+    public PorcoVela porcoVela;
+    public Animator anim;
+    public StatePorcoVela nextState;
+
+    #endregion
+
+    public StatePorcoVela(PorcoVela _porcoVela, Animator _anim)
     {
-        porco = _porco;
+        porcoVela = _porcoVela;
         anim = _anim;
     }
 
-    public virtual void Enter() { stage = EVENT.ENTER; }
-    public virtual void Update() { stage = EVENT.UPDATE;}
-    public virtual void Exit() { stage = EVENT.EXIT; }
+    public virtual void Enter() { stage = STAGE.ENTER; }
+    public virtual void Update() { stage = STAGE.UPDATE; }
+    public virtual void Exit() { stage = STAGE.EXIT; }
 
     public StatePorcoVela Process()
     {
-        if (stage == EVENT.ENTER) Enter();
-        if (stage == EVENT.UPDATE) Update();
-        if (stage == EVENT.EXIT)
+        if(stage == STAGE.ENTER) { Enter(); }
+        if(stage == STAGE.UPDATE) { Update(); }
+        if(stage == STAGE.EXIT)
         {
             Exit();
             return nextState;
@@ -46,45 +53,102 @@ public class StatePorcoVela
 
     public bool IsPlayerVisible()
     {
-        if (PlayerController.Instance.GetPlayerVisible())
-            return true;
-
-        return false;
+        return PlayerController.Instance.GetPlayerVisible();
     }
 
 }
 
 
-public class StatePorcoVelaIDLE: StatePorcoVela
+public class StatePorcoVelaIDLE : StatePorcoVela
 {
-    public StatePorcoVelaIDLE(PorcoVela _porco, Animator _anim)
-        : base(_porco, _anim)
+    public StatePorcoVelaIDLE(PorcoVela porcoVela, Animator anim) 
+        :base(porcoVela, anim)
     {
         name = STATE.IDLE;
     }
 
     public override void Enter()
     {
-        //TODO Verificar
-        anim.SetTrigger("IDLE");
-
         base.Enter();
+        anim.SetTrigger("IDLE");//TODO verificar
     }
 
     public override void Update()
     {
-        if (IsPlayerVisible())
-        {
-            //TODO Chamar PURSUE
-            //nextState = new 
-        }
         base.Update();
+
+        float valorRandom = Random.Range(0, 1f);
+        if(valorRandom < .25f)
+        {
+            stage = STAGE.EXIT;
+        }
+
     }
 
     public override void Exit()
     {
-        //TODO Verificar 2
-        anim.ResetTrigger("IDLE");
+        anim.SetTrigger("IDLE");
+
+        //TODO verificar
+        nextState = new StatePorcoVelaPATROL(porcoVela, anim);
+
         base.Exit();
+    }
+}
+
+public class StatePorcoVelaPATROL: StatePorcoVela
+{
+    public StatePorcoVelaPATROL(PorcoVela porcoVela, Animator anim)
+        :base(porcoVela, anim)
+    {
+        name = STATE.PATROL;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        porcoVela.speed = 1f;
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+        if (IsPlayerVisible())
+        {
+            nextState = new StatePorcoVelaPURSUE(porcoVela, anim);
+            stage = STAGE.EXIT;
+        }
+        else
+        {
+
+        }
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+}
+
+public class StatePorcoVelaPURSUE: StatePorcoVela
+{
+    public StatePorcoVelaPURSUE(PorcoVela porcoVela, Animator anim)
+        : base(porcoVela, anim)
+    {
+        name = STATE.PURSUE;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+        porcoVela.speed = 4f;   
+    }
+
+    public override void Update()
+    {
+        base.Update();
+
+
     }
 }
