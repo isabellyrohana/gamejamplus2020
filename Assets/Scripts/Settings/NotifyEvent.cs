@@ -27,6 +27,8 @@ public static class NotifyEvent
             public static readonly int Show = ++c;
             public static readonly int Hide = ++c;
         }
+
+        
     }
 
 }

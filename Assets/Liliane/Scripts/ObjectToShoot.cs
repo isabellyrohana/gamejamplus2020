@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class ObjectToShoot : MonoBehaviour
 {
+
+    [SerializeField] private Key keyPrefab;
+
     private bool _gameIsPaused = false;
     private Rigidbody2D objectRb;
     private Animator objectAnim;
     private BoxCollider2D objectBC;
     private bool canDestroy;
+
+    private bool _hasKey = false;
 
     private void Start()
     {
@@ -53,6 +58,8 @@ public class ObjectToShoot : MonoBehaviour
             SoundFxController.Instance.playFx(7);
             gameObject.tag = "Untagged";
 
+            if (_hasKey) Instantiate(keyPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
+
             canDestroy = false;
         }
 
@@ -70,6 +77,11 @@ public class ObjectToShoot : MonoBehaviour
         {
             Events.ObserverManager.Notify(NotifyEvent.Interactions.Arrows.Hide);
         }
+    }
+
+    public void HasKey()
+    {
+        _hasKey = true;
     }
 
 }

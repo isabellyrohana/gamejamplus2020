@@ -87,6 +87,11 @@ public class PlayerController : Singleton<PlayerController>
         return _hasKey;
     }
 
+    public void GetKey()
+    {
+        _hasKey = true;
+    }
+
     private void Move()
     {
         float speed = _rigidbody2D.velocity.y;
@@ -187,11 +192,6 @@ public class PlayerController : Singleton<PlayerController>
         {
             Destroy(this.gameObject);
             GameController.Instance.ActiveGameOver();
-        }
-
-        if (other.gameObject.CompareTag("Key"))
-        {
-            UpdateHasKey(true);
         }
 
         // Enter in Door Trigger

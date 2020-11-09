@@ -20,6 +20,7 @@ public class ChandelierBoxCollider : MonoBehaviour
             rb.gravityScale = 0f;
             rb.bodyType = RigidbodyType2D.Static;
             chandelierSprite.sprite = spriteEndFall;
+            transform.tag = Tags.GetTag(Tags.TagsEnum.WALL);
             foreach(Lamp lamp in lampsToRotate) lamp.transform.rotation = Quaternion.Euler(0f, 0f, 45f);
         }
 
