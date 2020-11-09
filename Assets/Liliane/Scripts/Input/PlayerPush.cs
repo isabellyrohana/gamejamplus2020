@@ -17,23 +17,15 @@ public class PlayerPush : MonoBehaviour
     public float distance = 0.5f;
     public float throwForce;
 
-    private bool isThrow;
-
-    private void Start()
+    private void Awake()
     {
+        isThrowable = false;
         playerAnim = GetComponent<Animator>();
     }
 
     private void Update()
     {
-        if(PlayerController.Instance.IsFacingLeft())
-        {
-            direction = -1;
-        }
-        else
-        {
-            direction = 1;
-        }
+        direction = PlayerController.Instance.IsFacingLeft() ? -1 : 1;
 
         if (isThrowable)
         {
@@ -41,21 +33,26 @@ public class PlayerPush : MonoBehaviour
         }
     }
 
-    private void OnPick(/*InputValue value*/)
+    private void OnPick(InputValue value)
     {
-        Debug.Log("OnPick");
-        if (!isThrowable /*&& value.Get<float>() == 1*/)
-        {
-            Physics2D.queriesStartInColliders = false;
-            hit = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - 1f), Vector2.right * direction, distance);
+        bool pressPick = value.Get<float>() == 1;
 
-            if (hit.collider != null && hit.collider.gameObject.CompareTag("throwable"))
+        if (!isThrowable && pressPick)
+        {
+            int layerThrowable = 1 << LayerMask.NameToLayer(Tags.GetTag(Tags.TagsEnum.THROWABLE));
+            Vector3 startPoint = transform.position + Vector3.down;
+            Vector3 rayDirection = Vector3.right * direction;
+            hit = Physics2D.Raycast(startPoint, rayDirection, distance, layerThrowable);
+
+            if (hit.collider != null && 
+                hit.collider.CompareTag(Tags.GetTag(Tags.TagsEnum.THROWABLE)))
             {
                 isThrowable = true;
                 playerAnim.SetBool("hold", true);
+                Events.ObserverManager.Notify(NotifyEvent.Interactions.Arrows.Hide);
             }
         }
-        else if (!Physics2D.OverlapPoint(rightHandPosition.position, layerNotThrowable) /*&& value.Get<float>() == 1*/)
+        else if (!Physics2D.OverlapPoint(rightHandPosition.position, layerNotThrowable) && pressPick)
         {
             isThrowable = false;
 
@@ -64,12 +61,10 @@ public class PlayerPush : MonoBehaviour
                 hit.collider.gameObject.TryGetComponent(out Rigidbody2D hitRb);
 
                 hitRb.bodyType = RigidbodyType2D.Dynamic;
-                hitRb.mass = .5f;
                 hitRb.velocity = Vector2.zero;
 
-                Vector2 vectorThrow = new Vector2(direction, 1f) * throwForce;
+                Vector2 vectorThrow = new Vector2(direction, 2.5f) * throwForce;
                 hitRb.AddForce(vectorThrow);
-                Debug.Log(vectorThrow);
                 
                 hit.collider.gameObject.TryGetComponent(out ObjectToShoot hitScript);
                 hitScript.ChangeToTrigger();
@@ -80,7 +75,9 @@ public class PlayerPush : MonoBehaviour
     }
 
     void OnDrawGizmos() {
+        Vector3 startPoint = transform.position + Vector3.down;
+        Vector3 endPoint = startPoint + Vector3.right * direction * distance;
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(new Vector2(transform.position.x, transform.position.y - 1f), new Vector2(transform.position.x, transform.position.y - 1f) + Vector2.right * direction * distance);
+        Gizmos.DrawLine(startPoint, endPoint);
     }
 }

@@ -16,9 +16,12 @@ public class Lamp : MonoBehaviour
 
     private Coroutine _currentCoroutine = null;
 
+    private Color _startColor = Color.yellow;
+
     private void Start()
     {
         _currentCoroutine = StartCoroutine("TwinkleLight");
+        _startColor = lightLamp.color;
     }
 
     private IEnumerator TwinkleLight()
@@ -68,4 +71,42 @@ public class Lamp : MonoBehaviour
             PlayerController.Instance.UpdatePlayerOnTheLight(false);
         }
     }
+
+    public void StopLight()
+    {
+        lightLamp.intensity = 0f;
+        StopCoroutine(_currentCoroutine);
+    }
+
+    public void TurnOffSlowly(float timeToStop)
+    {
+        StopCoroutine(_currentCoroutine);
+        lightLamp.intensity = 2.5f;
+
+        StartCoroutine(Wait());
+
+        IEnumerator Wait()
+        {
+            float currentTime = 0f;
+            float startIntensity = 2.5f;
+            float finalIntensity = 0.07f;
+
+            while(currentTime < timeToStop)
+            {
+                currentTime += Time.deltaTime;
+                float proportionTime = MathUtility.CurveAsc(currentTime) / timeToStop;
+                Color newColor = Color.Lerp(_startColor, Color.red, proportionTime);
+                float intensity = Mathf.Lerp(startIntensity, finalIntensity, proportionTime);
+
+                lightLamp.color = newColor;
+                lightLamp.intensity = intensity;
+                yield return null;
+            }
+
+            lightLamp.color = Color.red;
+            lightLamp.intensity = finalIntensity;
+            yield return null;
+        }
+    }
+
 }

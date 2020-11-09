@@ -6,11 +6,11 @@ using UnityEngine.InputSystem;
 [
     RequireComponent(typeof(Rigidbody2D)),
     RequireComponent(typeof(Animator)),
-    RequireComponent(typeof(AudioSource)),
 ]
 public class PlayerController : Singleton<PlayerController>
 {
 
+    [Range(0.5f, 3f)] [SerializeField] private float playerWalkSoundSfx = 1f;
     [SerializeField] private float playerSpeed = 5f;
     [SerializeField] private UiPauseController uiPauseController = null;
     [SerializeField] private Transform rightHandPosition = null;
@@ -42,20 +42,15 @@ public class PlayerController : Singleton<PlayerController>
     // Internal References
     private Rigidbody2D _rigidbody2D = null;
     private Animator _animator = null;
-    private AudioSource _passosSound = null;
 
+    // Timers
+    private float timeSoundWalkSfx = 0f;
 
-
-    protected new virtual void Awake()
+    public override void Init()
     {
-        base.Awake();
+        base.Init();
 
         _rigidbody2D = GetComponent<Rigidbody2D>();
-        _passosSound = GetComponent<AudioSource>();
-    }
-
-    private void Start()
-    {
         _animator = GetComponent<Animator>();
     }
 
@@ -93,30 +88,34 @@ public class PlayerController : Singleton<PlayerController>
         return _hasKey;
     }
 
+    public void GetKey()
+    {
+        _hasKey = true;
+    }
+
     private void Move()
     {
-        float speedY = _rigidbody2D.velocity.y;
-        _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speedY);
+        float speed = _rigidbody2D.velocity.y;
+        _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speed);
 
-        if (_horizontalInput > 0.2f)
+        if (_horizontalInput == 0f)
         {
-            if (_isFacingLeft) Flip();
-            if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
-        }
-        else if (_horizontalInput < -0.2f)
-        {
-            if (!_isFacingLeft) Flip();
-            if (_passosSound != null && !_passosSound.isPlaying) _passosSound.Play();
-        }
-
-        if (_horizontalInput == 0)
-        {
+            timeSoundWalkSfx = playerWalkSoundSfx;
             _animator.SetBool("walk", false);
         }
         else
         {
+            if (_horizontalInput > 0f && _isFacingLeft) Flip();
+            else if (_horizontalInput < 0f && !_isFacingLeft) Flip();
+
+            timeSoundWalkSfx -= Time.deltaTime;
+            if (timeSoundWalkSfx <= 0f)
+            {
+                SoundFxController.Instance.playFx(5);
+    	        timeSoundWalkSfx = playerWalkSoundSfx;
+            }
             _animator.SetBool("walk", true);
-        }
+        } 
     }
 
     private void Flip()
@@ -147,11 +146,6 @@ public class PlayerController : Singleton<PlayerController>
     {
         _rigidbody2D.velocity *= Vector2.up;
         _gameIsPaused = pause;
-    }
-
-    private void PlaySfx()
-    {
-        SoundFxController.Instance.playFx(5);
     }
 
     public void ThrowObject()
@@ -188,17 +182,6 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
-    public void PickItem()
-    {
-        //_currentThrowableObject = _currentTouchedObject.GetComponent<InventoryObject>();
-        //_currentTouchedObject = null;
-        //_currentThrowableObject.transform.SetParent(transform);
-        //_currentThrowableObject.transform.position = rightHandPosition.position;
-        //Rigidbody2D rb = _currentThrowableObject.GetComponent<Rigidbody2D>();
-        //rb.velocity = Vector2.zero;
-        //rb.bodyType = RigidbodyType2D.Kinematic;
-    }
-
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Rasga"))
@@ -211,11 +194,6 @@ public class PlayerController : Singleton<PlayerController>
         {
             Destroy(this.gameObject);
             GameController.Instance.ActiveGameOver();
-        }
-
-        if (other.gameObject.CompareTag("Key"))
-        {
-            UpdateHasKey(true);
         }
 
         // Enter in Door Trigger
@@ -264,13 +242,12 @@ public class PlayerController : Singleton<PlayerController>
     private void OnMove(InputValue value)
     {
         _horizontalInput = value.Get<Vector2>().x;
-        //print("move " + _horizontalInput);
+        Debug.Log("OnMove: " + _horizontalInput);
     }
 
     private void OnHideAppear(InputValue value)
     {
         _verticalInput = value.Get<Vector2>().y;
-        print("hide " + _verticalInput);
     }
 
     private void OnDiary()
@@ -279,19 +256,8 @@ public class PlayerController : Singleton<PlayerController>
         uiPauseController.ButtonJournals();
     }
 
-    private void OnPick()
-    {
-        //print("pick click");
-        //// Se tiver encostado, pega o Item
-        //if (_currentTouchedObject != null) PickItem();
-        //// Se tiver segurando algum item, arremessa
-        //else if (_currentThrowableObject != null) ThrowObject();
-    }
-
     private void OnInteract()
     {
-        print("interact click");
-
         if (_journalReference != null)
         {
             string text = "cuidado, aqui não é tão seguro.... se ficar com medo se esconda";
@@ -311,8 +277,6 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnPause()
     {
-        print("pause click");
-
         if (GameController.Instance != null)
         {
             if (GameController.Instance.IsPause()) uiPauseController.Hide(() => Pause(false));
@@ -326,8 +290,9 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnBag()
     {
-        print("bag click");
+        Debug.Log("OnBag");
     }
 
     #endregion
+
 }

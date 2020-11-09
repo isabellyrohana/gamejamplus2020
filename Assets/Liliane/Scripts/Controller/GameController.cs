@@ -12,11 +12,19 @@ public class GameController : Singleton<GameController>
     [SerializeField] private RasgaController[] rasgas;
     [SerializeField] private PorcoVela[] porcos;
     [SerializeField] private Lamp[] lamps;
+    [SerializeField] private List<ObjectToShoot> vasesToDropKey = null;
     public GameObject gameOverPanel;
 
-    protected new virtual void Awake()
+    public override void Init()
     {
-        base.Awake();
+        base.Init();
+
+        if (vasesToDropKey != null && vasesToDropKey.Count > 0)
+        {
+            int indexSorted = Random.Range(0, vasesToDropKey.Count);
+            ObjectToShoot objectToShoot = vasesToDropKey[indexSorted];
+            objectToShoot.HasKey();
+        }
     }
 
     public void ActiveGameOver()

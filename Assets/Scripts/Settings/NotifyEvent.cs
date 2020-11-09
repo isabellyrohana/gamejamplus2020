@@ -13,4 +13,22 @@ public static class NotifyEvent
         public static readonly int ChangeInSettings = ++c;
     }
 
+    public static class Interactions
+    {
+
+        public static class Key
+        {
+            public static readonly int Show = ++c;
+            public static readonly int Hide = ++c;
+        }
+
+        public static class Arrows
+        {
+            public static readonly int Show = ++c;
+            public static readonly int Hide = ++c;
+        }
+
+        
+    }
+
 }
