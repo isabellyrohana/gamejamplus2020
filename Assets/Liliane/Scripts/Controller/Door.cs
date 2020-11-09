@@ -36,4 +36,24 @@ public class Door : MonoBehaviour
         SceneController.ToScene(sceneTransition);
     }
 
+    private void OnTriggerEnter2D(Collider2D other) {
+
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)))
+        {
+            string key = "W";
+            Vector2 position = transform.position + Vector3.up * 4.25f;
+            Events.ObserverManager.Notify<string, Vector2>(NotifyEvent.Interactions.Arrows.Show, key, position);
+        }
+
+    }
+
+    private void OnTriggerExit2D(Collider2D other) {
+        
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)))
+        {
+            Events.ObserverManager.Notify(NotifyEvent.Interactions.Arrows.Hide);
+        }
+
+    }
+
 }
