@@ -126,16 +126,22 @@ public class RasgaController : Singleton<RasgaController>
 
     private IEnumerator FlyAway()
     {
-        SoundFxController.Instance.playFx(3);
+        SoundFxController.Instance.playFx(2);
         
         direction = (posToRun.transform.position - transform.position).normalized;
         rasgaControllerRb.velocity = direction * speedToAttack;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
+
+        SoundFxController.Instance.playFx(2);
+
+        yield return new WaitForSeconds(0.1f);
+
+        SoundFxController.Instance.playFx(2);
         
         MoveToLeftToRight();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.5f);
 
         UpdateCanAttack(true);
     }
