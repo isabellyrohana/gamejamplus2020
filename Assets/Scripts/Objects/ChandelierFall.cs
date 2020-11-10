@@ -27,6 +27,7 @@ public class ChandelierFall : MonoBehaviour
             triggerCollider.enabled = false;
             chandelierBoxCollider.gameObject.SetActive(true);
             chandelierSprite.sprite = spriteStartFall;
+            SoundFxController.Instance.playFx(7);
             foreach (Lamp lamp in lampsToTurnOff) lamp.StopLight();
             foreach (Lamp lamp in lampsToTurnOffSlowly) lamp.TurnOffSlowly(1f);
         }
@@ -37,7 +38,6 @@ public class ChandelierFall : MonoBehaviour
 
         if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)))
         {
-            Debug.Log("Player is not trigger anymore with Chandelier");
             bool playerOnRight = other.transform.position.x > transform.position.x;
             isToFall = ((playerOnRight && playerExitRight) || (!playerOnRight && !playerExitRight));
         }

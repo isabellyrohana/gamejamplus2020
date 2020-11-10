@@ -32,8 +32,10 @@ public class ObjectToShoot : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         
-        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.CHANDELIER)) || 
-            other.CompareTag(Tags.GetTag(Tags.TagsEnum.WALL)))
+        if (
+            (other.CompareTag(Tags.GetTag(Tags.TagsEnum.CHANDELIER)) || 
+             other.CompareTag(Tags.GetTag(Tags.TagsEnum.WALL))) &&
+             !PlayerController.Instance.IsInteracting())
         {
             SoundFxController.Instance.playFx(7);
 
