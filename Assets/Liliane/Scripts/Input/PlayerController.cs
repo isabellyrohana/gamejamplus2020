@@ -281,8 +281,7 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (_journalReference != null)
         {
-            _journalReference = null;
-            string text = "cuidado, aqui não é tão seguro.... se ficar com medo se esconda";
+            string text = LocalizationManager.Instance.GetLocalizationValue("diary01");
             Journal journal = new Journal(text);
             Journals.AddJournal(journal);
             Pause(true);
@@ -290,7 +289,6 @@ public class PlayerController : Singleton<PlayerController>
         }
         else if (_picture != null)
         {
-            _picture = null;
             Pause(true);
             uiPauseController.OpenPicture();
         }
