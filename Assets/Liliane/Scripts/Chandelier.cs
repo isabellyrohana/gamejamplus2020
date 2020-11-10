@@ -22,7 +22,6 @@ public class Chandelier : MonoBehaviour
             RasgaController.Instance?.UpdateCanAttack(false);
             RasgaController.Instance?.RasgaAffected();
             
-            SoundFxController.Instance.playFx(3);
             StartCoroutine("LightsFall");
         }
 
