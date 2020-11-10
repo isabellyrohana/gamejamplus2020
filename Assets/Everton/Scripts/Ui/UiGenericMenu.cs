@@ -26,14 +26,6 @@ public abstract class UiGenericMenu : MonoBehaviour
 
     public abstract void Setup();
 
-    void Update()
-    {
-        /*if (_isShowing && Input.GetButtonDown("Pause"))
-        {
-            if (menus.Count > 0) menus[menus.Count - 1].Hide();
-        }*/
-    }
-
     public void Show() => Show(null);
 
     public void Show(Action callback = null)
