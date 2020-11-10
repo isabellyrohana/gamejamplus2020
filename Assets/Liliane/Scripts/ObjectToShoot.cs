@@ -32,8 +32,7 @@ public class ObjectToShoot : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         
-        if (
-            (other.CompareTag(Tags.GetTag(Tags.TagsEnum.CHANDELIER)) || 
+        if ((other.CompareTag(Tags.GetTag(Tags.TagsEnum.CHANDELIER)) || 
              other.CompareTag(Tags.GetTag(Tags.TagsEnum.WALL))) &&
              !PlayerController.Instance.IsInteracting())
         {
@@ -42,6 +41,9 @@ public class ObjectToShoot : MonoBehaviour
             objectAnim.SetTrigger("destroy");
             objectRb.velocity = new Vector2(0, objectRb.velocity.y);
             objectRb.gravityScale = 3f;
+
+            RasgaController.Instance?.UpdateCanAttack(false);
+            RasgaController.Instance?.RasgaAffected();
 
             canDestroy = false;
         }
@@ -61,6 +63,9 @@ public class ObjectToShoot : MonoBehaviour
             gameObject.tag = "Untagged";
 
             if (_hasKey) Instantiate(keyPrefab, transform.position + Vector3.up, Quaternion.identity, transform);
+
+            RasgaController.Instance?.UpdateCanAttack(false);
+            RasgaController.Instance?.RasgaAffected();
 
             canDestroy = false;
         }
