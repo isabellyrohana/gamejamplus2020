@@ -71,10 +71,10 @@ public class PlayerController : Singleton<PlayerController>
         {
             if (_onDoor != null)
             {
-                if (GetHasKey())
-                {
+                if (!_onDoor.NeedKey())
                     _onDoor.OpenDoor();
-                }
+                else if (GetHasKey())
+                    _onDoor.OpenDoor();
             }
             else Hide();
         }
