@@ -50,6 +50,7 @@ public class RasgaController : Singleton<RasgaController>
             if(distance > 0)
             {
                 direction = (PlayerController.Instance.transform.position - transform.position).normalized;
+                print(direction);
 
                 if (direction.x < 0 && !isLookLeft)
                 {
@@ -59,13 +60,18 @@ public class RasgaController : Singleton<RasgaController>
                 {
                     Flip();
                 }
-                
+
+                    
+            }
+            
+            if(direction.x < 0)
+            {
                 signal = -1;
             }
             else
             {
                 signal = 1;
-            }
+            }   
 
             rasgaControllerRb.velocity = new Vector2(signal, direction.y) * speedToAttack;
         }
