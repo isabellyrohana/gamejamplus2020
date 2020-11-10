@@ -7,9 +7,9 @@
             "actions": [
                 {
                     "name": "Move",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "e1e7920b-e737-45a9-95f1-2a307965ef91",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
                 },
@@ -342,7 +342,7 @@
                     "name": "2D Vector",
                     "id": "ef4e1ba9-56dd-4943-9117-32c7632a4a4e",
                     "path": "2DVector",
-                    "interactions": "",
+                    "interactions": "Press,Press(behavior=1)",
                     "processors": "",
                     "groups": "",
                     "action": "Move",
@@ -377,7 +377,7 @@
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard;Gamepad",
+                    "groups": "Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -399,7 +399,7 @@
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard;Gamepad",
+                    "groups": "Keyboard",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
