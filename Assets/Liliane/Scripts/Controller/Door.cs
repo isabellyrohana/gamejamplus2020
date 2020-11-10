@@ -78,4 +78,6 @@ public class Door : MonoBehaviour
 
     }
 
+    public bool NeedKey() => needKey;
+
 }
