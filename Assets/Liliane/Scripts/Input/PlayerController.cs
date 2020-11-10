@@ -279,7 +279,11 @@ public class PlayerController : Singleton<PlayerController>
 
     private void OnInteract()
     {
-        if (_journalReference != null)
+        if (uiPauseController.JournalIsOpen())
+        {
+            uiPauseController.CloseJournal();
+        }
+        else if (_journalReference != null)
         {
             string text = LocalizationManager.Instance.GetLocalizationValue("diary01");
             Journal journal = new Journal(text);
@@ -291,10 +295,6 @@ public class PlayerController : Singleton<PlayerController>
         {
             Pause(true);
             uiPauseController.OpenPicture();
-        }
-        else if (uiPauseController.JournalIsOpen())
-        {
-            uiPauseController.CloseJournal(() => Pause(false));
         }
     }
 

@@ -77,7 +77,7 @@ public class UiPauseController : UiGenericMenu
 
     public bool JournalIsOpen() => uiPauseJournal.IsShowing();
 
-    public void CloseJournal(Action callback = null) => uiPauseJournal.Hide(callback);
+    public void CloseJournal() => uiPauseJournal.Hide();
 
     public void OpenGameOver()
     {
