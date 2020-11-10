@@ -18,6 +18,7 @@ public class Tags : MonoBehaviour
         DOOR = 8,
         SAFEPLACE = 9,
         WALL = 10,
+        PICTURE = 11,
     }
 
     public static string GetTag(TagsEnum scene)
@@ -35,6 +36,7 @@ public class Tags : MonoBehaviour
             case TagsEnum.DOOR: return "Door";
             case TagsEnum.SAFEPLACE: return "Safeplace";
             case TagsEnum.WALL: return "Wall";
+            case TagsEnum.PICTURE: return "Picture";
             default: return "SceneMainMenu";
         }
     }

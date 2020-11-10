@@ -126,6 +126,8 @@ public class RasgaController : Singleton<RasgaController>
 
     private IEnumerator FlyAway()
     {
+        SoundFxController.Instance.playFx(3);
+        
         direction = (posToRun.transform.position - transform.position).normalized;
         rasgaControllerRb.velocity = direction * speedToAttack;
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -68,7 +69,15 @@ public class UiPauseController : UiGenericMenu
         uiPauseJournal.Show();
     }
 
+    public void OpenPicture()
+    {
+        uiPauseJournal.Setup("");
+        uiPauseJournal.Show();
+    }
+
     public bool JournalIsOpen() => uiPauseJournal.IsShowing();
+
+    public void CloseJournal(Action callback = null) => uiPauseJournal.Hide(callback);
 
     public void OpenGameOver()
     {
