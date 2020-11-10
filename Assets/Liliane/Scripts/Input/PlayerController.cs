@@ -17,6 +17,8 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] private AudioClip morteAudioPorco = null;
     [SerializeField] private AudioClip armarioEntrandoAudioClip = null;
     [SerializeField] private AudioClip armarioSaindoAudioClip = null;
+    [SerializeField] private Sprite armarioPortaAberta = null;
+    [SerializeField] private Sprite armarioPortaFechada = null;
 
     // Inputs
     private float _horizontalInput = 0f;
@@ -36,6 +38,7 @@ public class PlayerController : Singleton<PlayerController>
     // Triggers Checkers
     private Door _onDoor = null;
     private GameObject _currentSafePlace = null;
+    private GameObject _lastSafePlace = null;
     private InventoryObject _currentTouchedObject = null;
     private GameObject _journalReference = null;
 
@@ -159,13 +162,17 @@ public class PlayerController : Singleton<PlayerController>
 
     public void Hide()
     {
+
         if (_currentSafePlace != null && !_isHiding)
         {
+            SpriteRenderer currentSafePlaceSprite = _currentSafePlace.GetComponent<SpriteRenderer>();
+            _lastSafePlace = _currentSafePlace;
             //transform.position = new Vector3(_currentSafePlace.transform.position.x, transform.position.y, transform.position.z);
             _rigidbody2D.velocity *= Vector2.up;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             GetComponent<SpriteRenderer>().enabled = false;
             _isHiding = true;
+            currentSafePlaceSprite.sprite = armarioPortaFechada;
 
             AudioSource.PlayClipAtPoint(armarioEntrandoAudioClip, Camera.main.transform.position, 1f);
         }
@@ -178,6 +185,9 @@ public class PlayerController : Singleton<PlayerController>
             GetComponent<BoxCollider2D>().enabled = true;
             GetComponent<SpriteRenderer>().enabled = true;
             _isHiding = false;
+            SpriteRenderer currentSafePlaceSprite = _lastSafePlace.GetComponent<SpriteRenderer>();
+            currentSafePlaceSprite.sprite = armarioPortaAberta;
+            _lastSafePlace = null;
             AudioSource.PlayClipAtPoint(armarioSaindoAudioClip, Camera.main.transform.position, 1f);
         }
     }

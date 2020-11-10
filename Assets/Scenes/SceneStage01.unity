@@ -731,7 +731,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725826410}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.58, y: -1.6, z: 0}
+  m_LocalPosition: {x: -60.79, y: -1.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 263544458}
@@ -776,6 +776,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e61963b56d65bad4183a51ffe10460b2, type: 3}
   - {fileID: 8300000, guid: 2515d0b6e47827844aa5f55cf358f680, type: 3}
   - {fileID: 8300000, guid: e1c318fc42f634c4f8fa912d79f0bdb2, type: 3}
+  vfxVolume: 0.25
 --- !u!4 &790419923
 Transform:
   m_ObjectHideFlags: 0
@@ -1449,6 +1450,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 1125937398949757417, guid: bd4b49a70d8a94348a56afe5c010c76b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1125937398949757419, guid: bd4b49a70d8a94348a56afe5c010c76b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1978,12 +1984,13 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cef06677a1d3edf4c8eac477c9cde40e, type: 3}
+  m_Sprite: {fileID: -7530842697571287909, guid: cef06677a1d3edf4c8eac477c9cde40e,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.74, y: 1.33}
+  m_Size: {x: 3.7, y: 6.65}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1998,7 +2005,7 @@ Transform:
   m_GameObject: {fileID: 1231602087}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 18.35, y: 0.28, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 934847057}
   m_RootOrder: 2
@@ -2016,18 +2023,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.15647037, y: 0}
+  m_Offset: {x: 0.7002636, y: -0.67174244}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3, y: 3}
-    newSize: {x: 0.74, y: 1.33}
+    oldSize: {x: 3.7, y: 6.65}
+    newSize: {x: 3.7, y: 6.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3570592, y: 1.22}
+  m_Size: {x: 1.4446456, y: 4.546731}
   m_EdgeRadius: 0
 --- !u!1 &1369098584
 GameObject:
@@ -3659,6 +3666,10 @@ MonoBehaviour:
   armarioEntrandoAudioClip: {fileID: 8300000, guid: 85b8f7d0a87bf2e4eb660cde3771f8fc,
     type: 3}
   armarioSaindoAudioClip: {fileID: 8300000, guid: 0c44dac57805d78478a8f8af4caf6d9d,
+    type: 3}
+  armarioPortaAberta: {fileID: -7530842697571287909, guid: cef06677a1d3edf4c8eac477c9cde40e,
+    type: 3}
+  armarioPortaFechada: {fileID: 8727683836241684774, guid: 7955841ba4faf2e40bbfd1f6fc35b372,
     type: 3}
   _hasKey: 0
 --- !u!50 &7330416164016774593

@@ -52,7 +52,7 @@ public class Lamp : MonoBehaviour
     {
         if(hasSound)
         {
-            SoundFxController.Instance.playFx(4);
+            SoundFxController.Instance.playFx(4, transform.position);
         }
     }
 
