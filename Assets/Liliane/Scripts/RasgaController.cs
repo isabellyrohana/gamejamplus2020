@@ -131,9 +131,13 @@ public class RasgaController : Singleton<RasgaController>
         direction = (posToRun.transform.position - transform.position).normalized;
         rasgaControllerRb.velocity = direction * speedToAttack;
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(0.5f);
         
-        rasgaControllerRb.velocity = Vector2.zero;
+        MoveToLeftToRight();
+
+        yield return new WaitForSeconds(1f);
+
+        UpdateCanAttack(true);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
