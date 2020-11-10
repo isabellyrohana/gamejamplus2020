@@ -10,6 +10,7 @@ public class Door : MonoBehaviour
 {
 
     [SerializeField] private Scenes.ScenesEnum sceneTransition = Scenes.ScenesEnum.MAIN_MENU;
+    [SerializeField] private bool needKey = false;
 
     private Animator _doorAnim;
     private AudioSource _audioSource;
@@ -30,45 +31,53 @@ public class Door : MonoBehaviour
         _audioSource.Play();
         PlayerController.Instance?.Pause(true);
 
-        while(_audioSource.isPlaying)
-        {
+        while (_audioSource.isPlaying)
             yield return null;
-        }
 
         SceneController.ToScene(sceneTransition);
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other)
+    {
 
-        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && PlayerController.Instance.GetHasKey() && !_keyIsShow)
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && !_keyIsShow)
+            CheckToShowKey();
+
+    }
+
+    private void OnTriggerStay2D(Collider2D other)
+    {
+
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)))
         {
-            string key = "W";
-            Vector2 position = transform.position + Vector3.up * 4.25f;
-            Events.ObserverManager.Notify<string, Vector2>(NotifyEvent.Interactions.Arrows.Show, key, position);
-            _keyIsShow = true;
+            if (!_keyIsShow)
+                CheckToShowKey();
         }
 
     }
 
-    private void OnTriggerStay2D(Collider2D other) {
-        
-        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && PlayerController.Instance.GetHasKey() && !_keyIsShow)
-        {
-            string key = "W";
-            Vector2 position = transform.position + Vector3.up * 4.25f;
-            Events.ObserverManager.Notify<string, Vector2>(NotifyEvent.Interactions.Arrows.Show, key, position);
-            _keyIsShow = true;
-        }
-
+    private void CheckToShowKey()
+    {
+        if (!needKey) ShowKey();
+        else if (PlayerController.Instance.GetHasKey()) ShowKey();
     }
 
-    private void OnTriggerExit2D(Collider2D other) {
-        
+    private void ShowKey()
+    {
+        string key = "W";
+        Vector2 position = transform.position + Vector3.up * 4.25f;
+        Events.ObserverManager.Notify<string, Vector2>(NotifyEvent.Interactions.Arrows.Show, key, position);
+        _keyIsShow = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+
         if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && _keyIsShow)
-        {
             Events.ObserverManager.Notify(NotifyEvent.Interactions.Arrows.Hide);
-        }
 
     }
+
+    public bool NeedKey() => needKey;
 
 }

@@ -41,10 +41,12 @@ public class PlayerController : Singleton<PlayerController>
     private GameObject _lastSafePlace = null;
     private InventoryObject _currentTouchedObject = null;
     private GameObject _journalReference = null;
+    private Picture _picture = null;
 
     // Internal References
     private Rigidbody2D _rigidbody2D = null;
     private Animator _animator = null;
+    private PlayerPush _playerPush = null;
 
     // Timers
     private float timeSoundWalkSfx = 0f;
@@ -55,6 +57,7 @@ public class PlayerController : Singleton<PlayerController>
 
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
+        _playerPush = GetComponent<PlayerPush>();
     }
 
     void Update()
@@ -68,10 +71,10 @@ public class PlayerController : Singleton<PlayerController>
         {
             if (_onDoor != null)
             {
-                if (GetHasKey())
-                {
+                if (!_onDoor.NeedKey())
                     _onDoor.OpenDoor();
-                }
+                else if (GetHasKey())
+                    _onDoor.OpenDoor();
             }
             else Hide();
         }
@@ -192,6 +195,8 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
+    public bool IsInteracting() => _playerPush.IsInteracting();
+
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Rasga"))
@@ -214,6 +219,8 @@ public class PlayerController : Singleton<PlayerController>
         if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.THROWABLE))) _currentTouchedObject = other.gameObject.GetComponent<InventoryObject>();
         // Enter in Papelzin Trigger
         if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PAPER))) _journalReference = other.gameObject;
+        // Enter in Picture Trigger
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PICTURE))) _picture = other.gameObject.GetComponent<Picture>();
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -226,6 +233,8 @@ public class PlayerController : Singleton<PlayerController>
         if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.THROWABLE))) _currentTouchedObject = null;
         // Exit in Papelzin Trigger
         if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PAPER))) _journalReference = null;
+        // Exit in Picture Trigger
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PICTURE))) _picture = null;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -270,18 +279,22 @@ public class PlayerController : Singleton<PlayerController>
     {
         if (_journalReference != null)
         {
+            _journalReference = null;
             string text = "cuidado, aqui não é tão seguro.... se ficar com medo se esconda";
             Journal journal = new Journal(text);
-            if (Journals.AddJournal(journal))
-            {
-                Destroy(_journalReference.gameObject);
-                Pause(true);
-                uiPauseController.OpenLastJournal();
-            }
+            Journals.AddJournal(journal);
+            Pause(true);
+            uiPauseController.OpenLastJournal();
+        }
+        else if (_picture != null)
+        {
+            _picture = null;
+            Pause(true);
+            uiPauseController.OpenPicture();
         }
         else if (uiPauseController.JournalIsOpen())
         {
-            Pause(false);
+            uiPauseController.CloseJournal(() => Pause(false));
         }
     }
 

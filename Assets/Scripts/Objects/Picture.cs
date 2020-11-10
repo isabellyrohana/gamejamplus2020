@@ -22,7 +22,20 @@ public class Picture : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
         
-        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)))
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && !PlayerController.Instance.IsInteracting())
+        {
+            spriteRenderer.sprite = highlightPicture;
+
+            string key = "J";
+            Vector2 position = transform.position + Vector3.up * 2.5f;
+            Events.ObserverManager.Notify<string, Vector2>(NotifyEvent.Interactions.Arrows.Show, key, position);
+        }
+
+    }
+
+    private void OnTriggerStay2D(Collider2D other) {
+        
+        if (other.CompareTag(Tags.GetTag(Tags.TagsEnum.PLAYER)) && !PlayerController.Instance.IsInteracting())
         {
             spriteRenderer.sprite = highlightPicture;
 
