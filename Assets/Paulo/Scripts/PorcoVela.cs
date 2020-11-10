@@ -53,7 +53,7 @@ public class PorcoVela : MonoBehaviour
         {
             if (!GetLoud)
             {
-                AudioSource.PlayClipAtPoint(porcoGrito, transform.position);
+                AudioSource.PlayClipAtPoint(porcoGrito, Camera.main.transform.position);
                 GetLoud = true;
             }
 
@@ -64,6 +64,8 @@ public class PorcoVela : MonoBehaviour
             vela.transform.position = positionA.position;
             sprinting = true;
             Flip();
+            //PURSUE
+            GetComponentInChildren<Light2D>().color = new Color(.984f, .105f, 0f, 1f);
         }
         else
         {
@@ -88,6 +90,7 @@ public class PorcoVela : MonoBehaviour
                         Vector3.MoveTowards(porco.position, positionFinal.position, speed * Time.deltaTime);
                 isLookLeft = false;
                 vela.transform.position = positionA.position;
+                
                 sprinting = true;
                 Flip();
             }
