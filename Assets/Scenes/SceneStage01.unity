@@ -2336,7 +2336,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -7530842697571287909, guid: cef06677a1d3edf4c8eac477c9cde40e,
+  m_Sprite: {fileID: -293732256557179644, guid: 237e58856d3096b4f93190d62dbd5722,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2375,7 +2375,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.7002636, y: -0.67174244}
+  m_Offset: {x: 0.58232844, y: -0.67174244}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -2386,7 +2386,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.4446456, y: 4.546731}
+  m_Size: {x: 1.2087753, y: 4.546731}
   m_EdgeRadius: 0
 --- !u!1 &1267632371
 GameObject:
@@ -3977,6 +3977,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 855670679}
     m_Modifications:
+    - target: {fileID: 2920171799490275373, guid: 07eeeae4aa41be0408c1e2d5758c9ba3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2946579789808328954, guid: 07eeeae4aa41be0408c1e2d5758c9ba3,
         type: 3}
       propertyPath: m_Name
@@ -4061,6 +4066,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 4.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8989609312855074815, guid: 07eeeae4aa41be0408c1e2d5758c9ba3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 07eeeae4aa41be0408c1e2d5758c9ba3, type: 3}
@@ -4294,7 +4304,7 @@ MonoBehaviour:
     type: 3}
   armarioSaindoAudioClip: {fileID: 8300000, guid: 0c44dac57805d78478a8f8af4caf6d9d,
     type: 3}
-  armarioPortaAberta: {fileID: -7530842697571287909, guid: cef06677a1d3edf4c8eac477c9cde40e,
+  armarioPortaAberta: {fileID: -293732256557179644, guid: 237e58856d3096b4f93190d62dbd5722,
     type: 3}
   armarioPortaFechada: {fileID: 8727683836241684774, guid: 7955841ba4faf2e40bbfd1f6fc35b372,
     type: 3}

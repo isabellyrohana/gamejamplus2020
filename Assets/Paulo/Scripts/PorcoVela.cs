@@ -66,6 +66,7 @@ public class PorcoVela : MonoBehaviour
             Flip();
             //PURSUE
             GetComponentInChildren<Light2D>().color = new Color(.984f, .105f, 0f, 1f);
+            GetComponentInChildren<Light2D>().pointLightOuterRadius = 8f;
         }
         else
         {
