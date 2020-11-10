@@ -98,16 +98,18 @@ public class PlayerController : Singleton<PlayerController>
 
     private void Move()
     {
-        float speed = _rigidbody2D.velocity.y;
-        _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speed);
-
-        if (_horizontalInput == 0f)
+        if (_horizontalInput != 1 && _horizontalInput != -1)
         {
             timeSoundWalkSfx = playerWalkSoundSfx;
             _animator.SetBool("walk", false);
+            _rigidbody2D.velocity = Vector2.zero;
         }
         else
         {
+            Debug.Log("Entrou ELSE");
+            float speed = _rigidbody2D.velocity.y;
+            _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speed);
+
             if (_horizontalInput > 0f && _isFacingLeft) Flip();
             else if (_horizontalInput < 0f && !_isFacingLeft) Flip();
 
