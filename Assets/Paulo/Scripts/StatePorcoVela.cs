@@ -148,7 +148,6 @@ public class StatePorcoVelaPATROL: StatePorcoVela
 
         }
 
-
     }
 
     public override void Exit()
@@ -194,4 +193,58 @@ public class StatePorcoVelaPURSUE: StatePorcoVela
     {
         base.Exit();
     }
+}
+
+public class StatePorcoVelaSCARY : StatePorcoVela
+{
+    public StatePorcoVelaSCARY(GameObject porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget)
+        : base(porcoVela, anim, _patrolPoints, _pursueTarget)
+    {
+        name = STATE.SCARY;
+        Debug.Log("Entrou SCARY");
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        stage = STAGE.EXIT;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+    }
+
+}
+
+
+public class StatePorcoVelaDOUBT: StatePorcoVela
+{
+    public StatePorcoVelaDOUBT(GameObject porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget)
+        : base(porcoVela, anim, _patrolPoints, _pursueTarget)
+    {
+
+    }
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+        stage = STAGE.EXIT;
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        nextState = new StatePorcoVelaPATROL(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
+    }
+
 }
