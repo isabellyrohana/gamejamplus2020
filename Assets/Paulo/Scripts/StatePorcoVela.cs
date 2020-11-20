@@ -1,16 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net.Mime;
-using System.Security.Cryptography;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StatePorcoVela
 {
     public enum STATE
     {
-        IDLE, PATROL, PURSUE
+        IDLE, PATROL, PURSUE, SCARY
     }
 
     public enum STAGE
@@ -22,7 +16,7 @@ public class StatePorcoVela
 
     public STATE name;
     public STAGE stage;
-    public PorcoVela porcoVela;
+    public IAPorcoVela IAPorcoVela;
     public Animator anim;
     public StatePorcoVela nextState;
     public Transform[] patrolPoints;
@@ -30,15 +24,17 @@ public class StatePorcoVela
 
     #endregion
 
-    public StatePorcoVela(PorcoVela _porcoVela, Animator _anim, Transform[] _patrolPoints, Transform _pursueTarget)
+    public StatePorcoVela(GameObject _porcoVela, Animator _anim, Transform[] _patrolPoints, Transform _pursueTarget)
     {
-        porcoVela = _porcoVela;
+        IAPorcoVela = _porcoVela.GetComponent<IAPorcoVela>();
         anim = _anim;
         patrolPoints = _patrolPoints;
         pursueTarget = _pursueTarget;
+
+        stage = STAGE.ENTER;
     }
 
-    public virtual void Enter() { stage = STAGE.ENTER; }
+    public virtual void Enter() { stage = STAGE.UPDATE; }
     public virtual void Update() { stage = STAGE.UPDATE; }
     public virtual void Exit() { stage = STAGE.EXIT; }
 
@@ -65,24 +61,27 @@ public class StatePorcoVela
 
 public class StatePorcoVelaIDLE : StatePorcoVela
 {
-    public StatePorcoVelaIDLE(PorcoVela porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget) 
+    public StatePorcoVelaIDLE(GameObject porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget)
         :base(porcoVela, anim, _patrolPoints, _pursueTarget)
     {
         name = STATE.IDLE;
+        IAPorcoVela.Speed = 1f;
+        Debug.Log("Entrou IDLE");
     }
 
     public override void Enter()
     {
         base.Enter();
-        anim.SetTrigger("IDLE");//TODO verificar
+        //TODO verificar
+        //anim.SetTrigger("IDLE");
     }
 
     public override void Update()
     {
         base.Update();
 
-        float valorRandom = Random.Range(0, 1f);
-        if(valorRandom < .25f)
+        float valorRandom = Random.Range(0, 1000f);
+        if(valorRandom <= 75f)
         {
             stage = STAGE.EXIT;
         }
@@ -91,10 +90,10 @@ public class StatePorcoVelaIDLE : StatePorcoVela
 
     public override void Exit()
     {
-        anim.SetTrigger("IDLE");
+        //anim.SetTrigger("IDLE");
 
         //TODO verificar
-        nextState = new StatePorcoVelaPATROL(porcoVela, anim, patrolPoints, pursueTarget);
+        nextState = new StatePorcoVelaPATROL(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
 
         base.Exit();
     }
@@ -102,16 +101,20 @@ public class StatePorcoVelaIDLE : StatePorcoVela
 
 public class StatePorcoVelaPATROL: StatePorcoVela
 {
-    public StatePorcoVelaPATROL(PorcoVela porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget)
+    private int nextTarget = 0;
+
+    public StatePorcoVelaPATROL(GameObject porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget)
         : base(porcoVela, anim, _patrolPoints, _pursueTarget)
     {
         name = STATE.PATROL;
+        IAPorcoVela.Speed = 1f;
+        Debug.Log("Entrou PATROL");
     }
 
     public override void Enter()
     {
         base.Enter();
-        porcoVela.speed = 1f;
+        nextTarget = 0;
     }
 
     public override void Update()
@@ -120,23 +123,32 @@ public class StatePorcoVelaPATROL: StatePorcoVela
 
         if (IsPlayerVisible())
         {
-            nextState = new StatePorcoVelaPURSUE(porcoVela, anim, patrolPoints, pursueTarget);
+            nextState = new StatePorcoVelaPURSUE(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
             stage = STAGE.EXIT;
-        }
-        else
-        {
-            porcoVela.transform.position =
-                Vector2.MoveTowards(porcoVela.transform.position,
-                                    pursueTarget.position,
-                                    porcoVela.speed * Time.deltaTime
-                                    );
 
-            if (porcoVela.transform.position == pursueTarget.position)
-            {
-                nextState = new StatePorcoVelaIDLE(porcoVela, anim, patrolPoints, pursueTarget);
-            }
-            
+            return;
         }
+
+        if (Vector2.Distance(IAPorcoVela.transform.position, patrolPoints[nextTarget % patrolPoints.Length].position) > .1f)
+        {
+            IAPorcoVela.transform.position =
+                Vector2.MoveTowards(IAPorcoVela.transform.position, patrolPoints[nextTarget % patrolPoints.Length].position, IAPorcoVela.Speed * Time.deltaTime);
+        }
+        else 
+        {
+            int shouldStay = Random.Range(0, 1000);
+
+            if (shouldStay < 800)
+            {
+                nextState = new StatePorcoVelaIDLE(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
+                stage = STAGE.EXIT;
+            }
+            else
+                nextTarget++;
+
+        }
+
+
     }
 
     public override void Exit()
@@ -147,30 +159,35 @@ public class StatePorcoVelaPATROL: StatePorcoVela
 
 public class StatePorcoVelaPURSUE: StatePorcoVela
 {
-    public StatePorcoVelaPURSUE(PorcoVela porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget)
+    public StatePorcoVelaPURSUE(GameObject porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget)
         : base(porcoVela, anim, _patrolPoints, _pursueTarget)
     {
         name = STATE.PURSUE;
+        Debug.Log("Entrou PURSUE");
     }
 
     public override void Enter()
     {
         base.Enter();
-        porcoVela.speed = 4f;   
+        IAPorcoVela.Speed = 4f;
     }
 
     public override void Update()
     {
         base.Update();
 
-        porcoVela.transform.position = 
-            Vector2.MoveTowards(porcoVela.transform.position,
+        IAPorcoVela.transform.position = 
+            Vector2.MoveTowards(
+                                IAPorcoVela.transform.position,
                                 pursueTarget.position,
-                                porcoVela.speed * Time.deltaTime
+                                IAPorcoVela.Speed * Time.deltaTime
                                 );
 
-        if (porcoVela.transform.position == pursueTarget.position)
+        if (!IsPlayerVisible())
+        {
+            nextState = new StatePorcoVelaIDLE(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
             stage = STAGE.EXIT;
+        }
     }
 
     public override void Exit()
