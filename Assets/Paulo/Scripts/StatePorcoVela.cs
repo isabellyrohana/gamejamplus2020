@@ -114,7 +114,7 @@ public class StatePorcoVelaPATROL: StatePorcoVela
     public override void Enter()
     {
         base.Enter();
-        nextTarget = 0;
+        nextTarget = Random.Range(0, patrolPoints.Length);
     }
 
     public override void Update()
@@ -126,10 +126,12 @@ public class StatePorcoVelaPATROL: StatePorcoVela
             nextState = new StatePorcoVelaPURSUE(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
             stage = STAGE.EXIT;
 
+            Debug.Log("PURSUE");
+
             return;
         }
 
-        if (Vector2.Distance(IAPorcoVela.transform.position, patrolPoints[nextTarget % patrolPoints.Length].position) > .1f)
+        if (Vector2.Distance(IAPorcoVela.transform.position, patrolPoints[nextTarget % patrolPoints.Length].position) > 0)
         {
             IAPorcoVela.transform.position =
                 Vector2.MoveTowards(IAPorcoVela.transform.position, patrolPoints[nextTarget % patrolPoints.Length].position, IAPorcoVela.Speed * Time.deltaTime);
@@ -144,15 +146,25 @@ public class StatePorcoVelaPATROL: StatePorcoVela
                 stage = STAGE.EXIT;
             }
             else
+            {
                 nextTarget++;
+            }
 
+            VerifyLook();
         }
-
     }
 
     public override void Exit()
     {
         base.Exit();
+    }
+
+    private void VerifyLook()
+    {
+        if (IAPorcoVela.transform.position.x < patrolPoints[nextTarget % patrolPoints.Length].position.x)
+            IAPorcoVela.Flip(LookAt.Right);
+        else
+            IAPorcoVela.Flip(LookAt.Left);
     }
 }
 

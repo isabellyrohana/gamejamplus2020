@@ -109,7 +109,6 @@ public class PlayerController : Singleton<PlayerController>
         }
         else
         {
-            Debug.Log("Entrou ELSE");
             float speed = _rigidbody2D.velocity.y;
             _rigidbody2D.velocity = new Vector2(_horizontalInput * playerSpeed, speed);
 
@@ -263,7 +262,7 @@ public class PlayerController : Singleton<PlayerController>
     private void OnMove(InputValue value)
     {
         _horizontalInput = value.Get<Vector2>().x;
-        Debug.Log("OnMove: " + _horizontalInput);
+        //Debug.Log("OnMove: " + _horizontalInput);
     }
 
     private void OnHideAppear(InputValue value)
