@@ -131,7 +131,7 @@ public class PlayerController : Singleton<PlayerController>
         transform.Rotate(new Vector3(0, 180, 0), Space.Self);
     }
 
-    public bool GetPlayerVisible()
+    public bool isHiding()
     {
         return _isHiding;
     }

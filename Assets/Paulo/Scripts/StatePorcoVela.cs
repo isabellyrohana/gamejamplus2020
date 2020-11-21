@@ -4,7 +4,7 @@ public class StatePorcoVela
 {
     public enum STATE
     {
-        IDLE, PATROL, PURSUE, SCARY
+        IDLE, PATROL, PURSUE, SCARY, DOUBT, FINAL
     }
 
     public enum STAGE
@@ -51,9 +51,17 @@ public class StatePorcoVela
         return this;
     }
 
-    public bool IsPlayerVisible()
+    public bool GetPlayerOnTheLight()
     {
-        return PlayerController.Instance.GetPlayerVisible();
+        return PlayerController.Instance.GetPlayerOnTheLight();
+    }
+
+    public void VerifyLook(Transform target)
+    {
+        if (IAPorcoVela.transform.position.x < target.position.x)
+            IAPorcoVela.Flip(LookAt.Right);
+        else
+            IAPorcoVela.Flip(LookAt.Left);
     }
 
 }
@@ -66,7 +74,6 @@ public class StatePorcoVelaIDLE : StatePorcoVela
     {
         name = STATE.IDLE;
         IAPorcoVela.Speed = 1f;
-        Debug.Log("Entrou IDLE");
     }
 
     public override void Enter()
@@ -108,20 +115,20 @@ public class StatePorcoVelaPATROL: StatePorcoVela
     {
         name = STATE.PATROL;
         IAPorcoVela.Speed = 1f;
-        Debug.Log("Entrou PATROL");
     }
 
     public override void Enter()
     {
         base.Enter();
         nextTarget = Random.Range(0, patrolPoints.Length);
+        VerifyLook(patrolPoints[nextTarget % patrolPoints.Length]);
     }
 
     public override void Update()
     {
         base.Update();
 
-        if (IsPlayerVisible())
+        if (GetPlayerOnTheLight())
         {
             nextState = new StatePorcoVelaPURSUE(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
             stage = STAGE.EXIT;
@@ -140,7 +147,7 @@ public class StatePorcoVelaPATROL: StatePorcoVela
         {
             int shouldStay = Random.Range(0, 1000);
 
-            if (shouldStay < 800)
+            if (shouldStay < 600)
             {
                 nextState = new StatePorcoVelaIDLE(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
                 stage = STAGE.EXIT;
@@ -150,21 +157,13 @@ public class StatePorcoVelaPATROL: StatePorcoVela
                 nextTarget++;
             }
 
-            VerifyLook();
+            VerifyLook(patrolPoints[nextTarget % patrolPoints.Length]);
         }
     }
 
     public override void Exit()
     {
         base.Exit();
-    }
-
-    private void VerifyLook()
-    {
-        if (IAPorcoVela.transform.position.x < patrolPoints[nextTarget % patrolPoints.Length].position.x)
-            IAPorcoVela.Flip(LookAt.Right);
-        else
-            IAPorcoVela.Flip(LookAt.Left);
     }
 }
 
@@ -174,7 +173,7 @@ public class StatePorcoVelaPURSUE: StatePorcoVela
         : base(porcoVela, anim, _patrolPoints, _pursueTarget)
     {
         name = STATE.PURSUE;
-        Debug.Log("Entrou PURSUE");
+        VerifyLook(pursueTarget);
     }
 
     public override void Enter()
@@ -194,7 +193,13 @@ public class StatePorcoVelaPURSUE: StatePorcoVela
                                 IAPorcoVela.Speed * Time.deltaTime
                                 );
 
-        if (!IsPlayerVisible())
+        //if (!GetPlayerOnTheLight())
+        //{
+        //    nextState = new StatePorcoVelaIDLE(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
+        //    stage = STAGE.EXIT;
+        //}
+
+        if(IAPorcoVela.transform.position == pursueTarget.position)
         {
             nextState = new StatePorcoVelaIDLE(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
             stage = STAGE.EXIT;
@@ -259,4 +264,23 @@ public class StatePorcoVelaDOUBT: StatePorcoVela
         nextState = new StatePorcoVelaPATROL(IAPorcoVela.gameObject, anim, patrolPoints, pursueTarget);
     }
 
+}
+
+public class StatePorcoVelaFINAL: StatePorcoVela
+{
+    public StatePorcoVelaFINAL(GameObject porcoVela, Animator anim, Transform[] _patrolPoints, Transform _pursueTarget)
+        : base(porcoVela, anim, _patrolPoints, _pursueTarget)
+    {
+        name = STATE.FINAL;
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+        base.Update();
+    }
 }

@@ -32,15 +32,10 @@ public class IAPorcoVela : MonoBehaviour
 
     public void Flip(LookAt look)
     {
-        Debug.Log("Entrou!!!!  look: " + look);
         if (look == LookAt.Right)
             transform.rotation = new Quaternion(0, 180, 0, 0);
         else
-        {
-        Debug.Log("Entrou mais dentro!!!!");
-
             transform.rotation = new Quaternion(0, 0, 0, 0);
-        }
             
 
     }
