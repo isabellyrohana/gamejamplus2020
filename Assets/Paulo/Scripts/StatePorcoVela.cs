@@ -1,10 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Net.Mime;
-using System.Security.Cryptography;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class StatePorcoVela
 {
@@ -20,13 +14,13 @@ public class StatePorcoVela
 
     #region Attributes
 
-    public STATE name;
-    public STAGE stage;
-    public PorcoVela porcoVela;
-    public Animator anim;
-    public StatePorcoVela nextState;
-    public Transform[] patrolPoints;
-    public Transform pursueTarget;
+    protected STATE name;
+    protected STAGE stage;
+    protected PorcoVela porcoVela;
+    protected Animator anim;
+    protected StatePorcoVela nextState;
+    protected Transform[] patrolPoints;
+    protected Transform pursueTarget;
 
     #endregion
 
