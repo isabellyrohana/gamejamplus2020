@@ -45,9 +45,24 @@ public class StateRasgaMortalha
         return this;
     }
 
-    public bool IsplayerVisible()
+    protected bool IsplayerVisible()
     {
         return PlayerController.Instance.GetPlayerOnTheLight();
+    }
+
+    protected Vector2 BezierCurve(Vector2 b0, Vector2 b1, Vector2 b2, float t)
+    {
+        t = Mathf.Clamp(t, 0, 1);
+
+        return 
+            (1 - t) * (1 - t) * b0
+            + 2 * t * (1 - t) * b1
+            + t * t * b2;
+    }
+
+    protected Vector2 PlayerPosition()
+    {
+        return PlayerController.Instance.transform.position;
     }
 }
 
@@ -111,8 +126,8 @@ public class RasgaMostalhaPATROL : StateRasgaMortalha
                 nextState = new RasgaMostalhaIDLE(RasgaMortalha, Anim, patrolPoints);
                 stage = STAGE.EXIT;
             }
-            else
-                NextGoal++;
+            
+            NextGoal++;
 
         }
 
@@ -130,24 +145,63 @@ public class RasgaMostalhaPATROL : StateRasgaMortalha
 
 }
 
-//TODO PURSUE!!!!!!!!!!!!!!
-
 public class RasgaMostalhaPURSUE : StateRasgaMortalha
 {
+    float startTime = 0f;
+    float distance = 0f;
+    Vector2 startPosition;
+    Vector2 targetPosition;
+    Vector2 finalPosition;
+    Vector2 lastPosition;
+
     public RasgaMostalhaPURSUE(GameObject _rasgaMortalha, Animator _anim, Transform[] _patrolPoints)
         : base(_rasgaMortalha, _anim, _patrolPoints)
     {
         name = STATE.IDLE;
+        Speed = 5f;
+        targetPosition = PlayerPosition();
+        startPosition = RasgaMortalha.transform.position;
+
+        float r = 0;
+        if (startPosition.x > targetPosition.x)
+        {
+            r = startPosition.x - targetPosition.x;
+            finalPosition = new Vector2(targetPosition.x - r, targetPosition.y);
+        }
+        else
+        {
+            r = targetPosition.x - startPosition.x;
+            finalPosition = new Vector2(targetPosition.x + r, targetPosition.y);
+        }
     }
 
     public override void Enter()
     {
         base.Enter();
+        startTime = Time.time;
+        distance = Vector2.Distance(RasgaMortalha.transform.position, finalPosition);
+        lastPosition = BezierCurve(startPosition, targetPosition, finalPosition, 0);
+        RasgaMortalha.transform.position = lastPosition;
+
     }
 
     public override void Update()
     {
         base.Update();
+        
+        float distCovered = (Time.time - startTime) * Speed;
+
+        float percent = distCovered / distance;
+
+        Vector2 currentPosition = BezierCurve(startPosition, targetPosition, finalPosition, 1f);
+
+        RasgaMortalha.transform.position = Vector2.Lerp(
+            lastPosition,
+            currentPosition,
+            percent
+            );
+
+        lastPosition = currentPosition;
     }
 
     public override void Exit()
